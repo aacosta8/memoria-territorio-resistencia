@@ -71,8 +71,14 @@
             background-opacity: 0.05;
         }
 
-        .text-shadow-sm {
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        .archive-slide {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s ease;
+        }
+        .archive-slide.is-active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* Scrim keeps gallery captions legible over unpredictable photo contrast */
@@ -168,15 +174,15 @@
 
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden lg:hidden bg-cream-100 border-b border-brass-500/30 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
-            <a href="#territorio" class="block py-2 text-charcoal-800 hover:text-terracotta-600">1. Entramos al Territorio</a>
-            <a href="#historia" class="block py-2 text-charcoal-800 hover:text-terracotta-600">2. La Historia que Abre</a>
-            <a href="#huellas" class="block py-2 text-charcoal-800 hover:text-terracotta-600">3. El Territorio Guarda Huellas</a>
-            <a href="#recordar" class="block py-2 text-charcoal-800 hover:text-terracotta-600">4. Tres Formas de Recordar</a>
-            <a href="#disputa" class="block py-2 text-charcoal-800 hover:text-terracotta-600">5. La Memoria se Disputa</a>
-            <a href="#educacion" class="block py-2 text-charcoal-800 hover:text-terracotta-600">6. ¿Qué puede hacer la educación?</a>
-            <a href="#esperanza" class="block py-2 text-charcoal-800 hover:text-terracotta-600">7. Más allá de la Violencia</a>
-            <a href="#voces" class="block py-2 text-charcoal-800 hover:text-terracotta-600">8. Tres Voces</a>
-            <a href="#cierre" class="block py-2 text-charcoal-800 hover:text-terracotta-600">9. Cierre y Manifiesto</a>
+            <a href="#territorio" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 01</span>Entramos al Territorio</a>
+            <a href="#historia" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 02</span>La Historia que Abre</a>
+            <a href="#huellas" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 03</span>El Territorio Guarda Huellas</a>
+            <a href="#recordar" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 04</span>Tres Formas de Recordar</a>
+            <a href="#disputa" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 05</span>La Memoria se Disputa</a>
+            <a href="#educacion" class="block py-2 text-charcoal-800 hover:text-terracotta-600">¿Qué puede hacer la educación?</a>
+            <a href="#esperanza" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 06</span>Más allá de la Violencia</a>
+            <a href="#voces" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 07</span>Tres Voces</a>
+            <a href="#cierre" class="block py-2 text-charcoal-800 hover:text-terracotta-600">Cierre y Manifiesto</a>
         </div>
     </nav>
 
@@ -242,7 +248,7 @@
             <!-- Section Header -->
             <div class="mb-12 text-center sm:text-left">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 01</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">2. Entramos al Territorio 🗺️</h2>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">Entramos al Territorio 🗺️</h2>
                 <p class="text-charcoal-800 mt-2 max-w-2xl">Georreferenciación, origen geográfico y primeras preguntas de sentido.</p>
             </div>
 
@@ -333,7 +339,7 @@
             <!-- Header -->
             <div class="mb-12 text-center">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 02</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">3. La Historia que Abre la Pregunta ⏳</h2>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">La Historia que Abre la Pregunta ⏳</h2>
                 <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">Hitos fundamentales para comprender la memoria histórica sin reducirla a la violencia.</p>
             </div>
 
@@ -349,7 +355,7 @@
 
                     <!-- Timeline Item 2 -->
                     <div onclick="selectTimelineNode(2)" id="timeline-node-2" class="timeline-card cursor-pointer p-5 rounded-2xl bg-white border-2 border-transparent hover:border-brass-500 shadow-sm transition hover:-translate-y-1">
-                        <span class="inline-block px-2.5 py-1 rounded bg-brass-400/20 text-brass-600 font-bold text-xs mb-2">Etapa 2</span>
+                        <span class="inline-block px-2.5 py-1 rounded bg-brass-400/20 text-brass-600 font-bold text-xs mb-2">1996–2017</span>
                         <h3 class="font-serif font-bold text-lg text-olive-900">Búsqueda Colectiva</h3>
                         <p class="text-xs text-gray-600 mt-1">Flor Gallego, Cémida Cardona, Cruz Hernández y las familias sostienen la búsqueda de verdad y justicia.</p>
                     </div>
@@ -383,36 +389,53 @@
             </div>
 
             <!-- Documents Archive Viewer & Video Short -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <!-- Archive Document Viewer -->
                 <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-cream-300 flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="font-serif text-2xl font-bold text-olive-900">Archivos y Documentos de Memoria</h3>
-                            <span class="text-xs text-gray-500">Haz clic para ampliar</span>
+                            <span class="text-xs text-gray-500">Fuente oficial</span>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                            <!-- Image Card 1 -->
-                            <div onclick="openImageModal('https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80', 'Documento de prensa de la época')" class="group relative cursor-pointer overflow-hidden rounded-xl bg-cream-200 aspect-[4/3] border border-cream-300">
-                                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80" alt="Documento histórico" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-olive-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-medium">
-                                    <i class="fa-solid fa-magnifying-glass-plus text-lg mr-1"></i> Ver Documento
+                        <button type="button" onclick="openFichaModal()" class="group w-full text-left rounded-2xl border border-cream-300 bg-cream-50 hover:border-terracotta-500 hover:shadow-md transition overflow-hidden">
+                            <div class="flex items-stretch">
+                                <div class="w-20 sm:w-24 shrink-0 bg-olive-900 text-cream-100 flex flex-col items-center justify-center px-3 py-5">
+                                    <i class="fa-solid fa-scale-balanced text-brass-400 text-xl mb-2"></i>
+                                    <span class="text-[9px] uppercase tracking-widest font-bold text-center leading-tight">Corte IDH</span>
+                                </div>
+                                <div class="p-4 sm:p-5">
+                                    <span class="inline-block px-2 py-0.5 rounded bg-terracotta-100 text-terracotta-700 text-[10px] font-bold uppercase tracking-wider mb-2">Ficha técnica</span>
+                                    <h4 class="font-serif text-lg sm:text-xl font-bold text-olive-900 leading-snug">Vereda La Esperanza Vs. Colombia</h4>
+                                    <p class="text-[11px] text-gray-500 mt-1">Estado demandado: Colombia · Sentencia del 31 de agosto de 2017</p>
+                                    <p class="text-xs text-charcoal-800 mt-3 leading-relaxed line-clamp-3">
+                                        El caso se relaciona con la desaparición forzada de 14 personas, incluyendo tres niños, y la ejecución de otra persona, así como la privación de la libertad de un niño, ocurridas en la vereda La Esperanza, El Carmen de Viboral, entre el 21 de junio y el 27 de diciembre de 1996.
+                                    </p>
+                                    <span class="inline-flex items-center mt-3 text-xs font-bold text-terracotta-600 group-hover:text-terracotta-700">
+                                        Leer ficha completa
+                                        <i class="fa-solid fa-arrow-right ml-2 text-[10px]"></i>
+                                    </span>
                                 </div>
                             </div>
-                            <!-- Image Card 2 -->
-                            <div onclick="openImageModal('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80', 'Conmemoración en La Esperanza')" class="group relative cursor-pointer overflow-hidden rounded-xl bg-cream-200 aspect-[4/3] border border-cream-300">
-                                <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=400&q=80" alt="Conmemoración comunitaria" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-olive-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-medium">
-                                    <i class="fa-solid fa-magnifying-glass-plus text-lg mr-1"></i> Ver Fotografía
+                        </button>
+                        <div class="mt-5">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-serif text-lg font-bold text-olive-900">Registro fotográfico</h4>
+                                <span id="archive-photo-count" class="text-[10px] uppercase tracking-widest font-bold text-terracotta-600">1 / 5</span>
+                            </div>
+                            <div class="relative rounded-2xl overflow-hidden border border-cream-300 bg-olive-900 aspect-[16/10]">
+                                <div id="archive-carousel-track" class="absolute inset-0"></div>
+                                <button type="button" onclick="stepArchiveCarousel(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 text-olive-900 shadow border border-cream-200 hover:bg-cream-100 transition" aria-label="Fotografía anterior">
+                                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                                </button>
+                                <button type="button" onclick="stepArchiveCarousel(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 text-olive-900 shadow border border-cream-200 hover:bg-cream-100 transition" aria-label="Fotografía siguiente">
+                                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                                </button>
+                                <div class="absolute inset-x-0 bottom-0 z-10 p-4 media-scrim pointer-events-none">
+                                    <span id="archive-photo-kicker" class="block text-[10px] font-bold uppercase tracking-widest text-brass-400">Placeholder</span>
+                                    <p id="archive-photo-caption" class="font-serif text-base font-bold text-white mt-0.5 leading-snug"></p>
                                 </div>
                             </div>
-                            <!-- Image Card 3 -->
-                            <div onclick="openImageModal('https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80', 'Registros de la búsqueda comunitaria')" class="group relative cursor-pointer overflow-hidden rounded-xl bg-cream-200 aspect-[4/3] border border-cream-300">
-                                <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=400&q=80" alt="Archivo escrito" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-olive-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-medium">
-                                    <i class="fa-solid fa-magnifying-glass-plus text-lg mr-1"></i> Ver Archivo
-                                </div>
-                            </div>
+                            <div id="archive-photo-dots" class="flex justify-center gap-2 mt-3"></div>
                         </div>
                         <div class="mt-5 p-4 rounded-xl bg-cream-100 border border-cream-300">
                             <h4 class="font-serif text-lg font-bold text-olive-900 mb-2">Archivo detallado de las víctimas</h4>
@@ -424,13 +447,13 @@
                 </div>
 
                 <!-- Video Interrogation Box -->
-                <div class="lg:col-span-5 bg-olive-900 text-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between shadow-lg">
+                <div class="lg:col-span-5 lg:sticky lg:top-24 bg-olive-900 text-white p-6 sm:p-8 rounded-2xl shadow-lg space-y-6">
                     <div>
                         <span class="inline-block px-3 py-1 rounded-full bg-brass-500/20 text-brass-400 text-xs font-bold uppercase mb-4">Video de Reflexión</span>
                         <blockquote class="font-serif italic text-2xl leading-snug mb-4 text-cream-100">
                             "¿Qué ocurrió y por qué no podemos reducir esta historia únicamente a la violencia?"
                         </blockquote>
-                        <p class="text-xs text-cream-300 leading-relaxed mb-6">
+                        <p class="text-xs text-cream-300 leading-relaxed">
                             Los 17 desaparecidos son también el punto de partida de un proceso de búsqueda, organización y denuncia liderado por sus familias durante más de treinta años. Reducir el caso a 1996 invisibiliza esa agencia comunitaria.
                         </p>
                     </div>
@@ -454,7 +477,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-10">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 03</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">4. El Territorio Guarda Huellas 📍</h2>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">El Territorio Guarda Huellas 📍</h2>
                 <p class="font-serif italic text-xl sm:text-2xl text-terracotta-600 mt-2">"¿Qué queda en un territorio cuando alguien desaparece?"</p>
                 <p class="text-xs text-gray-500 mt-1">Haz clic sobre las marcas del mapa para acercarte a cada lugar de memoria del corregimiento.</p>
             </div>
@@ -479,7 +502,7 @@
                             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-terracotta-600 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
                                 <i class="fa-solid fa-road text-sm"></i>
                             </div>
-                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">1. La Carretera</span>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">La Carretera</span>
                         </div>
 
                         <!-- Hotspot 2: Caminos y sembrados de las veredas -->
@@ -487,7 +510,7 @@
                             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-olive-800 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
                                 <i class="fa-solid fa-camera text-sm"></i>
                             </div>
-                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">2. Registro Fotográfico</span>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">Registro Fotográfico</span>
                         </div>
 
                         <!-- Hotspot 3: Cabecera de El Carmen de Viboral -->
@@ -495,7 +518,7 @@
                             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brass-500 text-charcoal-900 flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
                                 <i class="fa-solid fa-monument text-sm"></i>
                             </div>
-                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">3. Conmemoraciones</span>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">Conmemoraciones</span>
                         </div>
 
                         <!-- Hotspot 4: Vereda La Esperanza -->
@@ -503,7 +526,7 @@
                             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-charcoal-800 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
                                 <i class="fa-solid fa-bookmark text-sm"></i>
                             </div>
-                            <span class="absolute bottom-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">4. Marcas de Memoria</span>
+                            <span class="absolute bottom-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">Marcas de Memoria</span>
                         </div>
                     </div>
                 </div>
@@ -525,7 +548,7 @@
             <!-- Header -->
             <div class="mb-12 text-center">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 04</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">5. Tres Formas de Recordar 🗂️</h2>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">Tres Formas de Recordar 🗂️</h2>
                 <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">
                     Categorías de análisis para interpretar la memoria sin separarla del sustento teórico pedagógico.
                 </p>
@@ -623,7 +646,7 @@
             <!-- Header -->
             <div class="mb-12 text-center">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 05 • Rubrica Curricular</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">6. La Memoria También se Disputa ⚖️</h2>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">La Memoria También se Disputa ⚖️</h2>
                 <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">Mapa conceptual de tensiones dialécticas que enriquecen el debate académico.</p>
             </div>
 
@@ -784,7 +807,7 @@
             <!-- Header -->
             <div class="mb-12 text-center">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 06</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">8. La Esperanza Más Allá de la Violencia 🌱</h2>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">La Esperanza Más Allá de la Violencia 🌱</h2>
                 <p class="font-serif italic text-xl text-terracotta-600 mt-2">¿Qué más cuenta esta historia además del conflicto armado?</p>
             </div>
 
@@ -831,6 +854,39 @@
                 </figure>
             </div>
 
+            <!-- Featured documentary: facade avoids loading the YouTube player until requested -->
+            <div class="bg-olive-900 rounded-3xl overflow-hidden shadow-xl mb-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                    <div id="doc-video-frame" class="lg:col-span-7 relative aspect-video bg-charcoal-900">
+                        <button type="button" onclick="loadFeaturedDocumentary()" aria-label="Reproducir el documental #QueNoMueraLaEsperanza" class="group absolute inset-0 w-full h-full cursor-pointer">
+                            <img src="https://i.ytimg.com/vi/7N52aJab0IE/sddefault.jpg" alt="Fotograma del documental #QueNoMueraLaEsperanza" referrerpolicy="no-referrer" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            <span class="absolute inset-0 bg-charcoal-900/45 group-hover:bg-charcoal-900/25 transition"></span>
+                            <span class="absolute inset-0 flex items-center justify-center">
+                                <span class="w-16 h-16 rounded-full bg-terracotta-600 text-white flex items-center justify-center text-2xl shadow-lg ring-4 ring-white/20 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-center text-cream-100">
+                        <span class="text-xs font-bold uppercase tracking-widest text-brass-400">Documental Comunitario</span>
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold mt-2 leading-snug">#QueNoMueraLaEsperanza</h3>
+                        <p class="font-serif italic text-lg text-brass-400 mt-1">28 años de resistencia y búsqueda por la verdad</p>
+                        <p class="text-sm text-cream-200 mt-4 leading-relaxed">
+                            El registro audiovisual del proceso: las familias de La Esperanza narran en primera persona su búsqueda sostenida desde 1996. Es una muestra de que la comunidad produce su propio archivo sobre verdad, justicia y memoria.
+                        </p>
+                        <div class="mt-6 flex flex-wrap items-center gap-4">
+                            <a href="https://www.youtube.com/watch?v=7N52aJab0IE" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-brass-500 text-charcoal-900 text-xs font-bold hover:bg-brass-400 transition">
+                                <i class="fa-brands fa-youtube"></i>
+                                <span>Ver en YouTube</span>
+                            </a>
+                            <span class="text-[11px] text-cream-300">Fuente: Corporación Jurídica Libertad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Pillars Bar -->
             <div class="bg-cream-100 p-8 rounded-2xl border border-cream-300">
                 <span class="text-xs uppercase font-bold text-gray-500 block text-center mb-6">Respuestas Fundamentales del Caso</span>
@@ -851,7 +907,7 @@
             <!-- Header -->
             <div class="mb-12 text-center">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 07</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">9. Tres Voces — Una Memoria en Construcción 🗣️</h2>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">Tres Voces — Una Memoria en Construcción 🗣️</h2>
                 <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">Tres reflexiones convergentes desde las dimensiones del estudio.</p>
             </div>
 
@@ -1067,6 +1123,52 @@
         </div>
     </div>
 
+    <!-- MODAL: FICHA TÉCNICA CORTE IDH -->
+    <div id="ficha-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-start justify-between border-b border-cream-300 pb-4 gap-4">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest font-bold text-terracotta-600">Archivo oficial · Corte Interamericana de Derechos Humanos</span>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-olive-900 mt-1">Ficha técnica: Vereda La Esperanza Vs. Colombia</h3>
+                </div>
+                <button type="button" onclick="closeFichaModal()" class="text-gray-400 hover:text-charcoal-800 text-2xl leading-none">&times;</button>
+            </div>
+
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 rounded-xl bg-cream-100 border border-cream-300">
+                    <dt class="uppercase tracking-wider font-bold text-olive-800">Estado demandado</dt>
+                    <dd class="text-charcoal-800 mt-1">Colombia</dd>
+                </div>
+                <div class="p-3 rounded-xl bg-cream-100 border border-cream-300">
+                    <dt class="uppercase tracking-wider font-bold text-olive-800">Sentencia</dt>
+                    <dd class="text-charcoal-800 mt-1">31 de agosto de 2017</dd>
+                </div>
+            </dl>
+
+            <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 rounded-full bg-olive-100 text-olive-800 text-[11px] font-semibold">Conflicto armado interno</span>
+                <span class="px-2.5 py-1 rounded-full bg-olive-100 text-olive-800 text-[11px] font-semibold">Desaparición forzada</span>
+                <span class="px-2.5 py-1 rounded-full bg-olive-100 text-olive-800 text-[11px] font-semibold">Ejecución extrajudicial</span>
+                <span class="px-2.5 py-1 rounded-full bg-olive-100 text-olive-800 text-[11px] font-semibold">Impunidad</span>
+            </div>
+
+            <div class="text-sm text-charcoal-800 leading-relaxed space-y-3">
+                <h4 class="font-serif text-lg font-bold text-olive-900">Sumilla</h4>
+                <p>El caso se relaciona con la desaparición forzada de 14 personas, incluyendo tres niños, y la ejecución de otra persona, así como la privación de la libertad de un niño, ocurridas en la Vereda La Esperanza del municipio de El Carmen de Viboral, Departamento de Antioquia, entre el 21 de junio y el 27 de diciembre de 1996.</p>
+                <p>Se alega que oficiales de las Fuerzas Armadas colombianas habrían coordinado con miembros del grupo paramilitar denominado Autodefensas del Magdalena Medio las distintas incursiones a la vereda, debido a que las presuntas víctimas eran percibidas como simpatizantes o colaboradoras de grupos guerrilleros que operaban en la zona.</p>
+                <p>Adicionalmente, según se alega, los hechos se encontrarían en la impunidad en tanto la investigación en el proceso penal ordinario y bajo la Ley de Justicia y Paz no habría sido diligente y no se habría sancionado a ninguno de los responsables de los hechos.</p>
+            </div>
+
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-cream-200">
+                <a href="https://www.corteidh.or.cr/ver_ficha_tecnica.cfm?nId_Ficha=427&lang=es" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-olive-800 text-white text-xs font-bold hover:bg-olive-900 transition">
+                    <i class="fa-solid fa-up-right-from-square"></i>
+                    <span>Consultar ficha en la Corte IDH</span>
+                </a>
+                <button type="button" onclick="closeFichaModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-gray-600 bg-cream-200 hover:bg-cream-300">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL 3: CATEGORY DEEP-DIVE MODAL (3 FORMAS DE RECORDAR) -->
     <div id="category-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
@@ -1273,6 +1375,23 @@
 
         document.getElementById('ambient-audio-btn').addEventListener('click', toggleAmbientAudio);
 
+        function loadFeaturedDocumentary() {
+            if (isAudioPlaying) {
+                toggleAmbientAudio();
+            }
+
+            const frame = document.getElementById('doc-video-frame');
+            const iframe = document.createElement('iframe');
+
+            iframe.className = 'absolute inset-0 w-full h-full';
+            iframe.src = 'https://www.youtube.com/embed/7N52aJab0IE?autoplay=1&rel=0';
+            iframe.title = '#QueNoMueraLaEsperanza: 28 años de resistencia y búsqueda por la verdad';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.allowFullscreen = true;
+
+            frame.replaceChildren(iframe);
+        }
+
         (function loadAmbientAudioApi() {
             const tag = document.createElement('script');
             tag.src = 'https://www.youtube.com/iframe_api';
@@ -1360,6 +1479,80 @@
             card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
+        const archivePhotos = [
+            { src: 'https://picsum.photos/id/1015/1200/750', kicker: 'Placeholder 1', caption: 'Comunidad de la vereda La Esperanza' },
+            { src: 'https://picsum.photos/id/1018/1200/750', kicker: 'Placeholder 2', caption: 'Familiares en actividades de memoria' },
+            { src: 'https://picsum.photos/id/1036/1200/750', kicker: 'Placeholder 3', caption: 'Acto de reconocimiento y conmemoración' },
+            { src: 'https://picsum.photos/id/1043/1200/750', kicker: 'Placeholder 4', caption: 'Territorio y paisaje del corregimiento' },
+            { src: 'https://picsum.photos/id/1050/1200/750', kicker: 'Placeholder 5', caption: 'Expresiones culturales de la memoria' }
+        ];
+        let archivePhotoIndex = 0;
+
+        function initArchiveCarousel() {
+            const track = document.getElementById('archive-carousel-track');
+            const dots = document.getElementById('archive-photo-dots');
+            if (!track || !dots) return;
+
+            track.innerHTML = archivePhotos.map((photo, i) => `
+                <button type="button" class="archive-slide absolute inset-0 ${i === 0 ? 'is-active' : ''}" data-archive-index="${i}" onclick="openImageModal('${photo.src}', '${photo.caption}')" aria-label="Ampliar: ${photo.caption}">
+                    <img src="${photo.src}" alt="${photo.caption}" loading="${i === 0 ? 'eager' : 'lazy'}" class="w-full h-full object-cover">
+                </button>
+            `).join('');
+
+            dots.innerHTML = archivePhotos.map((_, i) => `
+                <button type="button" class="w-2.5 h-2.5 rounded-full transition ${i === 0 ? 'bg-terracotta-600 scale-110' : 'bg-cream-300 hover:bg-brass-400'}" data-archive-dot="${i}" onclick="goToArchivePhoto(${i})" aria-label="Ir a la fotografía ${i + 1}"></button>
+            `).join('');
+
+            renderArchiveCarousel();
+            bindArchiveCarouselSwipe(track);
+        }
+
+        function renderArchiveCarousel() {
+            document.querySelectorAll('.archive-slide').forEach((slide, i) => {
+                slide.classList.toggle('is-active', i === archivePhotoIndex);
+            });
+            document.querySelectorAll('[data-archive-dot]').forEach((dot, i) => {
+                const active = i === archivePhotoIndex;
+                dot.classList.toggle('bg-terracotta-600', active);
+                dot.classList.toggle('scale-110', active);
+                dot.classList.toggle('bg-cream-300', !active);
+            });
+            document.getElementById('archive-photo-count').innerText = `${archivePhotoIndex + 1} / ${archivePhotos.length}`;
+            document.getElementById('archive-photo-kicker').innerText = archivePhotos[archivePhotoIndex].kicker;
+            document.getElementById('archive-photo-caption').innerText = archivePhotos[archivePhotoIndex].caption;
+        }
+
+        function goToArchivePhoto(index) {
+            archivePhotoIndex = (index + archivePhotos.length) % archivePhotos.length;
+            renderArchiveCarousel();
+        }
+
+        function stepArchiveCarousel(direction) {
+            goToArchivePhoto(archivePhotoIndex + direction);
+        }
+
+        function bindArchiveCarouselSwipe(track) {
+            let startX = 0;
+            let swiped = false;
+            track.addEventListener('pointerdown', (event) => {
+                startX = event.clientX;
+                swiped = false;
+            });
+            track.addEventListener('pointerup', (event) => {
+                const delta = event.clientX - startX;
+                if (Math.abs(delta) < 40) return;
+                swiped = true;
+                stepArchiveCarousel(delta < 0 ? 1 : -1);
+            });
+            track.addEventListener('click', (event) => {
+                if (swiped) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    swiped = false;
+                }
+            }, true);
+        }
+
         function openImageModal(src, caption) {
             document.getElementById('image-modal-src').src = src;
             document.getElementById('image-modal-caption').innerText = caption;
@@ -1368,6 +1561,14 @@
 
         function closeImageModal() {
             document.getElementById('image-modal').classList.add('hidden');
+        }
+
+        function openFichaModal() {
+            document.getElementById('ficha-modal').classList.remove('hidden');
+        }
+
+        function closeFichaModal() {
+            document.getElementById('ficha-modal').classList.add('hidden');
         }
 
         function openVideoModal(videoKey) {
@@ -1430,6 +1631,7 @@
         window.onload = function() {
             updateDOMWithSettings();
             selectTimelineNode(1);
+            initArchiveCarousel();
 
             // Mobile menu toggle logic
             document.getElementById('mobile-menu-btn').addEventListener('click', function() {
