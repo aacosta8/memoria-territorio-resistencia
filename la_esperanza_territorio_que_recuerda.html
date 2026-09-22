@@ -421,7 +421,7 @@
                         <div class="mt-5">
                             <div class="flex items-center justify-between mb-2">
                                 <h4 class="font-serif text-lg font-bold text-olive-900">Registro fotográfico</h4>
-                                <span id="archive-photo-count" class="text-[10px] uppercase tracking-widest font-bold text-terracotta-600">1 / 5</span>
+                                <span id="archive-photo-count" class="text-[10px] uppercase tracking-widest font-bold text-terracotta-600">1 / 6</span>
                             </div>
                             <div class="relative rounded-2xl overflow-hidden border border-cream-300 bg-olive-900 aspect-[16/10]">
                                 <div id="archive-carousel-track" class="absolute inset-0"></div>
@@ -432,8 +432,8 @@
                                     <i class="fa-solid fa-chevron-right text-xs"></i>
                                 </button>
                                 <div class="absolute inset-x-0 bottom-0 z-10 p-4 media-scrim pointer-events-none">
-                                    <span id="archive-photo-kicker" class="block text-[10px] font-bold uppercase tracking-widest text-brass-400">Placeholder</span>
-                                    <p id="archive-photo-caption" class="font-serif text-base font-bold text-white mt-0.5 leading-snug"></p>
+                                    <p id="archive-photo-title" class="font-serif text-base font-bold text-white leading-snug"></p>
+                                    <p id="archive-photo-caption" class="text-[11px] text-cream-100/90 mt-1 leading-snug"></p>
                                 </div>
                             </div>
                             <div id="archive-photo-dots" class="flex justify-center gap-2 mt-3"></div>
@@ -830,7 +830,7 @@
                 </figure>
 
                 <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-sm border border-cream-300">
-                    <img src="https://www.cancilleria.gov.co/sites/default/files/mi.jpg" alt="Jóvenes de la comunidad en actividades de memoria" referrerpolicy="no-referrer" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                    <img src="images/archivo/mi.jpg" alt="Jóvenes de la comunidad en actividades de memoria" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 media-scrim pointer-events-none"></div>
                     <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
                         <span class="block text-[11px] font-bold uppercase tracking-widest text-brass-400">Nuevas Generaciones</span>
@@ -840,7 +840,7 @@
                 </figure>
 
                 <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-sm border border-cream-300">
-                    <img src="https://www.cancilleria.gov.co/sites/default/files/me.jpg" alt="Retrato y flores en el acto de reconocimiento de responsabilidad del Estado" referrerpolicy="no-referrer" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                    <img src="images/archivo/me.jpg" alt="Retrato y flores en el acto de reconocimiento de responsabilidad del Estado" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 media-scrim pointer-events-none"></div>
                     <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
                         <span class="block text-[11px] font-bold uppercase tracking-widest text-brass-400">Encuentro Vivo</span>
@@ -1486,11 +1486,36 @@
         }
 
         const archivePhotos = [
-            { src: 'https://picsum.photos/id/1015/1200/750', kicker: 'Placeholder 1', caption: 'Comunidad de la vereda La Esperanza' },
-            { src: 'https://picsum.photos/id/1018/1200/750', kicker: 'Placeholder 2', caption: 'Familiares en actividades de memoria' },
-            { src: 'https://picsum.photos/id/1036/1200/750', kicker: 'Placeholder 3', caption: 'Acto de reconocimiento y conmemoración' },
-            { src: 'https://picsum.photos/id/1043/1200/750', kicker: 'Placeholder 4', caption: 'Territorio y paisaje del corregimiento' },
-            { src: 'https://picsum.photos/id/1050/1200/750', kicker: 'Placeholder 5', caption: 'Expresiones culturales de la memoria' }
+            {
+                src: 'images/archivo/mo.jpg',
+                title: 'Que no muera La Esperanza',
+                caption: 'Retrato de un joven desaparecido sobre un altar de flores blancas, con la consigna escrita a mano frente a la imagen.'
+            },
+            {
+                src: 'images/archivo/escuela-vereda.jpg',
+                title: 'Encuentro en la escuela rural',
+                caption: 'Familias, líderes y niñez posan en el patio de una escuela de la vereda, frente a aulas de techo de zinc y ladera sembrada.'
+            },
+            {
+                src: 'images/archivo/entrega-retratos.jpg',
+                title: 'Entrega de retratos',
+                caption: 'Acto público en un escenario: familiares y autoridades sostienen retratos enmarcados de las personas desaparecidas.'
+            },
+            {
+                src: 'images/archivo/marcha-autopista.jpg',
+                title: 'Marcha sobre la autopista',
+                caption: 'Movilización en la vía: pancartas verdes forman letra a letra la consigna «Que no muera La Esperanza».'
+            },
+            {
+                src: 'images/archivo/casa-campesina.jpg',
+                title: 'Casa campesina de la vereda',
+                caption: 'Vivienda rural de muros amarillos, puertas de madera y corredor de postes: huella cotidiana del territorio campesino.'
+            },
+            {
+                src: 'images/archivo/galeria-desaparecidos.jpg',
+                title: 'Galería de los desaparecidos',
+                caption: 'Puesto de memoria a orilla de la vía: fotografías de detenidos-desaparecidos, pinturas y el llamado «Nunca más desaparecidos».'
+            }
         ];
         let archivePhotoIndex = 0;
 
@@ -1500,8 +1525,8 @@
             if (!track || !dots) return;
 
             track.innerHTML = archivePhotos.map((photo, i) => `
-                <button type="button" class="archive-slide absolute inset-0 ${i === 0 ? 'is-active' : ''}" data-archive-index="${i}" onclick="openImageModal('${photo.src}', '${photo.caption}')" aria-label="Ampliar: ${photo.caption}">
-                    <img src="${photo.src}" alt="${photo.caption}" loading="${i === 0 ? 'eager' : 'lazy'}" class="w-full h-full object-cover">
+                <button type="button" class="archive-slide absolute inset-0 ${i === 0 ? 'is-active' : ''}" data-archive-index="${i}" onclick="openImageModal('${photo.src}', '${photo.title}. ${photo.caption}')" aria-label="Ampliar: ${photo.title}">
+                    <img src="${photo.src}" alt="${photo.title}. ${photo.caption}" loading="${i === 0 ? 'eager' : 'lazy'}" class="w-full h-full object-cover">
                 </button>
             `).join('');
 
@@ -1524,7 +1549,7 @@
                 dot.classList.toggle('bg-cream-300', !active);
             });
             document.getElementById('archive-photo-count').innerText = `${archivePhotoIndex + 1} / ${archivePhotos.length}`;
-            document.getElementById('archive-photo-kicker').innerText = archivePhotos[archivePhotoIndex].kicker;
+            document.getElementById('archive-photo-title').innerText = archivePhotos[archivePhotoIndex].title;
             document.getElementById('archive-photo-caption').innerText = archivePhotos[archivePhotoIndex].caption;
         }
 
