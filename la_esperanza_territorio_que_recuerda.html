@@ -250,7 +250,7 @@
             <div class="mb-12 text-center sm:text-left">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 01</span>
                 <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">Entramos al Territorio 🗺️</h2>
-                <p class="text-charcoal-800 mt-2 max-w-2xl">Georreferenciación, origen geográfico y primeras preguntas de sentido.</p>
+                <p class="text-charcoal-800 mt-2 max-w-2xl">Este territorio no es solamente el escenario de unos hechos de violencia: está habitado, recorrido y recordado. ¿Cómo se construye y se transmite la memoria de un territorio que todavía tiene preguntas abiertas?</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -297,24 +297,17 @@
 
                 <!-- Video 1 Container & Text -->
                 <div class="lg:col-span-6 space-y-6">
-                    <div class="bg-charcoal-900 rounded-2xl overflow-hidden shadow-xl aspect-video relative group flex items-center justify-center">
-                        <!-- Video iFrame / Container -->
-                        <div id="video1-wrapper" class="w-full h-full">
-                            <iframe id="iframe-video-1" class="w-full h-full hidden" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            
-                            <!-- Placeholder if no video set -->
-                            <div id="video1-placeholder" class="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-olive-900 to-charcoal-900 text-white">
-                                <div class="w-16 h-16 rounded-full bg-terracotta-600/30 border border-terracotta-500 flex items-center justify-center text-terracotta-500 text-2xl mb-4 group-hover:scale-110 transition">
-                                    <i class="fa-solid fa-play ml-1"></i>
-                                </div>
-                                <span class="text-xs uppercase tracking-widest text-brass-400 font-bold mb-1">Video 1 (20–30 seg)</span>
-                                <h4 class="font-serif text-xl font-bold text-cream-100 mb-2">Presentación de Lina Maria Garcia Gomez</h4>
-                                <p class="text-xs text-cream-300 max-w-sm mb-4">¿Dónde queda La Esperanza, por qué su ubicación fue estratégica durante el conflicto armado de los años noventa y por qué hoy es objeto de estudio pedagógico?</p>
-                                <button onclick="openVideoModal('video1')" class="px-4 py-2 text-xs rounded-full bg-brass-500 text-charcoal-900 font-bold hover:bg-brass-400 transition">
-                                    Cargar/Ver Video
-                                </button>
+                    <div id="video1-wrapper" data-video-key="video1" class="bg-charcoal-900 rounded-2xl overflow-hidden shadow-xl aspect-video relative group">
+                        <iframe id="iframe-video1" class="absolute inset-0 w-full h-full hidden" src="" title="La Esperanza: un territorio que recuerda" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                        <button type="button" id="video1-placeholder" onclick="openVideoModal('video1')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center text-white">
+                            <div class="w-16 h-16 rounded-full bg-terracotta-600/40 border border-terracotta-500 flex items-center justify-center text-cream-100 text-2xl mb-4 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-1"></i>
                             </div>
-                        </div>
+                            <span class="text-xs uppercase tracking-widest text-brass-400 font-bold mb-1">Video 1 · Territorio</span>
+                            <h4 class="font-serif text-xl font-bold text-cream-100 mb-2">La Esperanza: un territorio que recuerda</h4>
+                            <p class="text-xs text-cream-200 max-w-sm">Los invitamos a recorrer La Esperanza desde sus memorias, sus búsquedas y sus voces.</p>
+                        </button>
                     </div>
 
                     <div class="bg-cream-100 p-6 rounded-2xl border border-cream-300 text-sm leading-relaxed text-charcoal-800">
@@ -370,9 +363,9 @@
 
                     <!-- Timeline Item 4 -->
                     <div onclick="selectTimelineNode(4)" id="timeline-node-4" class="timeline-card cursor-pointer p-5 rounded-2xl bg-white border-2 border-transparent hover:border-brass-500 shadow-sm transition hover:-translate-y-1">
-                        <span class="inline-block px-2.5 py-1 rounded bg-brass-400/20 text-brass-600 font-bold text-xs mb-2">Reparación</span>
+                        <span class="inline-block px-2.5 py-1 rounded bg-brass-400/20 text-brass-600 font-bold text-xs mb-2">2024</span>
                         <h3 class="font-serif font-bold text-lg text-olive-900">Reconocimiento</h3>
-                        <p class="text-xs text-gray-600 mt-1">El Estado pide perdón públicamente y dignifica el nombre de las personas desaparecidas.</p>
+                        <p class="text-xs text-gray-600 mt-1">Acto público de reconocimiento de responsabilidad del Estado. La historia no termina en una fecha.</p>
                     </div>
 
                     <!-- Timeline Item 5 -->
@@ -450,23 +443,24 @@
                 <!-- Video Interrogation Box -->
                 <div class="lg:col-span-5 lg:sticky lg:top-24 bg-olive-900 text-white p-6 sm:p-8 rounded-2xl shadow-lg space-y-6">
                     <div>
-                        <span class="inline-block px-3 py-1 rounded-full bg-brass-500/20 text-brass-400 text-xs font-bold uppercase mb-4">Video de Reflexión</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-brass-500/20 text-brass-400 text-xs font-bold uppercase mb-4">Video 2 · Historia</span>
                         <blockquote class="font-serif italic text-2xl leading-snug mb-4 text-cream-100">
-                            "¿Qué ocurrió y por qué no podemos reducir esta historia únicamente a la violencia?"
+                            Una historia que sigue presente
                         </blockquote>
                         <p class="text-xs text-cream-300 leading-relaxed">
-                            Los 17 desaparecidos son también el punto de partida de un proceso de búsqueda, organización y denuncia liderado por sus familias durante más de treinta años. Reducir el caso a 1996 invisibiliza esa agencia comunitaria.
+                            En 1996 ocurrieron los asesinatos y las desapariciones. En 2017 llegó la sentencia de la Corte IDH y en 2024 el reconocimiento del Estado. Pero esta historia no termina en una fecha: la memoria continúa en las familias, en el territorio y en las nuevas generaciones.
                         </p>
                     </div>
 
-                    <div id="video2-wrapper" class="w-full bg-charcoal-900 rounded-xl overflow-hidden aspect-video flex items-center justify-center border border-olive-800">
-                        <iframe id="iframe-video-2" class="w-full h-full hidden" src="" frameborder="0" allowfullscreen></iframe>
-                        <div id="video2-placeholder" class="text-center p-4">
-                            <button onclick="openVideoModal('video2')" class="px-5 py-2.5 rounded-full bg-terracotta-600 text-white font-bold text-xs hover:bg-terracotta-700 transition flex items-center space-x-2 mx-auto">
-                                <i class="fa-solid fa-circle-play text-base"></i>
-                                <span>Reproducir Intervención</span>
-                            </button>
-                        </div>
+                    <div id="video2-wrapper" data-video-key="video2" class="w-full bg-charcoal-900 rounded-xl overflow-hidden aspect-video relative group border border-olive-800">
+                        <iframe id="iframe-video2" class="absolute inset-0 w-full h-full hidden" src="" title="Una historia que sigue presente" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <button type="button" id="video2-placeholder" onclick="openVideoModal('video2')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-4 text-center">
+                            <div class="w-14 h-14 rounded-full bg-terracotta-600/40 border border-terracotta-500 flex items-center justify-center text-cream-100 text-xl mb-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-0.5"></i>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-widest text-brass-400 font-bold">Video 2 · Historia</span>
+                            <p class="font-serif text-sm font-bold text-cream-100 mt-1">Una historia que sigue presente</p>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -560,11 +554,15 @@
                 <!-- Card A: Ausencia y Pérdida -->
                 <div class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden flex flex-col justify-between transition hover:shadow-md">
                     <div class="p-6">
-                        <div class="w-12 h-12 rounded-xl bg-terracotta-100 text-terracotta-600 flex items-center justify-center text-xl font-bold mb-4">
-                            🥀
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 shrink-0 rounded-xl bg-terracotta-100 text-terracotta-600 flex items-center justify-center text-xl font-bold">
+                                🥀
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-terracotta-600 uppercase tracking-wider">Categoría A</span>
+                                <h3 class="font-serif text-2xl font-bold text-olive-900 leading-tight">Ausencia y Pérdida</h3>
+                            </div>
                         </div>
-                        <span class="text-xs font-bold text-terracotta-600 uppercase tracking-wider">Categoría A</span>
-                        <h3 class="font-serif text-2xl font-bold text-olive-900 mt-1">Ausencia y Pérdida</h3>
                         <p class="text-xs text-gray-600 mt-3 leading-relaxed">
                             La desaparición produjo una ausencia particular: sin cuerpo, cierre del duelo ni certeza sobre el destino de la persona. Esa ausencia se instaló en la geografía cotidiana de los caminos y sembrados.
                         </p>
@@ -587,11 +585,15 @@
                 <!-- Card B: Búsqueda -->
                 <div class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden flex flex-col justify-between transition hover:shadow-md">
                     <div class="p-6">
-                        <div class="w-12 h-12 rounded-xl bg-brass-400/20 text-brass-600 flex items-center justify-center text-xl font-bold mb-4">
-                            🔍
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 shrink-0 rounded-xl bg-brass-400/20 text-brass-600 flex items-center justify-center text-xl font-bold">
+                                🔍
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-brass-600 uppercase tracking-wider">Categoría B</span>
+                                <h3 class="font-serif text-2xl font-bold text-olive-900 leading-tight">Búsqueda</h3>
+                            </div>
                         </div>
-                        <span class="text-xs font-bold text-brass-600 uppercase tracking-wider">Categoría B</span>
-                        <h3 class="font-serif text-2xl font-bold text-olive-900 mt-1">Búsqueda</h3>
                         <p class="text-xs text-gray-600 mt-3 leading-relaxed">
                             Flor Gallego, Cémida Cardona y Cruz Hernández lideraron con las familias un proceso de denuncia y búsqueda que llevó el caso hasta la Comisión y la Corte Interamericana de Derechos Humanos.
                         </p>
@@ -614,11 +616,15 @@
                 <!-- Card C: Transmisión Intergeneracional -->
                 <div class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden flex flex-col justify-between transition hover:shadow-md">
                     <div class="p-6">
-                        <div class="w-12 h-12 rounded-xl bg-olive-100 text-olive-800 flex items-center justify-center text-xl font-bold mb-4">
-                            🌱
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 shrink-0 rounded-xl bg-olive-100 text-olive-800 flex items-center justify-center text-xl font-bold">
+                                🌱
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-olive-800 uppercase tracking-wider">Categoría C</span>
+                                <h3 class="font-serif text-2xl font-bold text-olive-900 leading-tight">Transmisión Intergeneracional</h3>
+                            </div>
                         </div>
-                        <span class="text-xs font-bold text-olive-800 uppercase tracking-wider">Categoría C</span>
-                        <h3 class="font-serif text-2xl font-bold text-olive-900 mt-1">Transmisión Intergeneracional</h3>
                         <p class="text-xs text-gray-600 mt-3 leading-relaxed">
                             Hijos y nietos reelaboran activamente el legado mediante conmemoraciones y expresiones como la obra de teatro realizada en los 20 años de los hechos.
                         </p>
@@ -636,6 +642,48 @@
                     <button onclick="openCategoryModal('transmision')" class="w-full py-3 bg-cream-200 hover:bg-olive-800 hover:text-white text-olive-900 font-bold text-xs tracking-wider uppercase transition">
                         Explorar Transmisión ➔
                     </button>
+                </div>
+            </div>
+
+            <!-- Video strip: keeps the three category cards symmetrical -->
+            <div class="mt-12">
+                <div class="text-center mb-6">
+                    <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Videos del eje memoria</span>
+                    <h3 class="font-serif text-2xl font-bold text-olive-900 mt-1">Buscar también ha sido recordar</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <figure class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden">
+                        <div id="video3-wrapper" data-video-key="video3" class="w-full bg-charcoal-900 aspect-video relative group">
+                            <iframe id="iframe-video3" class="absolute inset-0 w-full h-full hidden" src="" title="La memoria de la búsqueda" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <button type="button" id="video3-placeholder" onclick="openVideoModal('video3')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-4 text-center">
+                                <div class="w-14 h-14 rounded-full bg-brass-500/30 border border-brass-400 flex items-center justify-center text-cream-100 mb-3 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </div>
+                                <span class="text-[10px] uppercase tracking-widest text-brass-400 font-bold">Video 3 · Categoría B</span>
+                                <p class="font-serif text-lg font-bold text-cream-100 mt-1 leading-snug">La memoria de la búsqueda</p>
+                            </button>
+                        </div>
+                        <figcaption class="p-5 text-xs text-gray-600 leading-relaxed">
+                            Nombrar a quienes faltan, exigir verdad y participar en conmemoraciones son formas de construir memoria: algo que la comunidad produce y mantiene vivo.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden">
+                        <div id="video4-wrapper" data-video-key="video4" class="w-full bg-charcoal-900 aspect-video relative group">
+                            <iframe id="iframe-video4" class="absolute inset-0 w-full h-full hidden" src="" title="Una memoria que pasa de generación en generación" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <button type="button" id="video4-placeholder" onclick="openVideoModal('video4')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-4 text-center">
+                                <div class="w-14 h-14 rounded-full bg-brass-500/30 border border-brass-400 flex items-center justify-center text-cream-100 mb-3 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </div>
+                                <span class="text-[10px] uppercase tracking-widest text-brass-400 font-bold">Video 4 · Categoría C</span>
+                                <p class="font-serif text-lg font-bold text-cream-100 mt-1 leading-snug">Una memoria que pasa de generación en generación</p>
+                            </button>
+                        </div>
+                        <figcaption class="p-5 text-xs text-gray-600 leading-relaxed">
+                            ¿Qué ocurre cuando una generación recibe una historia que no vivió directamente? Cada generación puede recibir el pasado, pero también construir nuevos sentidos sobre él.
+                        </figcaption>
+                    </figure>
                 </div>
             </div>
         </div>
@@ -699,25 +747,30 @@
                     </div>
                 </div>
 
-                <!-- Video 3 Container & Reflection Sheet -->
-                <div class="lg:col-span-5 bg-terracotta-700 text-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between shadow-lg">
+                <!-- Reflection Sheet -->
+                <div class="lg:col-span-5 bg-terracotta-700 text-white p-6 sm:p-8 rounded-2xl shadow-lg space-y-6">
                     <div>
-                        <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase mb-4">Video de Debate 2</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase mb-4">Pregunta de debate</span>
                         <blockquote class="font-serif italic text-2xl leading-snug mb-4">
                             “¿Qué ocurre cuando una memoria comunitaria entra al espacio educativo?”
                         </blockquote>
-                        <p class="text-xs text-white/90 leading-relaxed mb-6">
-                            Pregunta provocadora a cargo de la integrante 2 para analizar los riesgos de neutralización pedagógica.
+                        <p class="text-xs text-white/90 leading-relaxed">
+                            Educar sobre la memoria de La Esperanza no debería significar convertir el dolor de la comunidad en un contenido escolar cerrado. La pregunta permite analizar los riesgos de neutralización pedagógica.
                         </p>
                     </div>
 
-                    <div id="video3-wrapper" class="w-full bg-charcoal-900 rounded-xl overflow-hidden aspect-video flex items-center justify-center border border-terracotta-600">
-                        <iframe id="iframe-video-3" class="w-full h-full hidden" src="" frameborder="0" allowfullscreen></iframe>
-                        <div id="video3-placeholder" class="text-center p-4">
-                            <button onclick="openVideoModal('video3')" class="px-5 py-2.5 rounded-full bg-white text-terracotta-700 font-bold text-xs hover:bg-cream-100 transition flex items-center space-x-2 mx-auto shadow">
-                                <i class="fa-solid fa-play text-base"></i>
-                                <span>Ver Video de Debate</span>
-                            </button>
+                    <div class="pt-5 border-t border-white/20 space-y-3">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-brass-400 mt-0.5"></i>
+                            <p class="text-xs text-white/90 leading-relaxed">Reconocer los testimonios, documentos y fotografías de la comunidad como fuentes de conocimiento.</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-brass-400 mt-0.5"></i>
+                            <p class="text-xs text-white/90 leading-relaxed">Crear espacios para escuchar esa memoria, interrogarla y comprenderla críticamente.</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-brass-400 mt-0.5"></i>
+                            <p class="text-xs text-white/90 leading-relaxed">Evitar reducir el caso a una cronología de violencia que desconozca a la comunidad como sujeto que produce conocimiento.</p>
                         </div>
                     </div>
                 </div>
@@ -731,15 +784,30 @@
             <div class="mb-12 text-center">
                 <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 06</span>
                 <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">¿Qué puede hacer la educación? 🎓</h2>
+                <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">La pregunta ya no es solamente cómo transmitir una historia, sino cómo crear espacios para escucharla, interrogarla y comprenderla críticamente.</p>
             </div>
 
             <!-- Central Thesis Visual Banner -->
-            <div class="bg-gradient-to-r from-olive-900 via-olive-800 to-olive-900 text-white p-8 sm:p-12 rounded-3xl shadow-xl text-center mb-16 relative overflow-hidden">
+            <div class="bg-gradient-to-r from-olive-900 via-olive-800 to-olive-900 text-white p-8 sm:p-12 rounded-3xl shadow-xl text-center mb-10 relative overflow-hidden">
                 <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-serif">🎓</div>
                 <span class="text-xs font-bold uppercase tracking-widest text-brass-400 block mb-3">Tesis Central de la Propuesta Pedagógica</span>
                 <p class="font-serif text-3xl sm:text-5xl font-bold leading-tight max-w-4xl mx-auto text-cream-100">
                     “La comunidad no es objeto de memoria: es productora de memoria y conocimiento.”
                 </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto mb-16">
+                <div id="video5-wrapper" data-video-key="video5" class="w-full bg-charcoal-900 rounded-2xl overflow-hidden aspect-video relative group shadow-xl">
+                    <iframe id="iframe-video5" class="absolute inset-0 w-full h-full hidden" src="" title="¿Qué puede hacer la educación con esta memoria?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <button type="button" id="video5-placeholder" onclick="openVideoModal('video5')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center">
+                        <div class="w-16 h-16 rounded-full bg-brass-500/30 border border-brass-400 flex items-center justify-center text-cream-100 text-2xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest text-brass-400 font-bold mb-1">Video 5 · Educación</span>
+                        <h3 class="font-serif text-2xl font-bold text-cream-100 mb-2">¿Qué puede hacer la educación con esta memoria?</h3>
+                        <p class="text-xs text-cream-200 max-w-md">Educar no debería convertir el dolor de la comunidad en un contenido escolar cerrado. Implica reconocer sus testimonios, documentos, fotografías y territorio como fuentes de conocimiento.</p>
+                    </button>
+                </div>
             </div>
 
             <div class="text-center mb-10">
@@ -931,15 +999,8 @@
                         </div>
 
                         <blockquote class="font-serif italic text-lg text-charcoal-800 mb-4 leading-relaxed">
-                            Los caminos y sembrados dejaron de ser solo geografía para convertirse en huellas de lo ocurrido y de cómo la comunidad resistió, transformando la autopista Medellín-Bogotá de ruta de violencia a territorio de memoria.
+                            La Esperanza es un territorio que conserva huellas, pero también historias de organización y resistencia. Su memoria no está terminada: continúa construyéndose en las familias, en la comunidad y entre generaciones.
                         </blockquote>
-                    </div>
-
-                    <div id="voice1-video-box" class="mt-4 aspect-video bg-charcoal-900 rounded-xl overflow-hidden relative flex items-center justify-center">
-                        <iframe id="iframe-voice-1" class="w-full h-full hidden" src="" frameborder="0" allowfullscreen></iframe>
-                        <button onclick="openVideoModal('voice1')" class="px-4 py-2 rounded-full bg-brass-500 text-charcoal-900 font-bold text-xs hover:bg-brass-400 transition">
-                            Ver Intervención (20s)
-                        </button>
                     </div>
                 </div>
 
@@ -955,15 +1016,8 @@
                         </div>
 
                         <blockquote class="font-serif italic text-lg text-charcoal-800 mb-4 leading-relaxed">
-                            La ausencia no se quedó en el silencio: se transformó en una búsqueda activa sostenida durante treinta años y hoy continuada por los hijos e hijas de quienes la iniciaron.
+                            Buscar también ha sido recordar. Nombrar a quienes faltan, exigir verdad y mantener viva su historia son formas de construir memoria: no algo que simplemente se conserva, sino algo que la comunidad produce y mantiene vivo.
                         </blockquote>
-                    </div>
-
-                    <div id="voice2-video-box" class="mt-4 aspect-video bg-charcoal-900 rounded-xl overflow-hidden relative flex items-center justify-center">
-                        <iframe id="iframe-voice-2" class="w-full h-full hidden" src="" frameborder="0" allowfullscreen></iframe>
-                        <button onclick="openVideoModal('voice2')" class="px-4 py-2 rounded-full bg-brass-500 text-charcoal-900 font-bold text-xs hover:bg-brass-400 transition">
-                            Ver Intervención (20s)
-                        </button>
                     </div>
                 </div>
 
@@ -979,15 +1033,8 @@
                         </div>
 
                         <blockquote class="font-serif italic text-lg text-charcoal-800 mb-4 leading-relaxed">
-                            Enseñar sobre La Esperanza significa reconocer a una comunidad que produjo conocimiento sobre verdad, justicia y memoria, y dialogar con ese saber en vez de reemplazarlo.
+                            La comunidad no es solamente objeto de una historia que otros cuentan. Es también sujeto que recuerda, interpreta y produce conocimiento. La educación puede contribuir a que esa memoria siga viva, no para quedarse en el pasado, sino para construir otras posibilidades en el presente.
                         </blockquote>
-                    </div>
-
-                    <div id="voice3-video-box" class="mt-4 aspect-video bg-charcoal-900 rounded-xl overflow-hidden relative flex items-center justify-center">
-                        <iframe id="iframe-voice-3" class="w-full h-full hidden" src="" frameborder="0" allowfullscreen></iframe>
-                        <button onclick="openVideoModal('voice3')" class="px-4 py-2 rounded-full bg-brass-500 text-charcoal-900 font-bold text-xs hover:bg-brass-400 transition">
-                            Ver Intervención (20s)
-                        </button>
                     </div>
                 </div>
             </div>
@@ -1013,6 +1060,20 @@
                 </div>
             </div>
 
+            <div class="max-w-3xl mx-auto">
+                <div id="video6-wrapper" data-video-key="video6" class="w-full bg-charcoal-900 rounded-2xl overflow-hidden aspect-video relative group shadow-xl border border-olive-800">
+                    <iframe id="iframe-video6" class="absolute inset-0 w-full h-full hidden" src="" title="Cierre: la memoria como futuro" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <button type="button" id="video6-placeholder" onclick="openVideoModal('video6')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center">
+                        <div class="w-16 h-16 rounded-full bg-brass-500/30 border border-brass-400 flex items-center justify-center text-cream-100 text-2xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest text-brass-400 font-bold mb-1">Video 6 · Cierre</span>
+                        <h3 class="font-serif text-2xl font-bold text-cream-100 mb-2">La memoria como futuro</h3>
+                        <p class="text-xs text-cream-200 max-w-md">La educación puede y debe contribuir a que esa memoria siga viva, no para quedarse en el pasado, sino para construir otras posibilidades en el presente.</p>
+                    </button>
+                </div>
+            </div>
+
             <!-- Cita de cierre -->
             <div class="py-6 border-y border-olive-800">
                 <h3 class="font-serif text-3xl sm:text-5xl font-bold leading-tight text-cream-100">
@@ -1027,19 +1088,19 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left text-sm max-w-2xl mx-auto">
                 <div class="flex items-start space-x-3 p-3 bg-olive-800/50 rounded-xl border border-olive-800">
                     <i class="fa-solid fa-check text-brass-400 mt-1"></i>
-                    <span><strong>La Esperanza</strong> recuerda y sostiene su territorio a través de la autopista, los caminos y los sembrados resignificados.</span>
+                    <span><strong>La Esperanza</strong> es un territorio que conserva huellas, pero también historias de organización y resistencia.</span>
                 </div>
                 <div class="flex items-start space-x-3 p-3 bg-olive-800/50 rounded-xl border border-olive-800">
                     <i class="fa-solid fa-check text-brass-400 mt-1"></i>
-                    <span><strong>La comunidad</strong> interpreta sus procesos con dignidad, desde el liderazgo de Flor Gallego hasta la sentencia de la Corte IDH de 2017.</span>
+                    <span><strong>La comunidad</strong> produce y mantiene viva la memoria a través de la búsqueda, las conmemoraciones y el nombramiento de quienes faltan.</span>
                 </div>
                 <div class="flex items-start space-x-3 p-3 bg-olive-800/50 rounded-xl border border-olive-800">
                     <i class="fa-solid fa-check text-brass-400 mt-1"></i>
-                    <span><strong>Las nuevas generaciones</strong> resignifican el legado social, como en la obra de teatro de la conmemoración de los 20 años.</span>
+                    <span><strong>Las nuevas generaciones</strong> reciben el pasado, lo preguntan y construyen nuevos sentidos sobre él.</span>
                 </div>
                 <div class="flex items-start space-x-3 p-3 bg-olive-800/50 rounded-xl border border-olive-800">
                     <i class="fa-solid fa-check text-brass-400 mt-1"></i>
-                    <span><strong>La educación</strong> ayuda a mantener viva esa memoria sin reducirla a la violencia ni desconocer a la comunidad como productora de conocimiento.</span>
+                    <span><strong>La educación</strong> puede contribuir a que esa memoria siga viva, no para quedarse en el pasado, sino para construir otras posibilidades en el presente.</span>
                 </div>
             </div>
 
@@ -1094,21 +1155,31 @@
 
                 <!-- Video URLs -->
                 <div class="space-y-3 pt-2 border-t border-cream-200">
-                    <label class="block text-xs font-bold uppercase text-olive-800">Enlaces / URLs de Videos (Embed YouTube o Drive)</label>
+                    <label class="block text-xs font-bold uppercase text-olive-800">Enlaces de los 6 videos</label>
                     
                     <div>
-                        <span class="text-[11px] text-gray-500 font-medium">Video 1 (Módulo Territorio):</span>
-                        <input type="text" id="input-video-1" placeholder="Ej: https://www.youtube.com/embed/XXXXX" class="p-2 border rounded-lg text-xs w-full mt-1">
+                        <span class="text-[11px] text-gray-500 font-medium">Video 1 · Territorio</span>
+                        <input type="text" id="input-video-1" placeholder="https://youtu.be/WqCy2yGVRWg" class="p-2 border rounded-lg text-xs w-full mt-1">
                     </div>
-
                     <div>
-                        <span class="text-[11px] text-gray-500 font-medium">Video 2 (Módulo Historia/Debate):</span>
-                        <input type="text" id="input-video-2" placeholder="URL Video 2" class="p-2 border rounded-lg text-xs w-full mt-1">
+                        <span class="text-[11px] text-gray-500 font-medium">Video 2 · Historia</span>
+                        <input type="text" id="input-video-2" placeholder="https://youtu.be/QJWL4boVnvw" class="p-2 border rounded-lg text-xs w-full mt-1">
                     </div>
-
                     <div>
-                        <span class="text-[11px] text-gray-500 font-medium">Video 3 (Módulo Tensiones):</span>
-                        <input type="text" id="input-video-3" placeholder="URL Video 3" class="p-2 border rounded-lg text-xs w-full mt-1">
+                        <span class="text-[11px] text-gray-500 font-medium">Video 3 · Búsqueda</span>
+                        <input type="text" id="input-video-3" placeholder="https://youtu.be/kwxopnaFZ5M" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 4 · Intergeneracional</span>
+                        <input type="text" id="input-video-4" placeholder="https://youtu.be/9Vo9sZ7ommo" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 5 · Educación</span>
+                        <input type="text" id="input-video-5" placeholder="https://youtu.be/MxHLayca33w" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 6 · Cierre</span>
+                        <input type="text" id="input-video-6" placeholder="https://youtu.be/qsem3pps84g" class="p-2 border rounded-lg text-xs w-full mt-1">
                     </div>
                 </div>
 
@@ -1202,16 +1273,42 @@
         const DEFAULT_SETTINGS = {
             authors: ["Lina Maria Garcia Gomez", "Luisa Fernanda Osorio Zuluaga", "Paula Camila Manrique Ordoñez"],
             videos: {
-                video1: "",
-                video2: "",
-                video3: "",
-                voice1: "",
-                voice2: "",
-                voice3: ""
+                video1: "https://www.youtube.com/embed/WqCy2yGVRWg?rel=0",
+                video2: "https://www.youtube.com/embed/QJWL4boVnvw?rel=0",
+                video3: "https://www.youtube.com/embed/kwxopnaFZ5M?rel=0",
+                video4: "https://www.youtube.com/embed/9Vo9sZ7ommo?rel=0",
+                video5: "https://www.youtube.com/embed/MxHLayca33w?rel=0",
+                video6: "https://www.youtube.com/embed/qsem3pps84g?rel=0"
             }
         };
 
-        let appSettings = JSON.parse(localStorage.getItem('esperanza_settings')) || DEFAULT_SETTINGS;
+        function youTubeId(url) {
+            const match = String(url || '').match(/(?:youtu\.be\/|\/embed\/|v=)([A-Za-z0-9_-]{11})/);
+            return match ? match[1] : "";
+        }
+
+        function toYouTubeEmbed(url) {
+            const id = youTubeId(url);
+            return id ? `https://www.youtube.com/embed/${id}?rel=0&autoplay=1` : "";
+        }
+
+        function mergeSettings(saved) {
+            const merged = {
+                authors: [...DEFAULT_SETTINGS.authors],
+                videos: { ...DEFAULT_SETTINGS.videos }
+            };
+            if (saved && Array.isArray(saved.authors) && saved.authors.length) {
+                merged.authors = saved.authors;
+            }
+            if (saved && saved.videos) {
+                Object.keys(merged.videos).forEach((key) => {
+                    if (saved.videos[key]) merged.videos[key] = toYouTubeEmbed(saved.videos[key]);
+                });
+            }
+            return merged;
+        }
+
+        let appSettings = mergeSettings(JSON.parse(localStorage.getItem('esperanza_settings') || 'null'));
         if (
             !appSettings.authors ||
             appSettings.authors.includes('Integrante 2') ||
@@ -1239,8 +1336,8 @@
             },
             4: {
                 title: "Reconocimiento y Actos de Dignidad",
-                desc: "En 2017, el Estado colombiano realizó un acto público de reconocimiento de responsabilidad y pidió perdón a la comunidad, dignificando el nombre de las 17 personas desaparecidas y asumiendo un compromiso —aún parcial— con la verdad y la reparación.",
-                quote: "El mejor acto de perdón es la verdad y la justicia [...]. Creemos en la paz, pero una paz sin desaparecidos. — Flor Gallego"
+                desc: "En 2024 se realizó un acto público de reconocimiento de responsabilidad del Estado. La sentencia de 2017 y ese acto no cierran la historia: la memoria continúa en las familias, en el territorio y en las nuevas generaciones.",
+                quote: "Esta historia no termina en una fecha. La memoria continúa en las familias, en el territorio y en las nuevas generaciones."
             },
             5: {
                 title: "Presente: Educación y Memoria Viva",
@@ -1602,19 +1699,53 @@
             document.getElementById('ficha-modal').classList.add('hidden');
         }
 
-        function openVideoModal(videoKey) {
-            const url = appSettings.videos[videoKey];
-            if(!url) {
-                document.getElementById('open-settings-btn').click();
-            } else {
-                const iframe = document.getElementById(`iframe-${videoKey}`);
-                const placeholder = document.getElementById(`${videoKey}-placeholder`);
-                if(iframe) {
-                    iframe.src = url;
-                    iframe.classList.remove('hidden');
-                    if(placeholder) placeholder.classList.add('hidden');
+        // Each author presents her own videos, so the poster is her portrait
+        const VIDEO_POSTERS = {
+            video1: { src: 'images/equipo/lina.jpg', alt: 'Lina Maria Garcia Gomez presentando el video' },
+            video2: { src: 'images/equipo/lina.jpg', alt: 'Lina Maria Garcia Gomez presentando el video' },
+            video3: { src: 'images/equipo/luisa.jpg', alt: 'Luisa Fernanda Osorio Zuluaga presentando el video' },
+            video4: { src: 'images/equipo/luisa.jpg', alt: 'Luisa Fernanda Osorio Zuluaga presentando el video' },
+            video5: { src: 'images/equipo/camila.jpg', alt: 'Paula Camila Manrique Ordoñez presentando el video' },
+            video6: { src: 'images/equipo/camila.jpg', alt: 'Paula Camila Manrique Ordoñez presentando el video' }
+        };
+
+        function initVideoThumbnails() {
+            document.querySelectorAll('[data-video-key]').forEach((wrapper) => {
+                const key = wrapper.dataset.videoKey;
+                const poster = VIDEO_POSTERS[key];
+                const id = youTubeId(appSettings.videos[key] || DEFAULT_SETTINGS.videos[key]);
+                if (!poster && !id) return;
+
+                const thumb = document.createElement('img');
+                thumb.alt = poster ? poster.alt : '';
+                thumb.loading = 'lazy';
+                thumb.className = 'absolute inset-0 w-full h-full object-cover';
+                if (poster) {
+                    thumb.classList.add('object-top');
+                    thumb.src = poster.src;
+                } else {
+                    thumb.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+                    thumb.addEventListener('error', () => {
+                        thumb.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+                    }, { once: true });
                 }
-            }
+
+                const scrim = document.createElement('div');
+                scrim.className = 'absolute inset-0 bg-charcoal-900/65';
+
+                wrapper.prepend(scrim);
+                wrapper.prepend(thumb);
+            });
+        }
+
+        function openVideoModal(videoKey) {
+            const url = toYouTubeEmbed(appSettings.videos[videoKey] || DEFAULT_SETTINGS.videos[videoKey]);
+            const iframe = document.getElementById(`iframe-${videoKey}`);
+            const placeholder = document.getElementById(`${videoKey}-placeholder`);
+            if (!iframe || !url) return;
+            iframe.src = url;
+            iframe.classList.remove('hidden');
+            if (placeholder) placeholder.classList.add('hidden');
         }
 
         function openSettingsModal() {
@@ -1625,6 +1756,9 @@
             document.getElementById('input-video-1').value = appSettings.videos.video1 || '';
             document.getElementById('input-video-2').value = appSettings.videos.video2 || '';
             document.getElementById('input-video-3').value = appSettings.videos.video3 || '';
+            document.getElementById('input-video-4').value = appSettings.videos.video4 || '';
+            document.getElementById('input-video-5').value = appSettings.videos.video5 || '';
+            document.getElementById('input-video-6').value = appSettings.videos.video6 || '';
 
             document.getElementById('settings-modal').classList.remove('hidden');
         }
@@ -1640,9 +1774,12 @@
                 document.getElementById('input-author-3').value || 'Paula Camila Manrique Ordoñez'
             ];
 
-            appSettings.videos.video1 = document.getElementById('input-video-1').value;
-            appSettings.videos.video2 = document.getElementById('input-video-2').value;
-            appSettings.videos.video3 = document.getElementById('input-video-3').value;
+            appSettings.videos.video1 = toYouTubeEmbed(document.getElementById('input-video-1').value) || DEFAULT_SETTINGS.videos.video1;
+            appSettings.videos.video2 = toYouTubeEmbed(document.getElementById('input-video-2').value) || DEFAULT_SETTINGS.videos.video2;
+            appSettings.videos.video3 = toYouTubeEmbed(document.getElementById('input-video-3').value) || DEFAULT_SETTINGS.videos.video3;
+            appSettings.videos.video4 = toYouTubeEmbed(document.getElementById('input-video-4').value) || DEFAULT_SETTINGS.videos.video4;
+            appSettings.videos.video5 = toYouTubeEmbed(document.getElementById('input-video-5').value) || DEFAULT_SETTINGS.videos.video5;
+            appSettings.videos.video6 = toYouTubeEmbed(document.getElementById('input-video-6').value) || DEFAULT_SETTINGS.videos.video6;
 
             localStorage.setItem('esperanza_settings', JSON.stringify(appSettings));
             updateDOMWithSettings();
@@ -1663,6 +1800,7 @@
             updateDOMWithSettings();
             selectTimelineNode(1);
             initArchiveCarousel();
+            initVideoThumbnails();
 
             // Mobile menu toggle logic
             document.getElementById('mobile-menu-btn').addEventListener('click', function() {
