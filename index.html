@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MEMORIA,TERRITORIO Y RESISTENCIA: EL CASO DE LA VEREDA LA ESPERANZA</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS CDN (jsDelivr: cdn.tailwindcss.com is DNS-blocked on some networks) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -13,47 +13,44 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cream: {
-                            50: '#fcfbf8',
-                            100: '#f7f4ee',
-                            200: '#eee8dc',
-                            300: '#e0d4c1',
-                        },
-                        terracotta: {
-                            100: '#f9ebe6',
-                            500: '#c86d51',
-                            600: '#b35638',
-                            700: '#944127',
-                        },
-                        olive: {
-                            100: '#e8ece7',
-                            500: '#4a5d48',
-                            800: '#2d3b2b',
-                            900: '#1b2619',
-                        },
-                        brass: {
-                            400: '#e5be75',
-                            500: '#d4a359',
-                            600: '#b8863b',
-                        },
-                        charcoal: {
-                            800: '#2d2d2d',
-                            900: '#1a1a1a',
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    }
-                }
+    <style type="text/tailwindcss">
+        @theme {
+            --color-cream-50: #fcfbf8;
+            --color-cream-100: #f7f4ee;
+            --color-cream-200: #eee8dc;
+            --color-cream-300: #e0d4c1;
+
+            --color-terracotta-100: #f9ebe6;
+            --color-terracotta-500: #c86d51;
+            --color-terracotta-600: #b35638;
+            --color-terracotta-700: #944127;
+
+            --color-olive-100: #e8ece7;
+            --color-olive-500: #4a5d48;
+            --color-olive-800: #2d3b2b;
+            --color-olive-900: #1b2619;
+
+            --color-brass-400: #e5be75;
+            --color-brass-500: #d4a359;
+            --color-brass-600: #b8863b;
+
+            --color-charcoal-800: #2d2d2d;
+            --color-charcoal-900: #1a1a1a;
+
+            --font-serif: "Cormorant Garamond", Georgia, serif;
+            --font-sans: "Plus Jakarta Sans", sans-serif;
+        }
+
+        /* Tailwind 4 defaults borders to currentColor and buttons to the arrow cursor; keep the v3 look */
+        @layer base {
+            *, ::after, ::before, ::backdrop, ::file-selector-button {
+                border-color: var(--color-gray-200, currentColor);
+            }
+            button:not(:disabled), [role="button"]:not(:disabled) {
+                cursor: pointer;
             }
         }
-    </script>
+    </style>
     
     <style>
         /* Custom styling for editorial paper texture and zoom dynamics */
@@ -150,7 +147,7 @@
 </head>
 <body class="antialiased selection:bg-terracotta-500 selection:text-white">
 
-    <nav class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300 shadow-sm">
+    <nav class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Brand Title -->
@@ -176,7 +173,7 @@
                 <!-- Global Action Controls -->
                 <div class="flex items-center space-x-3">
                     <!-- Ambient Sound Audio Synth Button -->
-                    <button id="ambient-audio-btn" type="button" disabled aria-pressed="false" title="Sonido Ambiente del Territorio" class="px-3 py-1.5 rounded-full border border-olive-800 text-olive-800 hover:bg-olive-800 hover:text-white text-xs font-semibold flex items-center space-x-2 transition shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button id="ambient-audio-btn" type="button" disabled aria-pressed="false" title="Sonido Ambiente del Territorio" class="px-3 py-1.5 rounded-full border border-olive-800 text-olive-800 hover:bg-olive-800 hover:text-white text-xs font-semibold flex items-center space-x-2 transition shadow-xs disabled:opacity-50 disabled:cursor-not-allowed">
                         <i class="fa-solid fa-volume-xmark" id="audio-icon"></i>
                         <span id="audio-label" class="hidden sm:inline">Sonido Ambiente</span>
                     </button>
@@ -187,7 +184,7 @@
                     </button>
 
                     <!-- Mobile Navigation Toggle Button -->
-                    <button id="mobile-menu-btn" class="lg:hidden p-2 text-charcoal-800 hover:text-terracotta-600 focus:outline-none">
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 text-charcoal-800 hover:text-terracotta-600 focus:outline-hidden">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -208,7 +205,7 @@
     </nav>
 
     <!-- SECTION 1: PORTADA (HERO) -->
-    <section id="portada" class="relative min-h-screen flex items-center justify-center pt-20 pb-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-cream-200 via-cream-100 to-cream-50 overflow-hidden">
+    <section id="portada" class="relative min-h-screen flex items-center justify-center pt-20 pb-12 px-4 sm:px-6 lg:px-8 bg-linear-to-b from-cream-200 via-cream-100 to-cream-50 overflow-hidden">
         <!-- Background Editorial Decorative Elements -->
         <div class="absolute inset-0 opacity-15 paper-texture pointer-events-none"></div>
         <div class="absolute -top-24 -left-24 w-96 h-96 bg-terracotta-500/10 rounded-full blur-3xl"></div>
@@ -238,15 +235,15 @@
             <div class="pt-2">
                 <p class="text-xs uppercase tracking-widest text-olive-800 font-bold mb-3">Propuesta Investigativa y Pedagógica por</p>
                 <div class="flex flex-wrap justify-center gap-3 sm:gap-6 text-sm font-medium text-charcoal-800">
-                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-sm border border-cream-300 flex items-center space-x-2">
+                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-xs border border-cream-300 flex items-center space-x-2">
                         <i class="fa-solid fa-user-circle text-terracotta-600"></i>
                         <span id="display-author-1">Lina Maria Garcia Gomez</span>
                     </span>
-                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-sm border border-cream-300 flex items-center space-x-2">
+                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-xs border border-cream-300 flex items-center space-x-2">
                         <i class="fa-solid fa-user-circle text-terracotta-600"></i>
                         <span id="display-author-2">Luisa Fernanda Osorio Zuluaga</span>
                     </span>
-                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-sm border border-cream-300 flex items-center space-x-2">
+                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-xs border border-cream-300 flex items-center space-x-2">
                         <i class="fa-solid fa-user-circle text-terracotta-600"></i>
                         <span id="display-author-3">Paula Camila Manrique Ordoñez</span>
                     </span>
@@ -275,7 +272,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <!-- Territorial Route Schematic Diagram -->
-                <div class="lg:col-span-6 bg-cream-100 p-6 sm:p-8 rounded-2xl border border-cream-300 shadow-sm">
+                <div class="lg:col-span-6 bg-cream-100 p-6 sm:p-8 rounded-2xl border border-cream-300 shadow-xs">
                     <h3 class="font-serif text-2xl font-bold text-olive-900 mb-6 flex items-center space-x-2">
                         <i class="fa-solid fa-map-location-dot text-terracotta-600"></i>
                         <span>Ruta Geográfica de Contexto</span>
@@ -360,7 +357,7 @@
 
             <!-- Timeline: every milestone stays readable, the rail only tracks reading position -->
             <div class="mb-16 max-w-4xl mx-auto">
-                <div class="sticky top-16 z-20 -mx-4 px-4 py-3 bg-cream-100/95 backdrop-blur border-b border-cream-300">
+                <div class="sticky top-16 z-20 -mx-4 px-4 py-3 bg-cream-100/95 backdrop-blur-sm border-b border-cream-300">
                     <nav id="timeline-rail" aria-label="Hitos de la historia" class="flex gap-2 overflow-x-auto pb-1 md:grid md:grid-cols-5 md:overflow-visible md:pb-0"></nav>
                     <div class="mt-3 h-1 rounded-full bg-cream-300 overflow-hidden">
                         <div id="timeline-progress" class="h-full w-0 rounded-full bg-terracotta-500 transition-all duration-300"></div>
@@ -386,7 +383,7 @@
                                     <span class="text-[9px] uppercase tracking-widest font-bold text-center leading-tight">Corte IDH</span>
                                 </div>
                                 <div class="p-4 sm:p-5">
-                                    <span class="inline-block px-2 py-0.5 rounded bg-terracotta-100 text-terracotta-700 text-[10px] font-bold uppercase tracking-wider mb-2">Ficha técnica</span>
+                                    <span class="inline-block px-2 py-0.5 rounded-sm bg-terracotta-100 text-terracotta-700 text-[10px] font-bold uppercase tracking-wider mb-2">Ficha técnica</span>
                                     <h4 class="font-serif text-lg sm:text-xl font-bold text-olive-900 leading-snug">Vereda La Esperanza Vs. Colombia</h4>
                                     <p class="text-[11px] text-gray-500 mt-1">Estado demandado: Colombia · Sentencia del 31 de agosto de 2017</p>
                                     <p class="text-xs text-charcoal-800 mt-3 leading-relaxed line-clamp-3">
@@ -406,10 +403,10 @@
                             </div>
                             <div class="relative rounded-2xl overflow-hidden border border-cream-300 bg-olive-900 aspect-[16/10]">
                                 <div id="archive-carousel-track" class="absolute inset-0"></div>
-                                <button type="button" onclick="stepArchiveCarousel(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 text-olive-900 shadow border border-cream-200 hover:bg-cream-100 transition" aria-label="Fotografía anterior">
+                                <button type="button" onclick="stepArchiveCarousel(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 text-olive-900 shadow-sm border border-cream-200 hover:bg-cream-100 transition" aria-label="Fotografía anterior">
                                     <i class="fa-solid fa-chevron-left text-xs"></i>
                                 </button>
-                                <button type="button" onclick="stepArchiveCarousel(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 text-olive-900 shadow border border-cream-200 hover:bg-cream-100 transition" aria-label="Fotografía siguiente">
+                                <button type="button" onclick="stepArchiveCarousel(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 text-olive-900 shadow-sm border border-cream-200 hover:bg-cream-100 transition" aria-label="Fotografía siguiente">
                                     <i class="fa-solid fa-chevron-right text-xs"></i>
                                 </button>
                                 <div class="absolute inset-x-0 bottom-0 z-10 p-4 media-scrim pointer-events-none">
@@ -469,7 +466,7 @@
             <div class="relative bg-cream-100 rounded-2xl border border-cream-300 p-4 sm:p-8 overflow-hidden shadow-inner min-h-[500px] flex flex-col justify-between">
                 <!-- Zoom Controls -->
                 <div class="absolute top-4 right-4 z-20 flex space-x-2">
-                    <button onclick="resetPreziZoom()" class="px-3 py-1.5 rounded-lg bg-white/90 shadow text-xs font-bold text-olive-900 hover:bg-cream-200 border border-cream-300 transition">
+                    <button onclick="resetPreziZoom()" class="px-3 py-1.5 rounded-lg bg-white/90 shadow-sm text-xs font-bold text-olive-900 hover:bg-cream-200 border border-cream-300 transition">
                         <i class="fa-solid fa-rotate-left mr-1"></i> Ver Mapa Completo
                     </button>
                 </div>
@@ -485,7 +482,7 @@
                             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-terracotta-600 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
                                 <i class="fa-solid fa-road text-sm"></i>
                             </div>
-                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">La Carretera</span>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded-sm text-[10px] font-bold shadow-sm border border-cream-200 text-olive-900">La Carretera</span>
                         </div>
 
                         <!-- Hotspot 2: Caminos y sembrados de las veredas -->
@@ -493,7 +490,7 @@
                             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-olive-800 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
                                 <i class="fa-solid fa-camera text-sm"></i>
                             </div>
-                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">Registro Fotográfico</span>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded-sm text-[10px] font-bold shadow-sm border border-cream-200 text-olive-900">Registro Fotográfico</span>
                         </div>
 
                         <!-- Hotspot 3: Cabecera de El Carmen de Viboral -->
@@ -501,7 +498,7 @@
                             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brass-500 text-charcoal-900 flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
                                 <i class="fa-solid fa-monument text-sm"></i>
                             </div>
-                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">Conmemoraciones</span>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded-sm text-[10px] font-bold shadow-sm border border-cream-200 text-olive-900">Conmemoraciones</span>
                         </div>
 
                         <!-- Hotspot 4: Vereda La Esperanza -->
@@ -509,7 +506,7 @@
                             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-charcoal-800 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
                                 <i class="fa-solid fa-bookmark text-sm"></i>
                             </div>
-                            <span class="absolute bottom-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded text-[10px] font-bold shadow border border-cream-200 text-olive-900">Marcas de Memoria</span>
+                            <span class="absolute bottom-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded-sm text-[10px] font-bold shadow-sm border border-cream-200 text-olive-900">Marcas de Memoria</span>
                         </div>
                     </div>
                 </div>
@@ -540,7 +537,7 @@
             <!-- 3 Category Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Card A: Ausencia y Pérdida -->
-                <div class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden flex flex-col justify-between transition hover:shadow-md">
+                <div class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden flex flex-col justify-between transition hover:shadow-md">
                     <div class="p-6">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 shrink-0 rounded-xl bg-terracotta-100 text-terracotta-600 flex items-center justify-center text-xl font-bold">
@@ -558,9 +555,9 @@
                         <div class="mt-6 pt-4 border-t border-cream-200">
                             <span class="text-[10px] uppercase font-bold text-olive-800 tracking-wider block mb-2">Sustento Teórico</span>
                             <div class="flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Paul Ricoeur</span>
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Michael Pollak</span>
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Paul Ricoeur</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Michael Pollak</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
                             </div>
                         </div>
                     </div>
@@ -571,7 +568,7 @@
                 </div>
 
                 <!-- Card B: Búsqueda -->
-                <div class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden flex flex-col justify-between transition hover:shadow-md">
+                <div class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden flex flex-col justify-between transition hover:shadow-md">
                     <div class="p-6">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 shrink-0 rounded-xl bg-brass-400/20 text-brass-600 flex items-center justify-center text-xl font-bold">
@@ -589,9 +586,9 @@
                         <div class="mt-6 pt-4 border-t border-cream-200">
                             <span class="text-[10px] uppercase font-bold text-olive-800 tracking-wider block mb-2">Sustento Teórico</span>
                             <div class="flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Alessandro Portelli</span>
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Michael Pollak</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Alessandro Portelli</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Michael Pollak</span>
                             </div>
                         </div>
                     </div>
@@ -602,7 +599,7 @@
                 </div>
 
                 <!-- Card C: Transmisión Intergeneracional -->
-                <div class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden flex flex-col justify-between transition hover:shadow-md">
+                <div class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden flex flex-col justify-between transition hover:shadow-md">
                     <div class="p-6">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 shrink-0 rounded-xl bg-olive-100 text-olive-800 flex items-center justify-center text-xl font-bold">
@@ -620,9 +617,9 @@
                         <div class="mt-6 pt-4 border-t border-cream-200">
                             <span class="text-[10px] uppercase font-bold text-olive-800 tracking-wider block mb-2">Sustento Teórico</span>
                             <div class="flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Joan Pagès</span>
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Mario Carretero</span>
-                                <span class="px-2.5 py-1 rounded bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Joan Pagès</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Mario Carretero</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
                             </div>
                         </div>
                     </div>
@@ -641,7 +638,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <figure class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden">
+                    <figure class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden">
                         <div id="video3-wrapper" data-video-key="video3" class="w-full bg-charcoal-900 aspect-video relative group">
                             <iframe id="iframe-video3" class="absolute inset-0 w-full h-full hidden" src="" title="La memoria de la búsqueda" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                             <button type="button" id="video3-placeholder" onclick="openVideoModal('video3')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-4 text-center">
@@ -657,7 +654,7 @@
                         </figcaption>
                     </figure>
 
-                    <figure class="bg-white rounded-2xl border border-cream-300 shadow-sm overflow-hidden">
+                    <figure class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden">
                         <div id="video4-wrapper" data-video-key="video4" class="w-full bg-charcoal-900 aspect-video relative group">
                             <iframe id="iframe-video4" class="absolute inset-0 w-full h-full hidden" src="" title="Una memoria que pasa de generación en generación" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                             <button type="button" id="video4-placeholder" onclick="openVideoModal('video4')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-4 text-center">
@@ -699,8 +696,8 @@
                         </div>
                         <p class="text-xs text-gray-600 mb-3">Los testimonios y la sentencia no son fuentes opuestas. Joutard (2007) propone su diálogo y Portelli (1991) muestra que la historia oral aporta significados que los documentos institucionales no capturan por sí solos.</p>
                         <div class="flex space-x-2">
-                            <span class="px-2 py-0.5 rounded bg-white text-xs font-bold text-olive-900 border border-cream-300">Philippe Joutard</span>
-                            <span class="px-2 py-0.5 rounded bg-white text-xs font-bold text-olive-900 border border-cream-300">Alessandro Portelli</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Philippe Joutard</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Alessandro Portelli</span>
                         </div>
                     </div>
 
@@ -713,9 +710,9 @@
                         </div>
                         <p class="text-xs text-gray-600 mb-3">Durante más de veinte años, las familias disputaron el silencio institucional. Recordar expresa relaciones de poder y, en La Esperanza, persigue verdad, justicia y no repetición, no el uso instrumental del dolor.</p>
                         <div class="flex space-x-2">
-                            <span class="px-2 py-0.5 rounded bg-white text-xs font-bold text-olive-900 border border-cream-300">Elizabeth Jelin</span>
-                            <span class="px-2 py-0.5 rounded bg-white text-xs font-bold text-olive-900 border border-cream-300">Michael Pollak</span>
-                            <span class="px-2 py-0.5 rounded bg-white text-xs font-bold text-olive-900 border border-cream-300">Tzvetan Todorov</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Elizabeth Jelin</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Michael Pollak</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Tzvetan Todorov</span>
                         </div>
                     </div>
 
@@ -728,9 +725,9 @@
                         </div>
                         <p class="text-xs text-gray-600 mb-3">La escuela puede reducir el caso a una cronología de violencia o dialogar críticamente con las memorias sociales. Enseñar implica formar sujetos capaces de reconocer las condiciones que hicieron posible la violencia.</p>
                         <div class="flex space-x-2">
-                            <span class="px-2 py-0.5 rounded bg-white text-xs font-bold text-olive-900 border border-cream-300">Joan Pagès</span>
-                            <span class="px-2 py-0.5 rounded bg-white text-xs font-bold text-olive-900 border border-cream-300">Mario Carretero</span>
-                            <span class="px-2 py-0.5 rounded bg-white text-xs font-bold text-olive-900 border border-cream-300">Theodor Adorno</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Joan Pagès</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Mario Carretero</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Theodor Adorno</span>
                         </div>
                     </div>
                 </div>
@@ -776,7 +773,7 @@
             </div>
 
             <!-- Central Thesis Visual Banner -->
-            <div class="bg-gradient-to-r from-olive-900 via-olive-800 to-olive-900 text-white p-8 sm:p-12 rounded-3xl shadow-xl text-center mb-10 relative overflow-hidden">
+            <div class="bg-linear-to-r from-olive-900 via-olive-800 to-olive-900 text-white p-8 sm:p-12 rounded-3xl shadow-xl text-center mb-10 relative overflow-hidden">
                 <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-serif">🎓</div>
                 <span class="text-xs font-bold uppercase tracking-widest text-brass-400 block mb-3">Tesis Central de la Propuesta Pedagógica</span>
                 <p class="font-serif text-3xl sm:text-5xl font-bold leading-tight max-w-4xl mx-auto text-cream-100">
@@ -856,7 +853,7 @@
             </div>
 
             <!-- Verb Explanation Modal Banner -->
-            <div id="verb-modal-card" class="mt-8 bg-white p-6 rounded-2xl border border-cream-300 shadow-sm hidden">
+            <div id="verb-modal-card" class="mt-8 bg-white p-6 rounded-2xl border border-cream-300 shadow-xs hidden">
                 <h4 id="verb-modal-title" class="font-serif text-2xl font-bold text-olive-900"></h4>
                 <p id="verb-modal-desc" class="text-sm text-gray-700 mt-2 leading-relaxed"></p>
             </div>
@@ -875,7 +872,7 @@
 
             <!-- Gallery Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-sm border border-cream-300">
+                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-xs border border-cream-300">
                     <img src="https://estaticos.elcolombiano.com/binrepository/845x565/65c0/780d565/none/11101/VXPA/acto-de-perdon-en-el-carmen-de-vibor_46244318_20241009010027.jpg" alt="Acto de perdón en El Carmen de Viboral" referrerpolicy="no-referrer" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 media-scrim pointer-events-none"></div>
                     <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
@@ -885,7 +882,7 @@
                     </figcaption>
                 </figure>
 
-                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-sm border border-cream-300">
+                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-xs border border-cream-300">
                     <img src="images/archivo/mi.jpg" alt="Jóvenes de la comunidad en actividades de memoria" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 media-scrim pointer-events-none"></div>
                     <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
@@ -895,7 +892,7 @@
                     </figcaption>
                 </figure>
 
-                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-sm border border-cream-300">
+                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-xs border border-cream-300">
                     <img src="images/archivo/me.jpg" alt="Retrato y flores en el acto de reconocimiento de responsabilidad del Estado" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 media-scrim pointer-events-none"></div>
                     <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
@@ -905,7 +902,7 @@
                     </figcaption>
                 </figure>
 
-                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-sm border border-cream-300">
+                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-xs border border-cream-300">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvctppk24MN1Qws8WLtBBww69s7FzW8gSRCAuxvuO_2D7HTUSl1Soz6f4&s=10" alt="Marcha comunitaria con pancarta de La Esperanza" referrerpolicy="no-referrer" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 media-scrim pointer-events-none"></div>
                     <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
@@ -1289,7 +1286,7 @@
                 const tone = TIMELINE_TONES[item.tone];
                 return `
                     <button type="button" data-timeline-chip="${id}" onclick="goToTimelineStep('${id}')" class="timeline-chip shrink-0 min-w-[9.5rem] md:min-w-0 text-left p-3 rounded-xl bg-white border-2 border-cream-300 hover:border-brass-500 transition">
-                        <span class="inline-block px-2 py-0.5 rounded text-[11px] font-bold ${tone.badge}">${item.badge}</span>
+                        <span class="inline-block px-2 py-0.5 rounded-sm text-[11px] font-bold ${tone.badge}">${item.badge}</span>
                         <span class="block font-serif font-bold text-sm text-olive-900 mt-1 leading-tight">${item.label}</span>
                     </button>
                 `;
@@ -1302,9 +1299,9 @@
                 const tone = TIMELINE_TONES[item.tone];
                 return `
                     <article id="hito-${id}" data-timeline-step="${id}" class="timeline-step relative sm:pl-14">
-                        <div class="absolute left-0 top-6 w-10 h-10 rounded-full ${tone.dot} text-white hidden sm:flex items-center justify-center font-serif font-bold shadow" aria-hidden="true">${id}</div>
-                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-cream-300 shadow-sm">
-                            <span class="inline-block px-2.5 py-1 rounded text-xs font-bold ${tone.badge}">${item.badge}</span>
+                        <div class="absolute left-0 top-6 w-10 h-10 rounded-full ${tone.dot} text-white hidden sm:flex items-center justify-center font-serif font-bold shadow-sm" aria-hidden="true">${id}</div>
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-cream-300 shadow-xs">
+                            <span class="inline-block px-2.5 py-1 rounded-sm text-xs font-bold ${tone.badge}">${item.badge}</span>
                             <h3 class="font-serif text-2xl font-bold text-olive-900 mt-2">${item.title}</h3>
                             <p class="text-sm text-gray-700 mt-3 leading-relaxed">${item.desc}</p>
                             <blockquote class="mt-4 pl-4 border-l-2 font-serif italic text-sm font-semibold ${tone.quote}">“${item.quote}”</blockquote>
