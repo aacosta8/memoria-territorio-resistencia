@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas de Memorias y Territorios - Visor Geográfico Interactivo</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-parchment: #f7f4ee;
+            --bg-card: #fcfbf8;
+            --primary-dark: #1b2619;
+            --accent-gold: #d4a359;
+            --accent-gold-light: #eee8dc;
+            --accent-green: #2d3b2b;
+            --accent-terra: #b35638;
+            --accent-blue: #4a5d48;
+            --border-color: #e0d4c1;
+            --text-main: #2d2d2d;
+            --text-muted: #5c564e;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-parchment);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* HEADER ESTILO ATLAS FANTASÍA */
+        header {
+            background: linear-gradient(135deg, #1b2619 0%, #2d3b2b 100%);
+            color: #f7f4ee;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent-gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .header-title-container h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            letter-spacing: 1px;
+            color: #f7f4ee;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title-container p {
+            font-size: 0.82rem;
+            color: #e0d4c1;
+            margin-top: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(180deg, #2d3b2b 0%, #1b2619 100%);
+            color: #f7f4ee;
+            text-decoration: none;
+            border: 1px solid var(--accent-gold);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .btn:hover {
+            background: var(--accent-gold);
+            color: #1b2619;
+            transform: translateY(-1px);
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .main-layout {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 65px);
+            position: relative;
+        }
+
+        /* PANEL LATERAL DE CONTROLES Y LISTA */
+        .sidebar {
+            width: 410px;
+            background: var(--bg-card);
+            border-right: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            z-index: 900;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            background: #eee8dc;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.65rem 0.8rem 0.65rem 2.2rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #fff;
+            font-size: 0.88rem;
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(45, 90, 63, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .filter-section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            max-height: 140px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .chip {
+            font-size: 0.72rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            background: #eee8dc;
+            color: var(--text-main);
+            border: 1px solid #e0d4c1;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition);
+        }
+
+        .chip.active {
+            background: var(--accent-green);
+            color: #fff;
+            border-color: var(--accent-green);
+        }
+
+        .results-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            padding: 0.4rem 0;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .btn-text {
+            background: none;
+            border: none;
+            color: var(--accent-terra);
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* LISTA DE EXPERIENCIAS */
+        .experiences-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .exp-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--accent-green);
+            border-radius: 8px;
+            padding: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .exp-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-color: var(--accent-gold);
+        }
+
+        .exp-card.selected {
+            border-color: var(--accent-gold);
+            background: #f7f4ee;
+            box-shadow: 0 0 0 2px var(--accent-gold);
+        }
+
+        .exp-card-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exp-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 3px 0 6px 0;
+            line-height: 1.3;
+        }
+
+        .exp-card-meta {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .exp-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            background: #eee8dc;
+            color: #2d3b2b;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* AREA DEL MAPA */
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: #d4e3ed;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* FALLBACK VISUAL CUANDO TILE FAIL O NO INTERNET */
+        .map-fallback-notice {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(27, 38, 25, 0.92);
+            color: #f7f4ee;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            z-index: 800;
+            border: 1px solid var(--accent-gold);
+            pointer-events: none;
+            display: none;
+        }
+
+        /* CONTROLES FLOTANTES EN MAPA */
+        .map-controls-floating {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 800;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .map-btn {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: var(--transition);
+        }
+
+        .map-btn:hover {
+            background: var(--bg-parchment);
+            color: var(--accent-green);
+        }
+
+        /* LEYENDA CARTOGRÁFICA */
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(252, 251, 248, 0.94);
+            backdrop-filter: blur(4px);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            z-index: 800;
+            max-width: 280px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            font-size: 0.78rem;
+        }
+
+        .legend-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 3px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0;
+        }
+
+        .legend-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* ROSA DE LOS VIENTOS */
+        .compass-rose {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            z-index: 800;
+            opacity: 0.75;
+            pointer-events: none;
+        }
+
+        /* PANEL DE FICHA DETALLADA (OVERLAY DETALLE) */
+        .detail-panel {
+            position: absolute;
+            top: 0;
+            right: -550px;
+            width: 520px;
+            height: 100%;
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent-gold);
+            z-index: 950;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+            transition: right 0.35s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-panel.open {
+            right: 0;
+        }
+
+        .detail-header {
+            background: linear-gradient(135deg, #1b2619 0%, #2d3b2b 100%);
+            color: #f7f4ee;
+            padding: 1.2rem;
+            position: relative;
+        }
+
+        .detail-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            line-height: 1.3;
+            padding-right: 25px;
+        }
+
+        .detail-header .sub-info {
+            font-size: 0.8rem;
+            color: #e0d4c1;
+            margin-top: 5px;
+        }
+
+        .close-detail {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #f7f4ee;
+            font-size: 1.4rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .detail-tabs {
+            display: flex;
+            background: #eee8dc;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.65rem 0.4rem;
+            background: none;
+            border: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-green);
+            border-bottom-color: var(--accent-green);
+            background: #fff;
+        }
+
+        .detail-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.2rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .info-block {
+            margin-bottom: 1.1rem;
+        }
+
+        .info-block label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            display: block;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-block p, .info-block ul {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .info-block ul {
+            padding-left: 1.2rem;
+        }
+
+        .info-block ul li {
+            margin-bottom: 4px;
+        }
+
+        .badge-precision {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .precision-exacta {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .precision-regional {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* MODAL DE INTRODUCCIÓN ACADÉMICA */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 19, 0.75);
+            backdrop-filter: blur(3px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: var(--bg-card);
+            border: 3px solid var(--accent-gold);
+            border-radius: 12px;
+            max-width: 650px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1b2619 0%, #2d3b2b 100%);
+            color: #f7f4ee;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .modal-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem;
+            margin-bottom: 4px;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .modal-body p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            background: #eee8dc;
+            border-top: 1px solid var(--border-color);
+            text-align: right;
+        }
+
+        /* PERSONALIZACIÓN DE MARCADORES LEAFLET */
+        .custom-map-pin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            border: 2px solid #fff;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .custom-map-pin:hover {
+            transform: rotate(-45deg) scale(1.15);
+        }
+
+        .custom-map-pin span {
+            transform: rotate(45deg);
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.75rem;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 850px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: 45vh;
+            }
+            .map-container {
+                height: 55vh;
+            }
+            .detail-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-title-container">
+            <h1>📜 ATLAS DE MEMORIAS Y TERRITORIOS</h1>
+            <p>Experiencias educativas, prácticas comunitarias y construcción de memoria en Colombia</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn" href="index.html">← La Esperanza</a>
+            <button class="btn" onclick="openModal()">ℹ️ Presentación Académica</button>
+            <button class="btn" onclick="resetMapView()">🗺️ Vista General</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENEDOR -->
+    <div class="main-layout">
+        
+        <!-- SIDEBAR DE BÚSQUEDA Y LISTA -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <!-- BUSCADOR -->
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Buscar por título, lugar, autor o metodología..." oninput="filterData()">
+                </div>
+
+                <!-- FILTROS TEMÁTICOS -->
+                <div class="filter-section-title">
+                    <span>EJES TEMÁTICOS</span>
+                    <button class="btn-text" onclick="clearFilters()">Limpiar filtros</button>
+                </div>
+                <div class="filter-chips" id="filterChipsContainer">
+                    <!-- Generado dinámicamente -->
+                </div>
+
+                <div class="results-bar">
+                    <span id="resultsCount">Cargando experiencias...</span>
+                    <span style="font-size:0.7rem; color:var(--text-muted);">Curso: Pedagogías de la Memoria (USTA)</span>
+                </div>
+            </div>
+
+            <!-- LISTA DE CARDS -->
+            <div class="experiences-list" id="experiencesList">
+                <!-- Se llena con JS -->
+            </div>
+        </aside>
+
+        <!-- CONTENEDOR DEL MAPA -->
+        <main class="map-container">
+            <div id="map"></div>
+
+            <div class="map-fallback-notice" id="fallbackNotice">
+                ⚠️ Modo Cartográfico de Respaldo Activo (Sin conexión a teselas web)
+            </div>
+
+            <!-- CONTROLES FLOTANTES -->
+            <div class="map-controls-floating">
+                <button class="map-btn" onclick="zoomInMap()" title="Acercar">+</button>
+                <button class="map-btn" onclick="zoomOutMap()" title="Alejar">−</button>
+                <button class="map-btn" onclick="resetMapView()" title="Reajustar Mapa">🎯</button>
+            </div>
+
+            <!-- ROSA DE LOS VIENTOS GRÁFICA -->
+            <svg class="compass-rose" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#2d3b2b" stroke-width="2" opacity="0.4"/>
+                <polygon points="50,10 55,45 50,40 45,45" fill="#b35638"/>
+                <polygon points="50,90 55,55 50,60 45,55" fill="#2d3b2b"/>
+                <polygon points="10,50 45,45 40,50 45,55" fill="#2d3b2b"/>
+                <polygon points="90,50 55,45 60,50 55,55" fill="#2d3b2b"/>
+                <text x="50" y="8" font-size="8" font-weight="bold" fill="#b35638" text-anchor="middle">N</text>
+            </svg>
+
+            <!-- LEYENDA -->
+            <div class="map-legend">
+                <div class="legend-title">Simbología del Visor</div>
+                <div class="legend-item">
+                    <span class="legend-icon" style="background:#2d3b2b;"></span>
+                    <span>1. La escuela es territorio (Medellín/Bello)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon" style="background:#4a5d48;"></span>
+                    <span>2. Educación Intercultural (Bajo Caquetá)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon" style="background:#944127;"></span>
+                    <span>3. Memoria e Infancias (Nordeste Ant.)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon" style="background:#b35638;"></span>
+                    <span>4. Danzar el Territorio (Nazareth)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon" style="background:#d4a359;"></span>
+                    <span>5. Memoria Pequeñas Poblaciones (5 Mpios)</span>
+                </div>
+                <div style="margin-top:6px; font-size:0.7rem; color:var(--text-muted); border-top:1px solid #e0d4c1; padding-top:4px;">
+                    📌 Punto Sólido: Ubicación Municipal Exacta<br>
+                    ⭕ Punto Difuso: Marcador Regional Aproximado
+                </div>
+            </div>
+        </main>
+
+        <!-- PANEL DE FICHA DETALLADA DESPLEGABLE -->
+        <div class="detail-panel" id="detailPanel">
+            <div class="detail-header">
+                <button class="close-detail" onclick="closeDetailPanel()">×</button>
+                <div id="detailNumber" style="font-size:0.75rem; color:var(--accent-gold); font-weight:bold;">EXPERIENCIA #</div>
+                <h2 id="detailTitle">Título de la experiencia</h2>
+                <div class="sub-info" id="detailSubInfo">Ubicación • Año</div>
+            </div>
+
+            <!-- PESTAÑAS DE LA FICHA -->
+            <div class="detail-tabs">
+                <button class="tab-btn active" onclick="switchTab('tab-general')">General</button>
+                <button class="tab-btn" onclick="switchTab('tab-contexto')">Contexto & Sujetos</button>
+                <button class="tab-btn" onclick="switchTab('tab-pedagogia')">Pedagogía & Territorio</button>
+                <button class="tab-btn" onclick="switchTab('tab-balance')">Balance Crítico</button>
+            </div>
+
+            <div class="detail-body">
+                <!-- TAB 1: GENERAL -->
+                <div class="tab-content active" id="tab-general">
+                    <div class="info-block">
+                        <label>Título Completo</label>
+                        <p id="infoFullTitle"></p>
+                    </div>
+                    <div class="info-block">
+                        <label>Autores / Institución</label>
+                        <p id="infoAuthors"></p>
+                    </div>
+                    <div class="info-block">
+                        <label>Año de Publicación / Realización</label>
+                        <p id="infoYear"></p>
+                    </div>
+                    <div class="info-block">
+                        <label>Ubicación Geográfica y Precisión</label>
+                        <p id="infoLocation"></p>
+                        <span id="infoPrecisionBadge" class="badge-precision"></span>
+                    </div>
+                    <div class="info-block">
+                        <label>Referencia Bibliográfica Clicable / Cita</label>
+                        <p id="infoReference" style="font-style: italic; font-size:0.82rem; background:#eee8dc; padding:8px; border-radius:4px; border-left:3px solid var(--accent-gold);"></p>
+                    </div>
+                </div>
+
+                <!-- TAB 2: CONTEXTO Y SUJETOS -->
+                <div class="tab-content" id="tab-contexto">
+                    <div class="info-block">
+                        <label>Problemática Abordada</label>
+                        <p id="infoProblematic"></p>
+                    </div>
+                    <div class="info-block">
+                        <label>Participantes / Actores Comunitarios</label>
+                        <p id="infoParticipants"></p>
+                    </div>
+                    <div class="info-block">
+                        <label>Tipo(s) de Memoria Abordados</label>
+                        <p id="infoMemoryType"></p>
+                    </div>
+                </div>
+
+                <!-- TAB 3: PEDAGOGÍA Y TERRITORIO -->
+                <div class="tab-content" id="tab-pedagogia">
+                    <div class="info-block">
+                        <label>Relación Conceptual y Práctica con el Territorio</label>
+                        <p id="infoTerritoryRelation"></p>
+                    </div>
+                    <div class="info-block">
+                        <label>Estrategias Pedagógicas y Metodológicas</label>
+                        <ul id="infoStrategies"></ul>
+                    </div>
+                </div>
+
+                <!-- TAB 4: BALANCE CRÍTICO -->
+                <div class="tab-content" id="tab-balance">
+                    <div class="info-block">
+                        <label>Resultados Principales y Aportes</label>
+                        <ul id="infoResults"></ul>
+                    </div>
+                    <div class="info-block">
+                        <label>Fortalezas de la Experiencia</label>
+                        <p id="infoStrengths" style="color:#1b5e20; background:#e8f5e9; padding:8px; border-radius:4px;"></p>
+                    </div>
+                    <div class="info-block">
+                        <label>Limitaciones Identificadas</label>
+                        <p id="infoLimitations" style="color:#b71c1c; background:#ffebee; padding:8px; border-radius:4px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL PRESENTACIÓN ACADÉMICA -->
+    <div class="modal-overlay" id="introModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Atlas de Memorias y Territorios</h2>
+                <div style="font-size:0.8rem; color:#d0e0d5; margin-top:4px;">
+                    Maestría en Pedagogías Críticas e Intervención Socioeducativa — Universidad Santo Tomás
+                </div>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Esta cartografía reúne cinco experiencias educativas desarrolladas en distintos territorios de Colombia que permiten explorar las relaciones entre memoria, educación y territorio. A través de prácticas como la cartografía social, la educación intercultural, la narración intergeneracional, la danza comunitaria y la investigación participativa, las experiencias muestran distintas maneras de construir conocimiento desde los contextos, las historias y las voces de quienes habitan los territorios.
+                </p>
+                <p>
+                    El mapa invita a reconocer que la memoria no se limita al recuerdo del pasado: también se construye en las relaciones cotidianas, en los saberes comunitarios, en los cuerpos, en las prácticas educativas y en las formas de habitar y defender el territorio.
+                </p>
+                <div style="background:#eee8dc; padding:10px 14px; border-radius:6px; font-size:0.82rem; border-left:4px solid var(--accent-green); margin-top:10px;">
+                    <strong>Guía de exploración:</strong> Utiliza el panel lateral para buscar por palabras clave, filtrar por ejes pedagógicos o seleccionar cualquiera de las experiencias. En el mapa, haz clic en las insignias cartográficas para desplegar la ficha metodológica completa.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal()">Explorar la Cartografía 🗺️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        /* ==========================================================================
+           1. BASE DE DATOS DOCUMENTADA DE LAS 5 EXPERIENCIAS EDUCATIVAS
+           ========================================================================== */
+        const experiencesData = [
+            {
+                id: 1,
+                title: "La escuela es territorio",
+                fullTitle: "La escuela es territorio. Cartografía social de experiencias pedagógicas en instituciones educativas de Medellín y Bello, Colombia",
+                authors: "César Andrés Ospina Mesa, Vladimir Montoya Arango y Lida Sepúlveda López",
+                year: 2021,
+                location: "Medellín y Bello, Antioquia, Colombia",
+                color: "#2d3b2b",
+                ejes: ["Memoria colectiva y territorial", "Cartografía social", "Participación comunitaria"],
+                problematic: "La falta de conexión entre la escuela y las relaciones históricas, sociales, políticas y culturales de los territorios, sin reconocer suficientemente las tensiones y potencialidades que atraviesan esos espacios.",
+                participants: "112 maestros y maestras de 22 instituciones educativas de Medellín. En un segundo proyecto en Bello: 20 docentes, 16 estudiantes y 14 madres de familia de la Institución Educativa La Gabriela.",
+                memoryType: "Memoria colectiva y territorial.",
+                territoryRelation: "La escuela es comprendida como un territorio producido por complejas relaciones históricas y geográficas, atravesado por la diversidad de las personas que lo habitan.",
+                strategies: [
+                    "Cartografía social",
+                    "Etnografía",
+                    "Construcción colectiva de conocimientos territoriales"
+                ],
+                results: [
+                    "Permite comprender la escuela más allá de su infraestructura física, reconociéndola como un espacio productor de saberes y experiencias.",
+                    "Fortalece la reflexión sobre las tensiones sociales, políticas, históricas y culturales que atraviesan el territorio habitado."
+                ],
+                strengths: "Participación activa de la comunidad educativa, diálogo y reconocimiento de diferentes puntos de vista.",
+                limitations: "Las condiciones y particularidades de cada experiencia hacen que su aplicación en otros espacios no pueda asumirse como una reproducción automática.",
+                reference: "Ospina Mesa, C., Montoya Arango, V., & Sepúlveda López, L. (2021). La escuela es territorio. Cartografía social de experiencias pedagógicas en instituciones educativas de Medellín y Bello, Colombia. Territorios, (44-Especial), 15-34. https://doi.org/10.12804/revistas.urosario.edu.co/territorios/a.9024",
+                markers: [
+                    { name: "Medellín (22 Inst. Educativas)", lat: 6.2442, lng: -75.5812, precision: "Municipal (Exacta en municipio)" },
+                    { name: "Bello (I.E. La Gabriela)", lat: 6.3370, lng: -75.5579, precision: "Municipal (Exacta en municipio)" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Educación Intercultural en el Bajo Caquetá",
+                fullTitle: "Experiencias Colectivas y Didácticas para la Educación Intercultural",
+                authors: "Tropenbos Colombia (Autor institucional)",
+                year: 2024,
+                location: "Escuelas comunitarias del bajo río Caquetá, Amazonía colombiana",
+                color: "#4a5d48",
+                ejes: ["Memoria biocultural", "Memoria intergeneracional", "Educación intercultural", "Participación comunitaria"],
+                problematic: "Fortalecer la práctica docente mediante una propuesta didáctica articulada al proyecto educativo comunitario denominado Ordenamiento del Pensamiento Educativo Indígena (OPEI), reconociendo el territorio y los saberes de las comunidades.",
+                participants: "Docentes de escuelas comunitarias del bajo río Caquetá.",
+                memoryType: "Memoria intergeneracional y transmisión de memoria biocultural.",
+                territoryRelation: "El territorio orienta el ejercicio curricular y aporta características diversas de las comunidades. Se reconoce como un referente fundamental para la construcción de propuestas educativas contextualizadas.",
+                strategies: [
+                    "Proyectos Educativos Territoriales (PET)",
+                    "Dispositivo de anillos curriculares",
+                    "Articulación de saberes comunitarios en la planeación educativa"
+                ],
+                results: [
+                    "Fortalecimiento de la educación intercultural desde el trabajo docente y su articulación con el OPEI."
+                ],
+                strengths: "Articulación de saberes comunitarios en la planeación educativa y desarrollo de experiencias contextualizadas.",
+                limitations: "La publicación presenta estrategias y propuestas, pero no plantea directamente resultados específicos de su implementación.",
+                reference: "Tropenbos Colombia. (2024). Experiencias Colectivas y Didácticas para la Educación Intercultural. Publicación institucional, proyecto de fortalecimiento del modelo de educación intercultural en la Amazonía colombiana.",
+                markers: [
+                    { name: "Corredor Fluvial del Bajo Río Caquetá", lat: -1.1000, lng: -70.5000, precision: "Aproximación Regional (Referente territorial amplio)" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Memoria, infancias y pedagogía de paz",
+                fullTitle: "Memoria, infancias y pedagogía de paz en el nordeste de Antioquia (Colombia), 2018-2019",
+                authors: "Mary Luz Marín Posada y Jaime Alberto Saldarriaga Vélez",
+                year: 2021,
+                location: "Nordeste de Antioquia, Colombia",
+                color: "#944127",
+                ejes: ["Memoria intergeneracional", "Infancias y pedagogías de paz", "Memoria colectiva y territorial"],
+                problematic: "El poco reconocimiento de las voces de niños y niñas frente a la construcción de memoria territorial en relación con el conflicto armado.",
+                participants: "Excombatientes que vivieron su infancia en las filas de la guerrilla; Niños y niñas de distintas generaciones que vivieron en zonas afectadas por el conflicto armado.",
+                memoryType: "Memoria intergeneracional, Memorias del territorio, Memoria de infancia y Posmemoria.",
+                territoryRelation: "Las nuevas generaciones comprenden el territorio como algo heredado. Construyen su visión mediante relatos de personas mayores, pares, escuela, internet y redes. En ocasiones, no comprenden por qué ocurrieron determinados acontecimientos.",
+                strategies: [
+                    "Talleres de memoria",
+                    "Narración de experiencias de infancia",
+                    "Comprensión hermenéutica"
+                ],
+                results: [
+                    "Las voces de niños y niñas son fundamentales para construir una pedagogía para la paz.",
+                    "La memoria intergeneracional permite desarrollar conciencia sobre el país y construir posturas críticas frente a lo ocurrido."
+                ],
+                strengths: "Conversación entre generaciones, reconocimiento de la voz infantil y comprensión de los procesos de transmisión e interpretación de memorias.",
+                limitations: "La reconstrucción de relatos depende de los recuerdos y experiencias de participantes que vivieron momentos históricos distintos.",
+                reference: "Marín Posada, M. L., & Saldarriaga Vélez, J. A. (2021). Memoria, infancias y pedagogía de paz en el nordeste de Antioquia (Colombia), 2018-2019. Sociedad e Infancias, 5(1), 29-40. https://doi.org/10.5209/soci.74470",
+                markers: [
+                    { name: "Subregión del Nordeste de Antioquia", lat: 6.9500, lng: -74.7000, precision: "Aproximación Regional (Subregión antioqueña)" }
+                ]
+            },
+            {
+                id: 4,
+                title: "Danzar el Territorio",
+                fullTitle: "Danzar el Territorio: Educación Artística y Construcción de Paz Comunitaria en la Vereda Nazareth desde una Experiencia de Proyección Social de la Universidad de la Amazonia",
+                authors: "Jacqueline Vega Benítez y Blanca Nery Serna Agudelo",
+                year: 2026,
+                location: "Vereda Nazareth, Caquetá, Colombia",
+                color: "#b35638",
+                ejes: ["Arte, cuerpo y territorio", "Infancias y pedagogías de paz", "Participación comunitaria"],
+                problematic: "Comprender los aportes de la danza al reconocimiento de las memorias territoriales, la participación y el fortalecimiento de los vínculos comunitarios.",
+                participants: "Niños y niñas, Jóvenes, Docentes, Estudiantes de la Licenciatura en Educación Artística y Cultura, Actores comunitarios.",
+                memoryType: "Memorias territoriales, locales y culturales.",
+                territoryRelation: "El territorio se comprende como una construcción social y cultural conformada por historias, relaciones, memorias y formas de habitar. El cuerpo es entendido como territorio de memoria; la danza, como espacio de encuentro; y el territorio, como fuente de creación.",
+                strategies: [
+                    "Sistematización de experiencias",
+                    "Talleres y Semilleros de danza comunitaria",
+                    "Mochila de Molano como herramienta de observación, escucha y memoria"
+                ],
+                results: [
+                    "El cuerpo configurado como territorio de memoria.",
+                    "La danza consolidada como espacio de encuentro comunitario.",
+                    "El territorio asumido como fuente de creación artística y el docente como mediador cultural."
+                ],
+                strengths: "Articulación entre cuerpo, arte y memoria; participación comunitaria; fortalecimiento de vínculos y reflexión sobre el territorio habitado.",
+                limitations: "No se establece suficientemente la permanencia del proyecto a largo plazo ni su aplicación en contextos diferentes.",
+                reference: "Vega Benítez, J., & Serna Agudelo, B. N. (2026). Danzar el Territorio: Educación Artística y Construcción de Paz Comunitaria en la Vereda Nazareth desde una Experiencia de Proyección Social de la Universidad de la Amazonia. Ibero Ciencias - Revista Científica y Académica, 5(3), 2364-2381. https://doi.org/10.63371/ic.v5.n3.a1553",
+                markers: [
+                    { name: "Vereda Nazareth (Florencia, Caquetá)", lat: 1.6140, lng: -75.6060, precision: "Aproximación Veredal / Municipal" }
+                ]
+            },
+            {
+                id: 5,
+                title: "Memoria Histórica en Pequeñas Poblaciones",
+                fullTitle: "La recuperación de la memoria histórica y cultural de pequeñas poblaciones como dispositivo de reconocimiento social, cultural y educativo",
+                authors: "Alirio Valencia Agudelo",
+                year: 2020,
+                location: "Pueblorrico, Caicedo, Fredonia, Itagüí y Concepción, Antioquia, Colombia",
+                color: "#d4a359",
+                ejes: ["Memoria histórica y cultural", "Investigación Acción Participación", "Participación comunitaria"],
+                problematic: "Recuperar y reconocer la historia y la memoria cultural de pequeñas poblaciones antioqueñas, fomentando el reconocimiento del patrimonio tangible e intangible.",
+                participants: "Actores del territorio y habitantes de los cinco municipios mencionados.",
+                memoryType: "Memoria histórica y cultural.",
+                territoryRelation: "El territorio se entiende más allá de sus límites y elementos físico-bióticos. Comprende dimensiones socioculturales, políticas, económicas y educativas.",
+                strategies: [
+                    "Investigación Acción Participación (IAP)",
+                    "Grupos comunitarios de trabajo investigativo",
+                    "Investigación sobre historia, cultura, economía, ecología, educación, deporte, religión y patrimonio"
+                ],
+                results: [
+                    "Se produjeron ocho libros impresos y ocho digitales.",
+                    "Las publicaciones se convirtieron en Cátedras Municipales de cada grupo de trabajo y en materiales pedagógicos para generaciones posteriores."
+                ],
+                strengths: "La comunidad participa como equipo investigador. Se articulan memoria, patrimonio, educación y planificación territorial.",
+                limitations: "Se recoge y divulga información, pero no se evidencia suficientemente cómo se utiliza en escenarios educativos ni cómo promueve el reconocimiento de la identidad cultural en distintos espacios.",
+                reference: "Valencia Agudelo, A. (2020). La recuperación de la memoria histórica y cultural de pequeñas poblaciones como dispositivo de reconocimiento social, cultural y educativo. Desbordes, 11(2), 48-57. https://doi.org/10.22490/25394150.4384",
+                markers: [
+                    { name: "Pueblorrico, Antioquia", lat: 5.7900, lng: -75.8394, precision: "Exacta Municipal" },
+                    { name: "Caicedo, Antioquia", lat: 6.4094, lng: -75.9822, precision: "Exacta Municipal" },
+                    { name: "Fredonia, Antioquia", lat: 5.9267, lng: -75.6739, precision: "Exacta Municipal" },
+                    { name: "Itagüí, Antioquia", lat: 6.1722, lng: -75.6094, precision: "Exacta Municipal" },
+                    { name: "Concepción, Antioquia", lat: 6.3956, lng: -75.2600, precision: "Exacta Municipal" }
+                ]
+            }
+        ];
+
+        const allEjes = [
+            "Memoria colectiva y territorial",
+            "Memoria histórica y cultural",
+            "Memoria intergeneracional",
+            "Memoria biocultural",
+            "Infancias y pedagogías de paz",
+            "Educación intercultural",
+            "Cartografía social",
+            "Arte, cuerpo y territorio",
+            "Participación comunitaria",
+            "Investigación Acción Participación"
+        ];
+
+        /* ==========================================================================
+           2. INICIALIZACIÓN Y CONFIGURACIÓN DEL MAPA CON FALLBACKS ROBUSTOS
+           ========================================================================== */
+        let map;
+        let leafletMarkers = [];
+        let selectedEjes = [];
+
+
+        function initMap() {
+    // Centro de Colombia
+    map = L.map('map', {
+        center: [4.5709, -74.2973],
+        zoom: 6,
+        zoomControl: false
+    });
+
+    // Mapa gratuito de OpenStreetMap: no requiere API Key
+    const tileLayer = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+        {
+            attribution: 'Tiles &copy; <a href="https://www.esri.com">Esri</a> — Esri, HERE, Garmin, USGS, OpenStreetMap',
+            maxZoom: 19
+        }
+    ).addTo(map);
+
+    // Aviso si no se pueden cargar las teselas
+    tileLayer.on('tileerror', function() {
+        document.getElementById('fallbackNotice').style.display = 'block';
+    });
+
+    // Ajustar dimensiones del mapa
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 300);
+
+    // Cargar los marcadores
+    renderMarkers();
+}
+
+        /* ==========================================================================
+           3. GESTIÓN DE MARCADORES E ÍCONOS CARTOGRÁFICOS
+           ========================================================================== */
+        function createCustomIcon(expId, color) {
+            return L.divIcon({
+                className: 'custom-icon-wrapper',
+                html: `<div class="custom-map-pin" style="background-color: ${color};"><span>${expId}</span></div>`,
+                iconSize: [32, 32],
+                iconAnchor: [16, 32],
+                popupAnchor: [0, -28]
+            });
+        }
+
+        function renderMarkers() {
+            // Limpiar marcadores existentes
+            leafletMarkers.forEach(m => map.removeLayer(m));
+            leafletMarkers = [];
+
+            const filteredExp = getFilteredData();
+            let bounds = [];
+
+            filteredExp.forEach(exp => {
+                exp.markers.forEach(loc => {
+                    const icon = createCustomIcon(exp.id, exp.color);
+                    const marker = L.marker([loc.lat, loc.lng], { icon: icon }).addTo(map);
+                    
+                    const popupContent = `
+                        <div style="font-family:'Plus Jakarta Sans', sans-serif; padding:4px;">
+                            <strong style="color:${exp.color}; font-size:0.75rem; text-transform:uppercase;">Exp. #${exp.id}</strong>
+                            <h4 style="margin:2px 0 4px 0; font-size:0.9rem;">${exp.title}</h4>
+                            <p style="font-size:0.78rem; color:#555; margin-bottom:4px;">📍 ${loc.name}</p>
+                            <span style="font-size:0.68rem; padding:2px 6px; background:#eee; border-radius:3px; display:inline-block;">${loc.precision}</span>
+                            <hr style="margin:8px 0; border:none; border-top:1px solid #ddd;">
+                            <button onclick="openDetailPanel(${exp.id})" style="background:${exp.color}; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer; width:100%;">Ver Ficha Completa 📑</button>
+                        </div>
+                    `;
+
+                    marker.bindPopup(popupContent);
+                    marker.on('click', () => {
+                        selectCardInList(exp.id);
+                    });
+
+                    leafletMarkers.push(marker);
+                    bounds.push([loc.lat, loc.lng]);
+                });
+            });
+
+            if (bounds.length > 0) {
+                // No auto-zoom brusco si se interactúa, pero ajustar vista si es filtro masivo
+            }
+        }
+
+        /* ==========================================================================
+           4. RENDERING DE CHIPS Y LISTA LATERAL
+           ========================================================================== */
+        function renderChips() {
+            const container = document.getElementById('filterChipsContainer');
+            container.innerHTML = '';
+
+            allEjes.forEach(eje => {
+                const chip = document.createElement('div');
+                chip.className = `chip ${selectedEjes.includes(eje) ? 'active' : ''}`;
+                chip.innerText = eje;
+                chip.onclick = () => toggleFilter(eje);
+                container.appendChild(chip);
+            });
+        }
+
+        function renderExperiencesList() {
+            const container = document.getElementById('experiencesList');
+            const filteredExp = getFilteredData();
+            
+            document.getElementById('resultsCount').innerText = `Mostrando ${filteredExp.length} de 5 experiencias`;
+            container.innerHTML = '';
+
+            if (filteredExp.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:2rem;">No se encontraron experiencias con los criterios seleccionados.</div>`;
+                return;
+            }
+
+            filteredExp.forEach(exp => {
+                const card = document.createElement('div');
+                card.className = `exp-card`;
+                card.id = `exp-card-${exp.id}`;
+                card.style.borderLeftColor = exp.color;
+                card.onclick = () => selectExperience(exp.id);
+
+                const tagsHTML = exp.ejes.map(e => `<span class="tag">${e}</span>`).join('');
+
+                card.innerHTML = `
+                    <div class="exp-card-number">Experiencia #${exp.id}</div>
+                    <div class="exp-card-title">${exp.title}</div>
+                    <div class="exp-card-meta">
+                        <span>📍 ${exp.location}</span>
+                        <span>📅 ${exp.year}</span>
+                    </div>
+                    <div class="exp-card-tags">${tagsHTML}</div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        /* ==========================================================================
+           5. FILTRADO Y BÚSQUEDA MULTICRITERIO
+           ========================================================================== */
+        function getFilteredData() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            return experiencesData.filter(exp => {
+                // Filtro por Ejes Temáticos (debe cumplir todos los seleccionados)
+                const matchesEjes = selectedEjes.length === 0 || selectedEjes.every(eje => exp.ejes.includes(eje));
+
+                // Filtro por Buscador
+                const matchesQuery = !query || 
+                    exp.title.toLowerCase().includes(query) ||
+                    exp.fullTitle.toLowerCase().includes(query) ||
+                    exp.authors.toLowerCase().includes(query) ||
+                    exp.location.toLowerCase().includes(query) ||
+                    exp.problematic.toLowerCase().includes(query) ||
+                    exp.strategies.some(s => s.toLowerCase().includes(query));
+
+                return matchesEjes && matchesQuery;
+            });
+        }
+
+        function filterData() {
+            renderExperiencesList();
+            renderMarkers();
+        }
+
+        function toggleFilter(eje) {
+            if (selectedEjes.includes(eje)) {
+                selectedEjes = selectedEjes.filter(e => e !== eje);
+            } else {
+                selectedEjes.push(eje);
+            }
+            renderChips();
+            filterData();
+        }
+
+        function clearFilters() {
+            selectedEjes = [];
+            document.getElementById('searchInput').value = '';
+            renderChips();
+            filterData();
+            resetMapView();
+        }
+
+        /* ==========================================================================
+           6. SELECCIÓN E INTERACCIÓN CON EL DETALLE (FICHA)
+           ========================================================================== */
+        function selectExperience(id) {
+            selectCardInList(id);
+
+            const exp = experiencesData.find(e => e.id === id);
+            if (exp && exp.markers.length > 0) {
+                if (exp.markers.length === 1) {
+                    map.flyTo([exp.markers[0].lat, exp.markers[0].lng], 9, { duration: 1.2 });
+                } else {
+                    const bounds = L.latLngBounds(exp.markers.map(m => [m.lat, m.lng]));
+                    map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10 });
+                }
+            }
+
+            openDetailPanel(id);
+        }
+
+        function selectCardInList(id) {
+            document.querySelectorAll('.exp-card').forEach(c => c.classList.remove('selected'));
+            const selectedCard = document.getElementById(`exp-card-${id}`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+                selectedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function openDetailPanel(id) {
+            const exp = experiencesData.find(e => e.id === id);
+            if (!exp) return;
+
+            document.getElementById('detailNumber').innerText = `EXPERIENCIA #${exp.id}`;
+            document.getElementById('detailTitle').innerText = exp.title;
+            document.getElementById('detailSubInfo').innerText = `${exp.location} • ${exp.year}`;
+
+            // Tab 1: General
+            document.getElementById('infoFullTitle').innerText = exp.fullTitle;
+            document.getElementById('infoAuthors').innerText = exp.authors;
+            document.getElementById('infoYear').innerText = exp.year;
+            document.getElementById('infoLocation').innerText = exp.location;
+            document.getElementById('infoReference').innerText = exp.reference;
+
+            const precisionText = exp.markers.map(m => `${m.name}: ${m.precision}`).join(' | ');
+            const badge = document.getElementById('infoPrecisionBadge');
+            badge.innerText = precisionText;
+            badge.className = `badge-precision ${exp.markers.some(m => m.precision.includes('Exacta')) ? 'precision-exacta' : 'precision-regional'}`;
+
+            // Tab 2: Contexto
+            document.getElementById('infoProblematic').innerText = exp.problematic;
+            document.getElementById('infoParticipants').innerText = exp.participants;
+            document.getElementById('infoMemoryType').innerText = exp.memoryType;
+
+            // Tab 3: Pedagogía
+            document.getElementById('infoTerritoryRelation').innerText = exp.territoryRelation;
+            const stratList = document.getElementById('infoStrategies');
+            stratList.innerHTML = exp.strategies.map(s => `<li>${s}</li>`).join('');
+
+            // Tab 4: Balance
+            const resList = document.getElementById('infoResults');
+            resList.innerHTML = exp.results.map(r => `<li>${r}</li>`).join('');
+            document.getElementById('infoStrengths').innerText = exp.strengths;
+            document.getElementById('infoLimitations').innerText = exp.limitations;
+
+            // Abrir panel y asegurar la primera pestaña activa
+            switchTab('tab-general');
+            document.getElementById('detailPanel').classList.add('open');
+        }
+
+        function closeDetailPanel() {
+            document.getElementById('detailPanel').classList.remove('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const content = document.getElementById(tabId);
+            if (content) content.classList.add('active');
+        }
+
+        /* ==========================================================================
+           7. CONTROLES DEL MAPA Y MODAL
+           ========================================================================== */
+        function resetMapView() {
+            map.flyTo([4.5709, -74.2973], 6, { duration: 1.2 });
+            closeDetailPanel();
+        }
+
+        function zoomInMap() { map.zoomIn(); }
+        function zoomOutMap() { map.zoomOut(); }
+
+        function openModal() {
+            document.getElementById('introModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('introModal').classList.remove('active');
+        }
+
+        /* ==========================================================================
+           8. INICIALIZACIÓN GENERAL
+           ========================================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            initMap();
+            renderChips();
+            renderExperiencesList();
+            // Abrir presentación académica al inicio
+            openModal();
+        });
+    </script>
+</body>
+</html>
