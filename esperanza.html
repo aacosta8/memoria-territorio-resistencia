@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMORIA,TERRITORIO Y RESISTENCIA: EL CASO DE LA VEREDA LA ESPERANZA</title>
+    <!-- Tailwind CSS CDN (jsDelivr: cdn.tailwindcss.com is DNS-blocked on some networks) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style type="text/tailwindcss">
+        @theme {
+            --color-cream-50: #fcfbf8;
+            --color-cream-100: #f7f4ee;
+            --color-cream-200: #eee8dc;
+            --color-cream-300: #e0d4c1;
+
+            --color-terracotta-100: #f9ebe6;
+            --color-terracotta-500: #c86d51;
+            --color-terracotta-600: #b35638;
+            --color-terracotta-700: #944127;
+
+            --color-olive-100: #e8ece7;
+            --color-olive-500: #4a5d48;
+            --color-olive-800: #2d3b2b;
+            --color-olive-900: #1b2619;
+
+            --color-brass-400: #e5be75;
+            --color-brass-500: #d4a359;
+            --color-brass-600: #b8863b;
+
+            --color-charcoal-800: #2d2d2d;
+            --color-charcoal-900: #1a1a1a;
+
+            --font-serif: "Cormorant Garamond", Georgia, serif;
+            --font-sans: "Plus Jakarta Sans", sans-serif;
+        }
+
+        /* Tailwind 4 defaults borders to currentColor and buttons to the arrow cursor; keep the v3 look */
+        @layer base {
+            *, ::after, ::before, ::backdrop, ::file-selector-button {
+                border-color: var(--color-gray-200, currentColor);
+            }
+            button:not(:disabled), [role="button"]:not(:disabled) {
+                cursor: pointer;
+            }
+        }
+    </style>
+    
+    <style>
+        /* Custom styling for editorial paper texture and zoom dynamics */
+        body {
+            background-color: #f7f4ee;
+            color: #2d2d2d;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .paper-texture {
+            background-image: radial-gradient(#d4a359 0.4px, transparent 0.4px), radial-gradient(#4a5d48 0.4px, #f7f4ee 0.4px);
+            background-size: 16px 16px;
+            background-position: 0 0, 8px 8px;
+            background-opacity: 0.05;
+        }
+
+        .archive-slide {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s ease;
+        }
+        .archive-slide.is-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Scrim keeps gallery captions legible over unpredictable photo contrast */
+        .media-scrim {
+            background: linear-gradient(to top,
+                rgba(27, 38, 25, 0.97) 0%,
+                rgba(27, 38, 25, 0.9) 30%,
+                rgba(27, 38, 25, 0.6) 55%,
+                rgba(27, 38, 25, 0.2) 78%,
+                rgba(27, 38, 25, 0) 100%);
+        }
+
+        .media-caption {
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+        }
+
+        /* Timeline steps stay readable without JS; the reveal only runs once observed */
+        .timeline-step {
+            scroll-margin-top: 7rem;
+        }
+        [data-reveal="on"] .timeline-step {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        [data-reveal="on"] .timeline-step.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            [data-reveal="on"] .timeline-step {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        /* Prezi map viewport transition */
+        .zoom-stage {
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                        transform-origin 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: center center;
+        }
+
+        /* Glassmorphism Navigation */
+        .glass-nav {
+            background: rgba(247, 244, 238, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 163, 89, 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f7f4ee;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b35638;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #944127;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-terracotta-500 selection:text-white">
+
+    <nav class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Title -->
+                <a href="#portada" class="flex items-center space-x-3 group">
+                    <div class="w-8 h-8 rounded-full bg-terracotta-600 text-white flex items-center justify-center font-serif font-bold text-lg group-hover:bg-olive-800 transition">
+                        E
+                    </div>
+                    <span class="font-serif font-bold text-lg sm:text-xl text-olive-900 tracking-wide">La Esperanza</span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden lg:flex items-center space-x-4 xl:space-x-6 text-xs xl:text-sm font-medium text-charcoal-800">
+                    <a href="#territorio" class="hover:text-terracotta-600 transition">Territorio</a>
+                    <a href="#historia" class="hover:text-terracotta-600 transition">Historia</a>
+                    <a href="#huellas" class="hover:text-terracotta-600 transition">Huellas</a>
+                    <a href="#recordar" class="hover:text-terracotta-600 transition">3 Formas</a>
+                    <a href="#disputa" class="hover:text-terracotta-600 transition">Tensiones</a>
+                    <a href="#educacion" class="hover:text-terracotta-600 transition">Educación</a>
+                    <a href="#esperanza" class="hover:text-terracotta-600 transition">Esperanza</a>
+                    <a href="#cierre" class="hover:text-terracotta-600 transition">Conclusiones</a>
+                </div>
+
+                <!-- Global Action Controls -->
+                <div class="flex items-center space-x-3">
+                    <!-- Ambient Sound Audio Synth Button -->
+                    <button id="ambient-audio-btn" type="button" disabled aria-pressed="false" title="Sonido Ambiente del Territorio" class="px-3 py-1.5 rounded-full border border-olive-800 text-olive-800 hover:bg-olive-800 hover:text-white text-xs font-semibold flex items-center space-x-2 transition shadow-xs disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-volume-xmark" id="audio-icon"></i>
+                        <span id="audio-label" class="hidden sm:inline">Sonido Ambiente</span>
+                    </button>
+
+                    <a href="index.html" title="Caja de herramientas" class="px-3 py-1.5 rounded-full border border-olive-800 text-olive-800 hover:bg-olive-800 hover:text-white text-xs font-semibold flex items-center gap-2 transition shadow-xs"><i class="fa-solid fa-toolbox"></i><span class="hidden xl:inline">Caja de herramientas</span></a>
+                    <a href="atlas.html" class="px-3 py-1.5 rounded-full bg-terracotta-600 text-white hover:bg-olive-800 text-xs font-semibold transition shadow-xs">Atlas</a>
+
+                    <!-- Settings Modal Trigger -->
+                    <button id="open-settings-btn" title="Configurar Enlaces y Nombres" class="p-2 rounded-full text-charcoal-800 hover:bg-cream-200 transition">
+                        <i class="fa-solid fa-gear text-lg"></i>
+                    </button>
+
+                    <!-- Mobile Navigation Toggle Button -->
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 text-charcoal-800 hover:text-terracotta-600 focus:outline-hidden">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-cream-100 border-b border-brass-500/30 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
+            <a href="#territorio" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 01</span>Entramos al Territorio</a>
+            <a href="#historia" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 02</span>La Historia que Abre</a>
+            <a href="#huellas" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 03</span>El Territorio Guarda Huellas</a>
+            <a href="#recordar" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 04</span>Tres Formas de Recordar</a>
+            <a href="#disputa" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 05</span>La Memoria se Disputa</a>
+            <a href="#educacion" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 06</span>¿Qué puede hacer la educación?</a>
+            <a href="#esperanza" class="block py-2 text-charcoal-800 hover:text-terracotta-600"><span class="text-[10px] uppercase tracking-widest text-terracotta-600 font-bold mr-2">Módulo 07</span>Más allá de la Violencia</a>
+            <a href="#cierre" class="block py-2 text-charcoal-800 hover:text-terracotta-600">Cierre y Conclusiones</a>
+            <a href="index.html" class="block py-2 text-olive-800 font-semibold">Caja de herramientas</a>
+            <a href="atlas.html" class="block py-2 text-terracotta-600 font-semibold">Atlas de memorias</a>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: PORTADA (HERO) -->
+    <section id="portada" class="relative min-h-screen flex items-center justify-center pt-20 pb-12 px-4 sm:px-6 lg:px-8 bg-linear-to-b from-cream-200 via-cream-100 to-cream-50 overflow-hidden">
+        <!-- Background Editorial Decorative Elements -->
+        <div class="absolute inset-0 opacity-15 paper-texture pointer-events-none"></div>
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-terracotta-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-olive-500/10 rounded-full blur-3xl"></div>
+
+        <div class="relative max-w-4xl mx-auto text-center space-y-8 z-10">
+            <!-- Territory Badge -->
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-terracotta-100 border border-terracotta-500/30 text-terracotta-700 text-xs sm:text-sm font-semibold tracking-wide uppercase">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>El Carmen de Viboral, Antioquia • Colombia</span>
+            </div>
+
+            <!-- Main Title -->
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-olive-900 leading-tight tracking-tight">
+                MEMORIA, TERRITORIO Y RESISTENCIA: <br/>
+                <span class="italic font-normal text-terracotta-600">El caso de la Vereda La Esperanza</span>
+            </h1>
+
+            <!-- Key Central Question -->
+            <div class="max-w-2xl mx-auto py-4 border-y border-brass-500/40">
+                <blockquote class="font-serif italic text-2xl sm:text-3xl text-charcoal-800 leading-relaxed">
+                    “¿Qué papel puede desempeñar la educación en la transmisión de las memorias de La Esperanza entre generaciones, sin reducirlas al relato de la violencia y reconociendo a la comunidad como productora de memoria y conocimiento?”
+                </blockquote>
+            </div>
+
+            <!-- Authors / Team Members -->
+            <div class="pt-2">
+                <p class="text-xs uppercase tracking-widest text-olive-800 font-bold mb-3">Propuesta Investigativa y Pedagógica por</p>
+                <div class="flex flex-wrap justify-center gap-3 sm:gap-6 text-sm font-medium text-charcoal-800">
+                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-xs border border-cream-300 flex items-center space-x-2">
+                        <i class="fa-solid fa-user-circle text-terracotta-600"></i>
+                        <span id="display-author-1">Lina Maria Garcia Gomez</span>
+                    </span>
+                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-xs border border-cream-300 flex items-center space-x-2">
+                        <i class="fa-solid fa-user-circle text-terracotta-600"></i>
+                        <span id="display-author-2">Luisa Fernanda Osorio Zuluaga</span>
+                    </span>
+                    <span class="px-4 py-2 rounded-lg bg-white/80 shadow-xs border border-cream-300 flex items-center space-x-2">
+                        <i class="fa-solid fa-user-circle text-terracotta-600"></i>
+                        <span id="display-author-3">Paula Camila Manrique Ordoñez</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Quick Start Button -->
+            <div class="pt-6">
+                <a href="#territorio" class="inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-olive-800 hover:bg-olive-900 text-white font-medium text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200">
+                    <span>Entrar al Territorio</span>
+                    <i class="fa-solid fa-arrow-down text-brass-400"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: ENTRAMOS AL TERRITORIO -->
+    <section id="territorio" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-t border-cream-200">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="mb-12 text-center sm:text-left">
+                <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 01</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">Entramos al Territorio 🗺️</h2>
+                <p class="text-charcoal-800 mt-2 max-w-2xl">Este territorio no es solamente el escenario de unos hechos de violencia: está habitado, recorrido y recordado. ¿Cómo se construye y se transmite la memoria de un territorio que todavía tiene preguntas abiertas?</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Territorial Route Schematic Diagram -->
+                <div class="lg:col-span-6 bg-cream-100 p-6 sm:p-8 rounded-2xl border border-cream-300 shadow-xs">
+                    <h3 class="font-serif text-2xl font-bold text-olive-900 mb-6 flex items-center space-x-2">
+                        <i class="fa-solid fa-map-location-dot text-terracotta-600"></i>
+                        <span>Ruta Geográfica de Contexto</span>
+                    </h3>
+
+                    <!-- Visual Route Steps -->
+                    <div class="relative space-y-6 pl-4 border-l-2 border-brass-500/40 ml-2">
+                        <!-- Step 1 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[25px] top-1.5 w-4 h-4 rounded-full bg-olive-800 border-2 border-white"></div>
+                            <div class="bg-white p-4 rounded-xl shadow-xs border border-cream-200">
+                                <span class="text-xs font-bold uppercase text-terracotta-600 tracking-wider">Departamento</span>
+                                <h4 class="font-serif text-xl font-bold text-olive-900">Antioquia</h4>
+                                <p class="text-xs text-gray-600 mt-1">Región del Oriente antioqueño. Durante la década de 1990, la red de vías —entre ellas la autopista Medellín-Bogotá— facilitó la movilidad de grupos armados y convirtió la región en un espacio disputado entre guerrilleros, paramilitares y la Fuerza Pública.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[25px] top-1.5 w-4 h-4 rounded-full bg-terracotta-600 border-2 border-white"></div>
+                            <div class="bg-white p-4 rounded-xl shadow-xs border border-cream-200">
+                                <span class="text-xs font-bold uppercase text-terracotta-600 tracking-wider">Municipio</span>
+                                <h4 class="font-serif text-xl font-bold text-olive-900">El Carmen de Viboral</h4>
+                                <p class="text-xs text-gray-600 mt-1">Municipio del Oriente antioqueño donde está ubicada La Esperanza, en un corregimiento que limita con Cocorná, Santuario, Santa Inés y La Chapa. Desde 1996 sostiene uno de los procesos de memoria y búsqueda de justicia más prolongados de la región.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[25px] top-1.5 w-4 h-4 rounded-full bg-brass-500 border-2 border-white animate-pulse"></div>
+                            <div class="bg-terracotta-500 text-white p-4 rounded-xl shadow-md">
+                                <span class="text-xs font-bold uppercase text-brass-400 tracking-wider">Vereda / Territorio Clave</span>
+                                <h4 class="font-serif text-xl font-bold">La Esperanza</h4>
+                                <p class="text-xs text-white/90 mt-1">Vereda ubicada sobre la autopista Medellín-Bogotá. Entre junio y noviembre de 1996 sufrió la desaparición forzada de 17 campesinos y la ejecución extrajudicial del personero municipal. La sentencia de la Corte IDH de 2017 la reconoce hoy como territorio de memoria.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 1 Container & Text -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div id="video1-wrapper" data-video-key="video1" class="bg-charcoal-900 rounded-2xl overflow-hidden shadow-xl aspect-video relative group">
+                        <iframe id="iframe-video1" class="absolute inset-0 w-full h-full hidden" src="" title="La Esperanza: un territorio que recuerda" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                        <button type="button" id="video1-placeholder" onclick="openVideoModal('video1')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center text-white">
+                            <div class="w-16 h-16 rounded-full bg-terracotta-600/40 border border-terracotta-500 flex items-center justify-center text-cream-100 text-2xl mb-4 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                            <span class="text-xs uppercase tracking-widest text-brass-400 font-bold mb-1">Video 1 · Territorio</span>
+                            <h4 class="font-serif text-xl font-bold text-cream-100 mb-2">La Esperanza: un territorio que recuerda</h4>
+                            <p class="text-xs text-cream-200 max-w-sm">Los invitamos a recorrer La Esperanza desde sus memorias, sus búsquedas y sus voces.</p>
+                        </button>
+                    </div>
+
+                    <div class="bg-cream-100 p-6 rounded-2xl border border-cream-300 text-sm leading-relaxed text-charcoal-800">
+                        <p class="font-medium text-olive-900 mb-2">
+                            <i class="fa-solid fa-quote-left text-terracotta-600 mr-1"></i>
+                            El territorio no es únicamente una coordenada geográfica o un soporte físico.
+                        </p>
+                        <p>
+                            En La Esperanza, los caminos, los sembrados y la autopista Medellín-Bogotá guardan significados construidos por la comunidad. Como plantean Langland y Jelin (2003), las memorias se inscriben territorialmente mediante marcas, memoriales y prácticas colectivas: una ruta de tránsito se convirtió en zona de disputa armada y el paisaje cotidiano del trabajo campesino quedó marcado por la ausencia.
+                        </p>
+                        <p class="mt-3">
+                            Para Pierre Nora (1984), un lugar se vuelve “lugar de memoria” cuando una comunidad lo carga de sentido. Las marchas, conmemoraciones y cartografías comunitarias han inscrito el recuerdo en el espacio de La Esperanza.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: LA HISTORIA QUE ABRE LA PREGUNTA -->
+    <section id="historia" class="py-20 px-4 sm:px-6 lg:px-8 bg-cream-100 border-t border-cream-300">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="mb-12 text-center">
+                <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 02</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">La Historia que Abre la Pregunta ⏳</h2>
+                <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">Hitos fundamentales para comprender la memoria histórica sin reducirla a la violencia.</p>
+                <p class="text-xs text-gray-500 mt-2">Recorre la línea de tiempo con el scroll; el riel superior te indica en qué hito vas y te permite saltar a cualquiera.</p>
+            </div>
+
+            <!-- Timeline: every milestone stays readable, the rail only tracks reading position -->
+            <div class="mb-16 max-w-4xl mx-auto">
+                <div class="sticky top-16 z-20 -mx-4 px-4 py-3 bg-cream-100/95 backdrop-blur-sm border-b border-cream-300">
+                    <nav id="timeline-rail" aria-label="Hitos de la historia" class="flex gap-2 overflow-x-auto pb-1 md:grid md:grid-cols-5 md:overflow-visible md:pb-0"></nav>
+                    <div class="mt-3 h-1 rounded-full bg-cream-300 overflow-hidden">
+                        <div id="timeline-progress" class="h-full w-0 rounded-full bg-terracotta-500 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div id="timeline-steps" class="relative mt-8 space-y-6"></div>
+            </div>
+
+            <!-- Documents Archive Viewer & Video Short -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Archive Document Viewer -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-cream-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-serif text-2xl font-bold text-olive-900">Archivos y Documentos de Memoria</h3>
+                            <span class="text-xs text-gray-500">Fuente oficial</span>
+                        </div>
+                        <button type="button" onclick="openFichaModal()" class="group w-full text-left rounded-2xl border border-cream-300 bg-cream-50 hover:border-terracotta-500 hover:shadow-md transition overflow-hidden">
+                            <div class="flex items-stretch">
+                                <div class="w-20 sm:w-24 shrink-0 bg-olive-900 text-cream-100 flex flex-col items-center justify-center px-3 py-5">
+                                    <i class="fa-solid fa-scale-balanced text-brass-400 text-xl mb-2"></i>
+                                    <span class="text-[9px] uppercase tracking-widest font-bold text-center leading-tight">Corte IDH</span>
+                                </div>
+                                <div class="p-4 sm:p-5">
+                                    <span class="inline-block px-2 py-0.5 rounded-sm bg-terracotta-100 text-terracotta-700 text-[10px] font-bold uppercase tracking-wider mb-2">Ficha técnica</span>
+                                    <h4 class="font-serif text-lg sm:text-xl font-bold text-olive-900 leading-snug">Vereda La Esperanza Vs. Colombia</h4>
+                                    <p class="text-[11px] text-gray-500 mt-1">Estado demandado: Colombia · Sentencia del 31 de agosto de 2017</p>
+                                    <p class="text-xs text-charcoal-800 mt-3 leading-relaxed line-clamp-3">
+                                        El caso se relaciona con la desaparición forzada de 14 personas, incluyendo tres niños, y la ejecución de otra persona, así como la privación de la libertad de un niño, ocurridas en la vereda La Esperanza, El Carmen de Viboral, entre el 21 de junio y el 27 de diciembre de 1996.
+                                    </p>
+                                    <span class="inline-flex items-center mt-3 text-xs font-bold text-terracotta-600 group-hover:text-terracotta-700">
+                                        Leer ficha completa
+                                        <i class="fa-solid fa-arrow-right ml-2 text-[10px]"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </button>
+                        <div class="mt-5">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-serif text-lg font-bold text-olive-900">Registro fotográfico</h4>
+                                <span id="archive-photo-count" class="text-[10px] uppercase tracking-widest font-bold text-terracotta-600">1 / 6</span>
+                            </div>
+                            <div class="relative rounded-2xl overflow-hidden border border-cream-300 bg-olive-900 aspect-[16/10]">
+                                <div id="archive-carousel-track" class="absolute inset-0"></div>
+                                <button type="button" onclick="stepArchiveCarousel(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 text-olive-900 shadow-sm border border-cream-200 hover:bg-cream-100 transition" aria-label="Fotografía anterior">
+                                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                                </button>
+                                <button type="button" onclick="stepArchiveCarousel(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 text-olive-900 shadow-sm border border-cream-200 hover:bg-cream-100 transition" aria-label="Fotografía siguiente">
+                                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                                </button>
+                                <div class="absolute inset-x-0 bottom-0 z-10 p-4 media-scrim pointer-events-none">
+                                    <p id="archive-photo-title" class="font-serif text-base font-bold text-white leading-snug"></p>
+                                    <p id="archive-photo-caption" class="text-[11px] text-cream-100/90 mt-1 leading-snug"></p>
+                                </div>
+                            </div>
+                            <div id="archive-photo-dots" class="flex justify-center gap-2 mt-3"></div>
+                        </div>
+                        <div class="mt-5 p-4 rounded-xl bg-cream-100 border border-cream-300">
+                            <h4 class="font-serif text-lg font-bold text-olive-900 mb-2">Archivo detallado de las víctimas</h4>
+                            <p class="text-xs text-gray-700 leading-relaxed">
+                                El registro documental identifica, entre otras víctimas, a Aníbal de Jesús Castaño Gallego y Óscar Zuluaga Marulanda (21 de junio); Juan Crisóstomo Cardona Quintero y Miguel Ancésar Cardona Quintero (22 de junio); Juan Carlos Gallego Hernández y Jaime Alonso Mejía Quintero (7 de julio), junto con el asesinato de Javier Giraldo; Jesús Castaño Castaño, Octavio de Jesús Gallego Hernández y Orlando de Jesús Muñoz Castaño (9 de julio); el personero Helí Gómez (26 de noviembre); y Andrés Suárez Cordero, menor de edad (26 de diciembre). El caso documentado ante la Corte IDH comprende 17 personas desaparecidas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Interrogation Box -->
+                <div class="lg:col-span-5 lg:sticky lg:top-24 bg-olive-900 text-white p-6 sm:p-8 rounded-2xl shadow-lg space-y-6">
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded-full bg-brass-500/20 text-brass-400 text-xs font-bold uppercase mb-4">Video 2 · Historia</span>
+                        <blockquote class="font-serif italic text-2xl leading-snug mb-4 text-cream-100">
+                            Una historia que sigue presente
+                        </blockquote>
+                        <p class="text-xs text-cream-300 leading-relaxed">
+                            En 1996 ocurrieron los asesinatos y las desapariciones. En 2017 llegó la sentencia de la Corte IDH y en 2024 el reconocimiento del Estado. Pero esta historia no termina en una fecha: la memoria continúa en las familias, en el territorio y en las nuevas generaciones.
+                        </p>
+                    </div>
+
+                    <div id="video2-wrapper" data-video-key="video2" class="w-full bg-charcoal-900 rounded-xl overflow-hidden aspect-video relative group border border-olive-800">
+                        <iframe id="iframe-video2" class="absolute inset-0 w-full h-full hidden" src="" title="Una historia que sigue presente" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <button type="button" id="video2-placeholder" onclick="openVideoModal('video2')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-4 text-center">
+                            <div class="w-14 h-14 rounded-full bg-terracotta-600/40 border border-terracotta-500 flex items-center justify-center text-cream-100 text-xl mb-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-0.5"></i>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-widest text-brass-400 font-bold">Video 2 · Historia</span>
+                            <p class="font-serif text-sm font-bold text-cream-100 mt-1">Una historia que sigue presente</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: EL TERRITORIO GUARDA HUELLAS (PREZI ZOOM) -->
+    <section id="huellas" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-t border-cream-200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 03</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">El Territorio Guarda Huellas 📍</h2>
+                <p class="font-serif italic text-xl sm:text-2xl text-terracotta-600 mt-2">"¿Qué queda en un territorio cuando alguien desaparece?"</p>
+                <p class="text-xs text-gray-500 mt-1">Haz clic sobre las marcas del mapa para acercarte a cada lugar de memoria del corregimiento.</p>
+            </div>
+
+            <!-- Spatial Prezi Explorer Container -->
+            <div class="relative bg-cream-100 rounded-2xl border border-cream-300 p-4 sm:p-8 overflow-hidden shadow-inner min-h-[500px] flex flex-col justify-between">
+                <!-- Zoom Controls -->
+                <div class="absolute top-4 right-4 z-20 flex space-x-2">
+                    <button onclick="resetPreziZoom()" class="px-3 py-1.5 rounded-lg bg-white/90 shadow-sm text-xs font-bold text-olive-900 hover:bg-cream-200 border border-cream-300 transition">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Ver Mapa Completo
+                    </button>
+                </div>
+
+                <!-- Viewport clips the zoom so the enlarged map never covers the detail card -->
+                <div class="relative w-full rounded-xl overflow-hidden border border-olive-800/20 bg-cream-200">
+                    <!-- Canvas Zoom Stage: ratio matches the map file so hotspot percentages land on real places -->
+                    <div id="prezi-stage" class="zoom-stage relative w-full aspect-[1024/483]">
+                        <img src="assets/mapa-la-esperanza.jpg" alt="Mapa del corregimiento La Esperanza y sus veredas, El Carmen de Viboral, Antioquia" class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" draggable="false">
+
+                        <!-- Hotspot 1: Autopista Medellín-Bogotá -->
+                        <div onclick="zoomToSpot('carretera', 85, 26, 2.4)" class="absolute left-[85%] top-[26%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-terracotta-600 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
+                                <i class="fa-solid fa-road text-sm"></i>
+                            </div>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded-sm text-[10px] font-bold shadow-sm border border-cream-200 text-olive-900">La Carretera</span>
+                        </div>
+
+                        <!-- Hotspot 2: Caminos y sembrados de las veredas -->
+                        <div onclick="zoomToSpot('fotos', 46, 46, 2.4)" class="absolute left-[46%] top-[46%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-olive-800 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
+                                <i class="fa-solid fa-camera text-sm"></i>
+                            </div>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded-sm text-[10px] font-bold shadow-sm border border-cream-200 text-olive-900">Registro Fotográfico</span>
+                        </div>
+
+                        <!-- Hotspot 3: Cabecera de El Carmen de Viboral -->
+                        <div onclick="zoomToSpot('conmemoraciones', 17, 29, 2.4)" class="absolute left-[17%] top-[29%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brass-500 text-charcoal-900 flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
+                                <i class="fa-solid fa-monument text-sm"></i>
+                            </div>
+                            <span class="absolute top-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded-sm text-[10px] font-bold shadow-sm border border-cream-200 text-olive-900">Conmemoraciones</span>
+                        </div>
+
+                        <!-- Hotspot 4: Vereda La Esperanza -->
+                        <div onclick="zoomToSpot('marcas', 76, 84, 2.4)" class="absolute left-[76%] top-[84%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-charcoal-800 text-white flex items-center justify-center font-bold shadow-lg ring-2 ring-white/80 group-hover:scale-125 transition">
+                                <i class="fa-solid fa-bookmark text-sm"></i>
+                            </div>
+                            <span class="absolute bottom-11 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 rounded-sm text-[10px] font-bold shadow-sm border border-cream-200 text-olive-900">Marcas de Memoria</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spot Dynamic Information Display Drawer -->
+                <div id="prezi-info-card" class="relative z-10 mt-4 bg-white p-6 rounded-xl border border-cream-300 shadow-md">
+                    <h4 id="prezi-title" class="font-serif text-2xl font-bold text-olive-900">Selecciona un punto en el mapa del corregimiento</h4>
+                    <p id="prezi-desc" class="text-sm text-gray-600 mt-2">
+                        Recorre el territorio entre El Carmen de Viboral y la vereda La Esperanza. Al hacer clic en una marca, el mapa se acerca al lugar y revela su huella de memoria.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: TRES FORMAS DE RECORDAR -->
+    <section id="recordar" class="py-20 px-4 sm:px-6 lg:px-8 bg-cream-100 border-t border-cream-300">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="mb-12 text-center">
+                <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 04</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">Tres Formas de Recordar 🗂️</h2>
+                <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">
+                    Categorías de análisis para interpretar la memoria sin separarla del sustento teórico pedagógico.
+                </p>
+            </div>
+
+            <!-- 3 Category Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card A: Ausencia y Pérdida -->
+                <div class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden flex flex-col justify-between transition hover:shadow-md">
+                    <div class="p-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 shrink-0 rounded-xl bg-terracotta-100 text-terracotta-600 flex items-center justify-center text-xl font-bold">
+                                🥀
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-terracotta-600 uppercase tracking-wider">Categoría A</span>
+                                <h3 class="font-serif text-2xl font-bold text-olive-900 leading-tight">Ausencia y Pérdida</h3>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-3 leading-relaxed">
+                            La desaparición produjo una ausencia particular: sin cuerpo, cierre del duelo ni certeza sobre el destino de la persona. Esa ausencia se instaló en la geografía cotidiana de los caminos y sembrados.
+                        </p>
+                        
+                        <div class="mt-6 pt-4 border-t border-cream-200">
+                            <span class="text-[10px] uppercase font-bold text-olive-800 tracking-wider block mb-2">Sustento Teórico</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Paul Ricoeur</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Michael Pollak</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="openCategoryModal('ausencia')" class="w-full py-3 bg-cream-200 hover:bg-terracotta-600 hover:text-white text-olive-900 font-bold text-xs tracking-wider uppercase transition">
+                        Explorar Ausencia ➔
+                    </button>
+                </div>
+
+                <!-- Card B: Búsqueda -->
+                <div class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden flex flex-col justify-between transition hover:shadow-md">
+                    <div class="p-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 shrink-0 rounded-xl bg-brass-400/20 text-brass-600 flex items-center justify-center text-xl font-bold">
+                                🔍
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-brass-600 uppercase tracking-wider">Categoría B</span>
+                                <h3 class="font-serif text-2xl font-bold text-olive-900 leading-tight">Búsqueda</h3>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-3 leading-relaxed">
+                            Flor Gallego, Cémida Cardona y Cruz Hernández lideraron con las familias un proceso de denuncia y búsqueda que llevó el caso hasta la Comisión y la Corte Interamericana de Derechos Humanos.
+                        </p>
+
+                        <div class="mt-6 pt-4 border-t border-cream-200">
+                            <span class="text-[10px] uppercase font-bold text-olive-800 tracking-wider block mb-2">Sustento Teórico</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Alessandro Portelli</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Michael Pollak</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="openCategoryModal('busqueda')" class="w-full py-3 bg-cream-200 hover:bg-brass-500 hover:text-charcoal-900 text-olive-900 font-bold text-xs tracking-wider uppercase transition">
+                        Explorar Búsqueda ➔
+                    </button>
+                </div>
+
+                <!-- Card C: Transmisión Intergeneracional -->
+                <div class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden flex flex-col justify-between transition hover:shadow-md">
+                    <div class="p-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 shrink-0 rounded-xl bg-olive-100 text-olive-800 flex items-center justify-center text-xl font-bold">
+                                🌱
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-olive-800 uppercase tracking-wider">Categoría C</span>
+                                <h3 class="font-serif text-2xl font-bold text-olive-900 leading-tight">Transmisión Intergeneracional</h3>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-3 leading-relaxed">
+                            Hijos y nietos reelaboran activamente el legado mediante conmemoraciones y expresiones como la obra de teatro realizada en los 20 años de los hechos.
+                        </p>
+
+                        <div class="mt-6 pt-4 border-t border-cream-200">
+                            <span class="text-[10px] uppercase font-bold text-olive-800 tracking-wider block mb-2">Sustento Teórico</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Joan Pagès</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Mario Carretero</span>
+                                <span class="px-2.5 py-1 rounded-sm bg-cream-200 text-charcoal-800 text-xs font-semibold">Elizabeth Jelin</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="openCategoryModal('transmision')" class="w-full py-3 bg-cream-200 hover:bg-olive-800 hover:text-white text-olive-900 font-bold text-xs tracking-wider uppercase transition">
+                        Explorar Transmisión ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- Video strip: keeps the three category cards symmetrical -->
+            <div class="mt-12">
+                <div class="text-center mb-6">
+                    <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Videos del eje memoria</span>
+                    <h3 class="font-serif text-2xl font-bold text-olive-900 mt-1">Buscar también ha sido recordar</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <figure class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden">
+                        <div id="video3-wrapper" data-video-key="video3" class="w-full bg-charcoal-900 aspect-video relative group">
+                            <iframe id="iframe-video3" class="absolute inset-0 w-full h-full hidden" src="" title="La memoria de la búsqueda" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <button type="button" id="video3-placeholder" onclick="openVideoModal('video3')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-4 text-center">
+                                <div class="w-14 h-14 rounded-full bg-brass-500/30 border border-brass-400 flex items-center justify-center text-cream-100 mb-3 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </div>
+                                <span class="text-[10px] uppercase tracking-widest text-brass-400 font-bold">Video 3 · Categoría B</span>
+                                <p class="font-serif text-lg font-bold text-cream-100 mt-1 leading-snug">La memoria de la búsqueda</p>
+                            </button>
+                        </div>
+                        <figcaption class="p-5 text-xs text-gray-600 leading-relaxed">
+                            Nombrar a quienes faltan, exigir verdad y participar en conmemoraciones son formas de construir memoria: algo que la comunidad produce y mantiene vivo.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="bg-white rounded-2xl border border-cream-300 shadow-xs overflow-hidden">
+                        <div id="video4-wrapper" data-video-key="video4" class="w-full bg-charcoal-900 aspect-video relative group">
+                            <iframe id="iframe-video4" class="absolute inset-0 w-full h-full hidden" src="" title="Una memoria que pasa de generación en generación" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <button type="button" id="video4-placeholder" onclick="openVideoModal('video4')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-4 text-center">
+                                <div class="w-14 h-14 rounded-full bg-brass-500/30 border border-brass-400 flex items-center justify-center text-cream-100 mb-3 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </div>
+                                <span class="text-[10px] uppercase tracking-widest text-brass-400 font-bold">Video 4 · Categoría C</span>
+                                <p class="font-serif text-lg font-bold text-cream-100 mt-1 leading-snug">Una memoria que pasa de generación en generación</p>
+                            </button>
+                        </div>
+                        <figcaption class="p-5 text-xs text-gray-600 leading-relaxed">
+                            ¿Qué ocurre cuando una generación recibe una historia que no vivió directamente? Cada generación puede recibir el pasado, pero también construir nuevos sentidos sobre él.
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: LA MEMORIA TAMBIÉN SE DISPUTA -->
+    <section id="disputa" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-t border-cream-200">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="mb-12 text-center">
+                <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 05 • Rubrica Curricular</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">La Memoria También se Disputa ⚖️</h2>
+                <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">Mapa conceptual de tensiones dialécticas que enriquecen el debate académico.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Dialectic Tension Map -->
+                <div class="lg:col-span-7 space-y-4">
+                    <!-- Tension Pair 1 -->
+                    <div class="p-5 rounded-2xl bg-cream-100 border border-cream-300 hover:border-terracotta-500 transition">
+                        <div class="flex items-center justify-between font-serif text-xl font-bold text-olive-900 mb-2">
+                            <span class="text-terracotta-600">MEMORIA</span>
+                            <span class="text-xs text-gray-400 font-sans uppercase">↔ Tensión Dialéctica ↔</span>
+                            <span class="text-olive-800">HISTORIA</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mb-3">Los testimonios y la sentencia no son fuentes opuestas. Joutard (2007) propone su diálogo y Portelli (1991) muestra que la historia oral aporta significados que los documentos institucionales no capturan por sí solos.</p>
+                        <div class="flex space-x-2">
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Philippe Joutard</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Alessandro Portelli</span>
+                        </div>
+                    </div>
+
+                    <!-- Tension Pair 2 -->
+                    <div class="p-5 rounded-2xl bg-cream-100 border border-cream-300 hover:border-brass-500 transition">
+                        <div class="flex items-center justify-between font-serif text-xl font-bold text-olive-900 mb-2">
+                            <span class="text-terracotta-600">MEMORIA</span>
+                            <span class="text-xs text-gray-400 font-sans uppercase">↔ Tensión Dialéctica ↔</span>
+                            <span class="text-brass-600">OLVIDO</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mb-3">Durante más de veinte años, las familias disputaron el silencio institucional. Recordar expresa relaciones de poder y, en La Esperanza, persigue verdad, justicia y no repetición, no el uso instrumental del dolor.</p>
+                        <div class="flex space-x-2">
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Elizabeth Jelin</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Michael Pollak</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Tzvetan Todorov</span>
+                        </div>
+                    </div>
+
+                    <!-- Tension Pair 3 -->
+                    <div class="p-5 rounded-2xl bg-cream-100 border border-cream-300 hover:border-olive-800 transition">
+                        <div class="flex items-center justify-between font-serif text-xl font-bold text-olive-900 mb-2">
+                            <span class="text-terracotta-600">MEMORIA</span>
+                            <span class="text-xs text-gray-400 font-sans uppercase">↔ Tensión Dialéctica ↔</span>
+                            <span class="text-olive-900">EDUCACIÓN</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mb-3">La escuela puede reducir el caso a una cronología de violencia o dialogar críticamente con las memorias sociales. Enseñar implica formar sujetos capaces de reconocer las condiciones que hicieron posible la violencia.</p>
+                        <div class="flex space-x-2">
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Joan Pagès</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Mario Carretero</span>
+                            <span class="px-2 py-0.5 rounded-sm bg-white text-xs font-bold text-olive-900 border border-cream-300">Theodor Adorno</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reflection Sheet -->
+                <div class="lg:col-span-5 bg-terracotta-700 text-white p-6 sm:p-8 rounded-2xl shadow-lg space-y-6">
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase mb-4">Pregunta de debate</span>
+                        <blockquote class="font-serif italic text-2xl leading-snug mb-4">
+                            “¿Qué ocurre cuando una memoria comunitaria entra al espacio educativo?”
+                        </blockquote>
+                        <p class="text-xs text-white/90 leading-relaxed">
+                            Educar sobre la memoria de La Esperanza no debería significar convertir el dolor de la comunidad en un contenido escolar cerrado. La pregunta permite analizar los riesgos de neutralización pedagógica.
+                        </p>
+                    </div>
+
+                    <div class="pt-5 border-t border-white/20 space-y-3">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-brass-400 mt-0.5"></i>
+                            <p class="text-xs text-white/90 leading-relaxed">Reconocer los testimonios, documentos y fotografías de la comunidad como fuentes de conocimiento.</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-brass-400 mt-0.5"></i>
+                            <p class="text-xs text-white/90 leading-relaxed">Crear espacios para escuchar esa memoria, interrogarla y comprenderla críticamente.</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-brass-400 mt-0.5"></i>
+                            <p class="text-xs text-white/90 leading-relaxed">Evitar reducir el caso a una cronología de violencia que desconozca a la comunidad como sujeto que produce conocimiento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: ¿QUÉ PUEDE HACER LA EDUCACIÓN? -->
+    <section id="educacion" class="py-20 px-4 sm:px-6 lg:px-8 bg-cream-100 border-t border-cream-300">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-12 text-center">
+                <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 06</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">¿Qué puede hacer la educación? 🎓</h2>
+                <p class="text-charcoal-800 mt-2 max-w-2xl mx-auto">La pregunta ya no es solamente cómo transmitir una historia, sino cómo crear espacios para escucharla, interrogarla y comprenderla críticamente.</p>
+            </div>
+
+            <!-- Central Thesis Visual Banner -->
+            <div class="bg-linear-to-r from-olive-900 via-olive-800 to-olive-900 text-white p-8 sm:p-12 rounded-3xl shadow-xl text-center mb-10 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-serif">🎓</div>
+                <span class="text-xs font-bold uppercase tracking-widest text-brass-400 block mb-3">Tesis Central de la Propuesta Pedagógica</span>
+                <p class="font-serif text-3xl sm:text-5xl font-bold leading-tight max-w-4xl mx-auto text-cream-100">
+                    “La comunidad no es objeto de memoria: es productora de memoria y conocimiento.”
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto mb-16">
+                <div id="video5-wrapper" data-video-key="video5" class="w-full bg-charcoal-900 rounded-2xl overflow-hidden aspect-video relative group shadow-xl">
+                    <iframe id="iframe-video5" class="absolute inset-0 w-full h-full hidden" src="" title="¿Qué puede hacer la educación con esta memoria?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <button type="button" id="video5-placeholder" onclick="openVideoModal('video5')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center">
+                        <div class="w-16 h-16 rounded-full bg-brass-500/30 border border-brass-400 flex items-center justify-center text-cream-100 text-2xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest text-brass-400 font-bold mb-1">Video 5 · Educación</span>
+                        <h3 class="font-serif text-2xl font-bold text-cream-100 mb-2">¿Qué puede hacer la educación con esta memoria?</h3>
+                        <p class="text-xs text-cream-200 max-w-md">Educar no debería convertir el dolor de la comunidad en un contenido escolar cerrado. Implica reconocer sus testimonios, documentos, fotografías y territorio como fuentes de conocimiento.</p>
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-center mb-10">
+                <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Ruta de Acción Pedagógica</span>
+                <h3 class="font-serif text-3xl font-bold text-olive-900 mt-1">NO SOLO TRANSMITIR</h3>
+                <p class="text-xs text-gray-600 mt-1">Haz clic sobre cada verbo para desplegar la dimensión pedagógica transformadora.</p>
+            </div>
+
+            <!-- Pedagogical Verbs Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <!-- Verbo 1 -->
+                <div onclick="showVerbMeaning('Escuchar', 'Reconocer los testimonios de Flor Gallego, Claudia Castaño y las familias de La Esperanza como fuentes legítimas de conocimiento, no solo como material sensible o anecdótico (Portelli, 1991).')" class="cursor-pointer bg-white p-5 rounded-2xl border border-cream-300 text-center hover:border-terracotta-500 hover:shadow-md transition group">
+                    <div class="w-10 h-10 rounded-full bg-terracotta-100 text-terracotta-600 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
+                        👂
+                    </div>
+                    <h4 class="font-serif font-bold text-lg text-olive-900">Escuchar</h4>
+                </div>
+
+                <!-- Verbo 2 -->
+                <div onclick="showVerbMeaning('Preguntar', 'Formular con los estudiantes la pregunta central: ¿qué papel puede desempeñar la educación en la transmisión de esta memoria sin reducirla a la violencia?')" class="cursor-pointer bg-white p-5 rounded-2xl border border-cream-300 text-center hover:border-brass-500 hover:shadow-md transition group">
+                    <div class="w-10 h-10 rounded-full bg-brass-400/20 text-brass-600 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
+                        ❓
+                    </div>
+                    <h4 class="font-serif font-bold text-lg text-olive-900">Preguntar</h4>
+                </div>
+
+                <!-- Verbo 3 -->
+                <div onclick="showVerbMeaning('Contrastar', 'Poner en diálogo los testimonios familiares con los documentos judiciales y la sentencia de la Corte Interamericana, sin que una fuente sustituya a la otra (Ricoeur, 2003; Joutard, 2007).')" class="cursor-pointer bg-white p-5 rounded-2xl border border-cream-300 text-center hover:border-olive-800 hover:shadow-md transition group">
+                    <div class="w-10 h-10 rounded-full bg-olive-100 text-olive-800 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
+                        ⚖️
+                    </div>
+                    <h4 class="font-serif font-bold text-lg text-olive-900">Contrastar</h4>
+                </div>
+
+                <!-- Verbo 4 -->
+                <div onclick="showVerbMeaning('Interpretar', 'Analizar por qué la ausencia y la pérdida se transformaron en búsqueda activa y por qué esa búsqueda se convirtió en un legado transmitido a la segunda generación (Jelin, 2002).')" class="cursor-pointer bg-white p-5 rounded-2xl border border-cream-300 text-center hover:border-terracotta-500 hover:shadow-md transition group">
+                    <div class="w-10 h-10 rounded-full bg-terracotta-100 text-terracotta-600 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
+                        🔍
+                    </div>
+                    <h4 class="font-serif font-bold text-lg text-olive-900">Interpretar</h4>
+                </div>
+
+                <!-- Verbo 5 -->
+                <div onclick="showVerbMeaning('Resignificar', 'Comprender La Esperanza no solo como escenario de violencia, sino como mapa de memoria construido por la comunidad (Nora, 1984; Langland y Jelin, 2003).')" class="cursor-pointer bg-white p-5 rounded-2xl border border-cream-300 text-center hover:border-brass-500 hover:shadow-md transition group">
+                    <div class="w-10 h-10 rounded-full bg-brass-400/20 text-brass-600 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
+                        🌱
+                    </div>
+                    <h4 class="font-serif font-bold text-lg text-olive-900">Resignificar</h4>
+                </div>
+
+                <!-- Verbo 6 -->
+                <div onclick="showVerbMeaning('Construir conocimiento', 'Proponer desde el aula formas de dignificación y no repetición que reconozcan a la comunidad como productora de conocimiento, no solo como víctima de una tragedia (Pagès, 2008; Carretero et al., 2006).')" class="cursor-pointer bg-white p-5 rounded-2xl border border-cream-300 text-center hover:border-olive-800 hover:shadow-md transition group">
+                    <div class="w-10 h-10 rounded-full bg-olive-100 text-olive-800 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
+                        💡
+                    </div>
+                    <h4 class="font-serif font-bold text-lg text-olive-900">Construir</h4>
+                </div>
+            </div>
+
+            <!-- Verb Explanation Modal Banner -->
+            <div id="verb-modal-card" class="mt-8 bg-white p-6 rounded-2xl border border-cream-300 shadow-xs hidden">
+                <h4 id="verb-modal-title" class="font-serif text-2xl font-bold text-olive-900"></h4>
+                <p id="verb-modal-desc" class="text-sm text-gray-700 mt-2 leading-relaxed"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: LA ESPERANZA MÁS ALLÁ DE LA VIOLENCIA -->
+    <section id="esperanza" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-t border-cream-200">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="mb-12 text-center">
+                <span class="text-xs uppercase font-bold tracking-widest text-terracotta-600">Módulo 07</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-olive-900 mt-1">La Esperanza Más Allá de la Violencia 🌱</h2>
+                <p class="font-serif italic text-xl text-terracotta-600 mt-2">¿Qué más cuenta esta historia además del conflicto armado?</p>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-xs border border-cream-300">
+                    <img src="https://estaticos.elcolombiano.com/binrepository/845x565/65c0/780d565/none/11101/VXPA/acto-de-perdon-en-el-carmen-de-vibor_46244318_20241009010027.jpg" alt="Acto de perdón en El Carmen de Viboral" referrerpolicy="no-referrer" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 media-scrim pointer-events-none"></div>
+                    <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
+                        <span class="block text-[11px] font-bold uppercase tracking-widest text-brass-400">Liderazgo Rural</span>
+                        <h4 class="font-serif text-xl font-bold leading-snug mt-1">Mujeres y Dignidad</h4>
+                        <p class="text-xs text-cream-200 mt-2 leading-relaxed">Las madres rurales sostuvieron la crianza, la subsistencia y la lucha por la verdad en medio del abandono estatal.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-xs border border-cream-300">
+                    <img src="images/archivo/mi.jpg" alt="Jóvenes de la comunidad en actividades de memoria" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 media-scrim pointer-events-none"></div>
+                    <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
+                        <span class="block text-[11px] font-bold uppercase tracking-widest text-brass-400">Nuevas Generaciones</span>
+                        <h4 class="font-serif text-xl font-bold leading-snug mt-1">Jóvenes del Territorio</h4>
+                        <p class="text-xs text-cream-200 mt-2 leading-relaxed">Hijos y nietos sostienen y transmiten esta memoria como propia, como mostró la obra de teatro de 2016.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-xs border border-cream-300">
+                    <img src="images/archivo/me.jpg" alt="Retrato y flores en el acto de reconocimiento de responsabilidad del Estado" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 media-scrim pointer-events-none"></div>
+                    <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
+                        <span class="block text-[11px] font-bold uppercase tracking-widest text-brass-400">Encuentro Vivo</span>
+                        <h4 class="font-serif text-xl font-bold leading-snug mt-1">Conmemoraciones</h4>
+                        <p class="text-xs text-cream-200 mt-2 leading-relaxed">La conmemoración de 2016 y el reconocimiento estatal de 2017 unen justicia institucional y encuentro comunitario.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="group relative overflow-hidden rounded-2xl aspect-[3/4] bg-olive-900 shadow-xs border border-cream-300">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvctppk24MN1Qws8WLtBBww69s7FzW8gSRCAuxvuO_2D7HTUSl1Soz6f4&s=10" alt="Marcha comunitaria con pancarta de La Esperanza" referrerpolicy="no-referrer" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 media-scrim pointer-events-none"></div>
+                    <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white media-caption">
+                        <span class="block text-[11px] font-bold uppercase tracking-widest text-brass-400">Memoria en Circulación</span>
+                        <h4 class="font-serif text-xl font-bold leading-snug mt-1">Expresiones Culturales</h4>
+                        <p class="text-xs text-cream-200 mt-2 leading-relaxed">El teatro, las marchas, las conmemoraciones y los medios hacen circular la memoria más allá del territorio.</p>
+                    </figcaption>
+                </figure>
+            </div>
+
+            <!-- Featured documentary: facade avoids loading the YouTube player until requested -->
+            <div class="bg-olive-900 rounded-3xl overflow-hidden shadow-xl mb-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                    <div id="doc-video-frame" class="lg:col-span-7 relative aspect-video bg-charcoal-900">
+                        <button type="button" onclick="loadFeaturedDocumentary()" aria-label="Reproducir el documental #QueNoMueraLaEsperanza" class="group absolute inset-0 w-full h-full cursor-pointer">
+                            <img src="https://i.ytimg.com/vi/7N52aJab0IE/sddefault.jpg" alt="Fotograma del documental #QueNoMueraLaEsperanza" referrerpolicy="no-referrer" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            <span class="absolute inset-0 bg-charcoal-900/45 group-hover:bg-charcoal-900/25 transition"></span>
+                            <span class="absolute inset-0 flex items-center justify-center">
+                                <span class="w-16 h-16 rounded-full bg-terracotta-600 text-white flex items-center justify-center text-2xl shadow-lg ring-4 ring-white/20 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-center text-cream-100">
+                        <span class="text-xs font-bold uppercase tracking-widest text-brass-400">Documental Comunitario</span>
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold mt-2 leading-snug">#QueNoMueraLaEsperanza</h3>
+                        <p class="font-serif italic text-lg text-brass-400 mt-1">28 años de resistencia y búsqueda por la verdad</p>
+                        <p class="text-sm text-cream-200 mt-4 leading-relaxed">
+                            El registro audiovisual del proceso: las familias de La Esperanza narran en primera persona su búsqueda sostenida desde 1996. Es una muestra de que la comunidad produce su propio archivo sobre verdad, justicia y memoria.
+                        </p>
+                        <div class="mt-6 flex flex-wrap items-center gap-4">
+                            <a href="https://www.youtube.com/watch?v=7N52aJab0IE" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-brass-500 text-charcoal-900 text-xs font-bold hover:bg-brass-400 transition">
+                                <i class="fa-brands fa-youtube"></i>
+                                <span>Ver en YouTube</span>
+                            </a>
+                            <span class="text-[11px] text-cream-300">Fuente: Corporación Jurídica Libertad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: CIERRE — LA MEMORIA COMO FUTURO -->
+    <section id="cierre" class="py-20 px-4 sm:px-6 lg:px-8 bg-olive-900 text-white border-t border-olive-800 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10 space-y-12">
+            <!-- Flow Diagram -->
+            <div class="space-y-4">
+                <span class="text-xs uppercase tracking-widest text-brass-400 font-bold">Secuencia Dialéctica Conclusiva</span>
+                <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm font-bold text-cream-100">
+                    <span class="px-3 py-1.5 rounded-lg bg-olive-800 border border-olive-700">AUSENCIA</span>
+                    <i class="fa-solid fa-arrow-right text-terracotta-500"></i>
+                    <span class="px-3 py-1.5 rounded-lg bg-olive-800 border border-olive-700">BÚSQUEDA</span>
+                    <i class="fa-solid fa-arrow-right text-terracotta-500"></i>
+                    <span class="px-3 py-1.5 rounded-lg bg-olive-800 border border-olive-700">TRANSMISIÓN</span>
+                    <i class="fa-solid fa-arrow-right text-terracotta-500"></i>
+                    <span class="px-3 py-1.5 rounded-lg bg-olive-800 border border-olive-700">EDUCACIÓN</span>
+                    <i class="fa-solid fa-arrow-right text-brass-400"></i>
+                    <span class="px-3 py-1.5 rounded-lg bg-brass-500 text-charcoal-900">FUTURO</span>
+                </div>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div id="video6-wrapper" data-video-key="video6" class="w-full bg-charcoal-900 rounded-2xl overflow-hidden aspect-video relative group shadow-xl border border-olive-800">
+                    <iframe id="iframe-video6" class="absolute inset-0 w-full h-full hidden" src="" title="Cierre: la memoria como futuro" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <button type="button" id="video6-placeholder" onclick="openVideoModal('video6')" class="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center">
+                        <div class="w-16 h-16 rounded-full bg-brass-500/30 border border-brass-400 flex items-center justify-center text-cream-100 text-2xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest text-brass-400 font-bold mb-1">Video 6 · Cierre</span>
+                        <h3 class="font-serif text-2xl font-bold text-cream-100 mb-2">La memoria como futuro</h3>
+                        <p class="text-xs text-cream-200 max-w-md">La educación puede y debe contribuir a que esa memoria siga viva, no para quedarse en el pasado, sino para construir otras posibilidades en el presente.</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cita de cierre -->
+            <div class="py-6 border-y border-olive-800">
+                <h3 class="font-serif text-3xl sm:text-5xl font-bold leading-tight text-cream-100">
+                    La memoria no se transmite para permanecer en el pasado.
+                </h3>
+                <p class="font-serif italic text-2xl text-brass-400 mt-4">
+                    Se transmite para que la violencia no tenga la última palabra.
+                </p>
+            </div>
+
+            <!-- Conclusiones -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left text-sm max-w-2xl mx-auto">
+                <div class="flex items-start space-x-3 p-3 bg-olive-800/50 rounded-xl border border-olive-800">
+                    <i class="fa-solid fa-check text-brass-400 mt-1"></i>
+                    <span><strong>La Esperanza</strong> es un territorio que conserva huellas, pero también historias de organización y resistencia.</span>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-olive-800/50 rounded-xl border border-olive-800">
+                    <i class="fa-solid fa-check text-brass-400 mt-1"></i>
+                    <span><strong>La comunidad</strong> produce y mantiene viva la memoria a través de la búsqueda, las conmemoraciones y el nombramiento de quienes faltan.</span>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-olive-800/50 rounded-xl border border-olive-800">
+                    <i class="fa-solid fa-check text-brass-400 mt-1"></i>
+                    <span><strong>Las nuevas generaciones</strong> reciben el pasado, lo preguntan y construyen nuevos sentidos sobre él.</span>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-olive-800/50 rounded-xl border border-olive-800">
+                    <i class="fa-solid fa-check text-brass-400 mt-1"></i>
+                    <span><strong>La educación</strong> puede contribuir a que esa memoria siga viva, no para quedarse en el pasado, sino para construir otras posibilidades en el presente.</span>
+                </div>
+            </div>
+
+            <!-- Academic References -->
+            <div class="text-left bg-olive-800/50 rounded-2xl border border-olive-700 p-6 sm:p-8">
+                <h4 class="font-serif text-2xl font-bold text-cream-100 mb-5">Referencias</h4>
+                <ul class="space-y-2 text-xs sm:text-sm text-cream-200 leading-relaxed">
+                    <li>Adorno, T. (1998). <em>La educación después de Auschwitz</em>. En <em>Educación para la emancipación</em>. Morata.</li>
+                    <li>Carretero, M., Rosa, A. y González, M. F. (2006). <em>Enseñanza de la historia y memoria colectiva</em>. Paidós.</li>
+                    <li>Corte Interamericana de Derechos Humanos. (2017). <em>Caso Vereda La Esperanza vs. Colombia</em>. Sentencia del 31 de agosto de 2017.</li>
+                    <li>Jelin, E. (2002). <em>Los trabajos de la memoria</em>. Siglo XXI.</li>
+                    <li>Joutard, P. (2007). Memoria e historia ¿cómo superar el conflicto? <em>Historia, Antropología y Fuentes Orales</em>, (38), 115-122.</li>
+                    <li>Langland, V. y Jelin, E. (2003). <em>Monumentos, memoriales y marcas territoriales</em>. Siglo XXI.</li>
+                    <li>Nora, P. (1984). Entre mémoire et histoire. La problématique des lieux. En <em>Les lieux de mémoire</em> (Vol. 1). Gallimard.</li>
+                    <li>Pagès, J. (2008). El lugar de la memoria en la enseñanza de la historia. <em>Íber</em>, (55), 43-53.</li>
+                    <li>Pollak, M. (2006). <em>Memoria, olvido, silencio</em>. Ediciones Al Margen.</li>
+                    <li>Portelli, A. (1991). Lo que hace diferente a la historia oral. En <em>La historia oral</em>. Centro Editor de América Latina.</li>
+                    <li>Ricoeur, P. (2003). <em>La memoria, la historia, el olvido</em>. Trotta.</li>
+                    <li>Roballo, R. (2016). <em>20 años de ausencia en La Esperanza</em>. Centro Nacional de Memoria Histórica.</li>
+                    <li>Todorov, T. (2000). <em>Los abusos de la memoria</em>. Paidós.</li>
+                    <li>Villa, S. (2016, 22 de agosto). Víctimas de vereda La Esperanza conmemoran 20 años sin sus familiares. <em>El Tiempo</em>.</li>
+                </ul>
+            </div>
+
+            <!-- Footer Credits -->
+            <div class="pt-8 text-xs text-cream-300 border-t border-olive-800/60">
+                <p>© La Esperanza: un territorio que recuerda • Recurso Educativo Abierto</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL 1: SETTINGS / CONFIGURATION PANEL -->
+    <div id="settings-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-cream-300 pb-4">
+                <h3 class="font-serif text-2xl font-bold text-olive-900">Configuración del Sitio</h3>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-charcoal-800 text-xl">&times;</button>
+            </div>
+
+            <p class="text-xs text-gray-600">Personaliza aquí los nombres de las autoras y los enlaces embed de YouTube o Google Drive.</p>
+
+            <form id="settings-form" class="space-y-4">
+                <!-- Author Names -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold uppercase text-olive-800">Nombres de las 3 Integrantes</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <input type="text" id="input-author-1" placeholder="Nombre 1" class="p-2 border rounded-lg text-xs w-full">
+                        <input type="text" id="input-author-2" placeholder="Nombre 2" class="p-2 border rounded-lg text-xs w-full">
+                        <input type="text" id="input-author-3" placeholder="Nombre 3" class="p-2 border rounded-lg text-xs w-full">
+                    </div>
+                </div>
+
+                <!-- Video URLs -->
+                <div class="space-y-3 pt-2 border-t border-cream-200">
+                    <label class="block text-xs font-bold uppercase text-olive-800">Enlaces de los 6 videos</label>
+                    
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 1 · Territorio</span>
+                        <input type="text" id="input-video-1" placeholder="https://youtu.be/WqCy2yGVRWg" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 2 · Historia</span>
+                        <input type="text" id="input-video-2" placeholder="https://youtu.be/QJWL4boVnvw" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 3 · Búsqueda</span>
+                        <input type="text" id="input-video-3" placeholder="https://youtu.be/kwxopnaFZ5M" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 4 · Intergeneracional</span>
+                        <input type="text" id="input-video-4" placeholder="https://youtu.be/9Vo9sZ7ommo" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 5 · Educación</span>
+                        <input type="text" id="input-video-5" placeholder="https://youtu.be/MxHLayca33w" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-gray-500 font-medium">Video 6 · Cierre</span>
+                        <input type="text" id="input-video-6" placeholder="https://youtu.be/qsem3pps84g" class="p-2 border rounded-lg text-xs w-full mt-1">
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-end space-x-3">
+                    <button type="button" onclick="closeSettingsModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-gray-600 bg-cream-200 hover:bg-cream-300">Cancelar</button>
+                    <button type="button" onclick="saveSettings()" class="px-5 py-2 rounded-xl text-xs font-bold text-white bg-terracotta-600 hover:bg-terracotta-700">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: IMAGE LIGHTBOX MODAL -->
+    <div id="image-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
+        <div class="relative max-w-4xl w-full text-center" onclick="event.stopPropagation()">
+            <img id="image-modal-src" src="" alt="Ampliación" class="max-h-[80vh] mx-auto rounded-xl shadow-2xl border-2 border-white/20">
+            <p id="image-modal-caption" class="text-white text-sm mt-3 font-serif italic"></p>
+            <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white text-2xl hover:text-brass-400">&times;</button>
+        </div>
+    </div>
+
+    <!-- MODAL: FICHA TÉCNICA CORTE IDH -->
+    <div id="ficha-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-start justify-between border-b border-cream-300 pb-4 gap-4">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest font-bold text-terracotta-600">Archivo oficial · Corte Interamericana de Derechos Humanos</span>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-olive-900 mt-1">Ficha técnica: Vereda La Esperanza Vs. Colombia</h3>
+                </div>
+                <button type="button" onclick="closeFichaModal()" class="text-gray-400 hover:text-charcoal-800 text-2xl leading-none">&times;</button>
+            </div>
+
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 rounded-xl bg-cream-100 border border-cream-300">
+                    <dt class="uppercase tracking-wider font-bold text-olive-800">Estado demandado</dt>
+                    <dd class="text-charcoal-800 mt-1">Colombia</dd>
+                </div>
+                <div class="p-3 rounded-xl bg-cream-100 border border-cream-300">
+                    <dt class="uppercase tracking-wider font-bold text-olive-800">Sentencia</dt>
+                    <dd class="text-charcoal-800 mt-1">31 de agosto de 2017</dd>
+                </div>
+            </dl>
+
+            <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 rounded-full bg-olive-100 text-olive-800 text-[11px] font-semibold">Conflicto armado interno</span>
+                <span class="px-2.5 py-1 rounded-full bg-olive-100 text-olive-800 text-[11px] font-semibold">Desaparición forzada</span>
+                <span class="px-2.5 py-1 rounded-full bg-olive-100 text-olive-800 text-[11px] font-semibold">Ejecución extrajudicial</span>
+                <span class="px-2.5 py-1 rounded-full bg-olive-100 text-olive-800 text-[11px] font-semibold">Impunidad</span>
+            </div>
+
+            <div class="text-sm text-charcoal-800 leading-relaxed space-y-3">
+                <h4 class="font-serif text-lg font-bold text-olive-900">Sumilla</h4>
+                <p>El caso se relaciona con la desaparición forzada de 14 personas, incluyendo tres niños, y la ejecución de otra persona, así como la privación de la libertad de un niño, ocurridas en la Vereda La Esperanza del municipio de El Carmen de Viboral, Departamento de Antioquia, entre el 21 de junio y el 27 de diciembre de 1996.</p>
+                <p>Se alega que oficiales de las Fuerzas Armadas colombianas habrían coordinado con miembros del grupo paramilitar denominado Autodefensas del Magdalena Medio las distintas incursiones a la vereda, debido a que las presuntas víctimas eran percibidas como simpatizantes o colaboradoras de grupos guerrilleros que operaban en la zona.</p>
+                <p>Adicionalmente, según se alega, los hechos se encontrarían en la impunidad en tanto la investigación en el proceso penal ordinario y bajo la Ley de Justicia y Paz no habría sido diligente y no se habría sancionado a ninguno de los responsables de los hechos.</p>
+            </div>
+
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-cream-200">
+                <a href="https://www.corteidh.or.cr/ver_ficha_tecnica.cfm?nId_Ficha=427&lang=es" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-olive-800 text-white text-xs font-bold hover:bg-olive-900 transition">
+                    <i class="fa-solid fa-up-right-from-square"></i>
+                    <span>Consultar ficha en la Corte IDH</span>
+                </a>
+                <button type="button" onclick="closeFichaModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-gray-600 bg-cream-200 hover:bg-cream-300">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: CATEGORY DEEP-DIVE MODAL (3 FORMAS DE RECORDAR) -->
+    <div id="category-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-cream-300 pb-4">
+                <h3 id="cat-modal-title" class="font-serif text-3xl font-bold text-olive-900"></h3>
+                <button onclick="closeCategoryModal()" class="text-gray-400 hover:text-charcoal-800 text-2xl">&times;</button>
+            </div>
+
+            <div id="cat-modal-body" class="space-y-4 text-sm text-charcoal-800">
+                <!-- Dynamic Content Injection -->
+            </div>
+
+            <div class="pt-4 border-t border-cream-200 flex justify-end">
+                <button onclick="closeCategoryModal()" class="px-5 py-2 rounded-xl text-xs font-bold text-white bg-olive-800 hover:bg-olive-900">Cerrar Exploración</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ambient sound source: offscreen instead of hidden, since display:none blocks playback -->
+    <div class="fixed -left-[9999px] top-0 w-px h-px overflow-hidden opacity-0 pointer-events-none" aria-hidden="true">
+        <div id="ambient-player"></div>
+    </div>
+
+    <script>
+        const DEFAULT_SETTINGS = {
+            authors: ["Lina Maria Garcia Gomez", "Luisa Fernanda Osorio Zuluaga", "Paula Camila Manrique Ordoñez"],
+            videos: {
+                video1: "https://www.youtube.com/embed/WqCy2yGVRWg?rel=0",
+                video2: "https://www.youtube.com/embed/QJWL4boVnvw?rel=0",
+                video3: "https://www.youtube.com/embed/kwxopnaFZ5M?rel=0",
+                video4: "https://www.youtube.com/embed/9Vo9sZ7ommo?rel=0",
+                video5: "https://www.youtube.com/embed/MxHLayca33w?rel=0",
+                video6: "https://www.youtube.com/embed/qsem3pps84g?rel=0"
+            }
+        };
+
+        function youTubeId(url) {
+            const match = String(url || '').match(/(?:youtu\.be\/|\/embed\/|v=)([A-Za-z0-9_-]{11})/);
+            return match ? match[1] : "";
+        }
+
+        function toYouTubeEmbed(url) {
+            const id = youTubeId(url);
+            return id ? `https://www.youtube.com/embed/${id}?rel=0&autoplay=1` : "";
+        }
+
+        function mergeSettings(saved) {
+            const merged = {
+                authors: [...DEFAULT_SETTINGS.authors],
+                videos: { ...DEFAULT_SETTINGS.videos }
+            };
+            if (saved && Array.isArray(saved.authors) && saved.authors.length) {
+                merged.authors = saved.authors;
+            }
+            if (saved && saved.videos) {
+                Object.keys(merged.videos).forEach((key) => {
+                    if (saved.videos[key]) merged.videos[key] = toYouTubeEmbed(saved.videos[key]);
+                });
+            }
+            return merged;
+        }
+
+        let appSettings = mergeSettings(JSON.parse(localStorage.getItem('esperanza_settings') || 'null'));
+        if (
+            !appSettings.authors ||
+            appSettings.authors.includes('Integrante 2') ||
+            appSettings.authors.includes('Integrante 3') ||
+            appSettings.authors[0] === 'Lina Garcia'
+        ) {
+            appSettings.authors = DEFAULT_SETTINGS.authors;
+        }
+
+        const TIMELINE_TONES = {
+            terracotta: { badge: 'bg-terracotta-100 text-terracotta-700', dot: 'bg-terracotta-600', active: 'border-terracotta-500', quote: 'border-terracotta-500 text-terracotta-700' },
+            brass: { badge: 'bg-brass-400/20 text-brass-600', dot: 'bg-brass-500', active: 'border-brass-500', quote: 'border-brass-500 text-brass-600' },
+            olive: { badge: 'bg-olive-100 text-olive-800', dot: 'bg-olive-800', active: 'border-olive-800', quote: 'border-olive-800 text-olive-800' }
+        };
+
+        const timelineData = {
+            1: {
+                badge: "1996",
+                label: "Acontecimientos",
+                tone: "terracotta",
+                title: "1996: Acontecimientos Históricos",
+                desc: "Entre junio y noviembre de 1996, La Esperanza sufrió dos “noches de terror”: la desaparición forzada de 17 campesinos y la ejecución extrajudicial del personero Helí Gómez Osorio. La estigmatización de la población campesina como colaboradora de la guerrilla acompañó la llegada de estructuras paramilitares y, en menos de seis meses, la vida rural se transformó en despojo, angustia e incertidumbre.",
+                quote: "El pasado puede ser renuente al olvido [...] porque hay actores sociales persistentes que no dejan olvidar e insisten en su presencia. — Elizabeth Jelin (2002, p. 16)"
+            },
+            2: {
+                badge: "1996–2017",
+                label: "Búsqueda Colectiva",
+                tone: "brass",
+                title: "Búsqueda Colectiva e Incesante",
+                desc: "Bajo el liderazgo de Flor Gallego, junto con Cémida Cardona y Cruz Hernández, las familias emprendieron una búsqueda sostenida de verdad, justicia y reparación. Ante la ausencia de respuestas efectivas de la justicia nacional, el caso llegó a la Comisión Interamericana de Derechos Humanos.",
+                quote: "El dolor también se transforma en lucha, en denuncia y en la búsqueda de los desaparecidos. — Flor Gallego"
+            },
+            3: {
+                badge: "2017",
+                label: "Sentencia IDH",
+                tone: "olive",
+                title: "Sentencia de la Corte IDH",
+                desc: "El 31 de agosto de 2017, la Corte Interamericana de Derechos Humanos declaró la responsabilidad internacional del Estado colombiano por la colaboración entre la Fuerza Pública y estructuras paramilitares que operaban en el Oriente antioqueño. El fallo fue resultado de más de veinte años de denuncias comunitarias.",
+                quote: "Recordar a los desaparecidos es resistir al silenciamiento y reclamar verdad, reconocimiento y dignidad."
+            },
+            4: {
+                badge: "2024",
+                label: "Reconocimiento",
+                tone: "brass",
+                title: "Reconocimiento y Actos de Dignidad",
+                desc: "En 2024 se realizó un acto público de reconocimiento de responsabilidad del Estado. La sentencia de 2017 y ese acto no cierran la historia: la memoria continúa en las familias, en el territorio y en las nuevas generaciones.",
+                quote: "Esta historia no termina en una fecha. La memoria continúa en las familias, en el territorio y en las nuevas generaciones."
+            },
+            5: {
+                badge: "Presente",
+                label: "Educación Hoy",
+                tone: "terracotta",
+                title: "Presente: Educación y Memoria Viva",
+                desc: "En la conmemoración de los 20 años, hijos y nietos protagonizaron una obra de teatro en honor a sus familiares. La segunda generación no solo hereda la memoria: la reelabora. Esto abre la pregunta por una educación que no reduzca el caso a la violencia y reconozca a la comunidad como productora de conocimiento.",
+                quote: "Se han ido gestando nuevas generaciones para depositar la semilla, para que no desfallezcan después de tantos años de lucha. — Claudia Castaño"
+            }
+        };
+
+        const timelineIds = Object.keys(timelineData);
+
+        function initTimeline() {
+            const rail = document.getElementById('timeline-rail');
+            const steps = document.getElementById('timeline-steps');
+            if (!rail || !steps) return;
+
+            rail.innerHTML = timelineIds.map((id) => {
+                const item = timelineData[id];
+                const tone = TIMELINE_TONES[item.tone];
+                return `
+                    <button type="button" data-timeline-chip="${id}" onclick="goToTimelineStep('${id}')" class="timeline-chip shrink-0 min-w-[9.5rem] md:min-w-0 text-left p-3 rounded-xl bg-white border-2 border-cream-300 hover:border-brass-500 transition">
+                        <span class="inline-block px-2 py-0.5 rounded-sm text-[11px] font-bold ${tone.badge}">${item.badge}</span>
+                        <span class="block font-serif font-bold text-sm text-olive-900 mt-1 leading-tight">${item.label}</span>
+                    </button>
+                `;
+            }).join('');
+
+            steps.innerHTML = `
+                <div class="absolute left-[19px] top-6 bottom-6 w-0.5 bg-cream-300 hidden sm:block" aria-hidden="true"></div>
+            ` + timelineIds.map((id) => {
+                const item = timelineData[id];
+                const tone = TIMELINE_TONES[item.tone];
+                return `
+                    <article id="hito-${id}" data-timeline-step="${id}" class="timeline-step relative sm:pl-14">
+                        <div class="absolute left-0 top-6 w-10 h-10 rounded-full ${tone.dot} text-white hidden sm:flex items-center justify-center font-serif font-bold shadow-sm" aria-hidden="true">${id}</div>
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-cream-300 shadow-xs">
+                            <span class="inline-block px-2.5 py-1 rounded-sm text-xs font-bold ${tone.badge}">${item.badge}</span>
+                            <h3 class="font-serif text-2xl font-bold text-olive-900 mt-2">${item.title}</h3>
+                            <p class="text-sm text-gray-700 mt-3 leading-relaxed">${item.desc}</p>
+                            <blockquote class="mt-4 pl-4 border-l-2 font-serif italic text-sm font-semibold ${tone.quote}">“${item.quote}”</blockquote>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            setActiveTimelineStep(timelineIds[0]);
+            observeTimelineSteps(steps);
+        }
+
+        function setActiveTimelineStep(id) {
+            document.querySelectorAll('[data-timeline-chip]').forEach((chip) => {
+                const tone = TIMELINE_TONES[timelineData[chip.dataset.timelineChip].tone];
+                const isActive = chip.dataset.timelineChip === String(id);
+                chip.classList.toggle(tone.active, isActive);
+                chip.classList.toggle('shadow-md', isActive);
+                chip.classList.toggle('border-cream-300', !isActive);
+                if (isActive) {
+                    chip.setAttribute('aria-current', 'true');
+                } else {
+                    chip.removeAttribute('aria-current');
+                }
+            });
+
+            const progress = document.getElementById('timeline-progress');
+            if (progress) {
+                const position = timelineIds.indexOf(String(id)) + 1;
+                progress.style.width = `${(position / timelineIds.length) * 100}%`;
+            }
+        }
+
+        function observeTimelineSteps(container) {
+            const steps = container.querySelectorAll('[data-timeline-step]');
+            if (!('IntersectionObserver' in window)) {
+                steps.forEach((step) => step.classList.add('is-visible'));
+                return;
+            }
+
+            container.dataset.reveal = 'on';
+
+            const reveal = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        reveal.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+
+            // Narrow band near the top of the viewport decides which milestone is being read
+            const spy = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) setActiveTimelineStep(entry.target.dataset.timelineStep);
+                });
+            }, { rootMargin: '-25% 0px -60% 0px' });
+
+            steps.forEach((step) => {
+                reveal.observe(step);
+                spy.observe(step);
+            });
+        }
+
+        function goToTimelineStep(id) {
+            const step = document.getElementById(`hito-${id}`);
+            if (!step) return;
+            step.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setActiveTimelineStep(id);
+        }
+
+        const preziData = {
+            carretera: {
+                title: "1. La Carretera: Autopista Medellín-Bogotá",
+                desc: "La vía 60 atraviesa el oriente del corregimiento y pasa junto a la vereda La Esperanza. Esta ruta conectaba distintos territorios del Oriente antioqueño y facilitó el tránsito de grupos armados, convirtiendo a la vereda en zona estratégica de disputa entre guerrilla, paramilitares y el Ejército Nacional durante la década de 1990."
+            },
+            fotos: {
+                title: "2. Registro Fotográfico: Caminos y Sembrados",
+                desc: "Entre las veredas Viboral, San Juan y El Dragal se extiende la geografía campesina que la comunidad transitaba a diario. Esos caminos y sembrados dejaron de representar el encuentro entre vecinos y se transformaron en espacios de miedo e incertidumbre, aunque también dieron fuerza para exigir el esclarecimiento de los hechos."
+            },
+            conmemoraciones: {
+                title: "3. Conmemoraciones: El Carmen de Viboral",
+                desc: "En la cabecera municipal se han realizado los actos públicos de memoria. En 2016, por los 20 años de los hechos, hijos y nietos de las víctimas presentaron una obra de teatro en honor a sus familiares desaparecidos: un acto que convirtió el dolor privado en memoria pública y encuentro comunitario."
+            },
+            marcas: {
+                title: "4. Marcas de Memoria: Vereda La Esperanza",
+                desc: "Nora (1984), Langland y Jelin (2003) muestran cómo las prácticas colectivas cargan de sentido el territorio. Este punto del mapa dejó de ser solo el escenario de la violencia de 1996 para convertirse en un lugar de memoria construido por la búsqueda, la ausencia resignificada y la transmisión entre generaciones."
+            }
+        };
+
+        function zoomToSpot(spotKey, originX, originY, scale) {
+            const stage = document.getElementById('prezi-stage');
+            stage.style.transformOrigin = `${originX}% ${originY}%`;
+            stage.style.transform = `scale(${scale})`;
+
+            const infoTitle = document.getElementById('prezi-title');
+            const infoDesc = document.getElementById('prezi-desc');
+            const item = preziData[spotKey];
+
+            if(item) {
+                infoTitle.innerText = item.title;
+                infoDesc.innerText = item.desc;
+            }
+        }
+
+        function resetPreziZoom() {
+            const stage = document.getElementById('prezi-stage');
+            stage.style.transformOrigin = 'center center';
+            stage.style.transform = 'scale(1)';
+            document.getElementById('prezi-title').innerText = "Selecciona un punto en el mapa del corregimiento";
+            document.getElementById('prezi-desc').innerText = "Recorre el territorio entre El Carmen de Viboral y la vereda La Esperanza. Al hacer clic en una marca, el mapa se acerca al lugar y revela su huella de memoria.";
+        }
+
+        const AMBIENT_VIDEO_ID = 'oXYK6f6Nmno';
+        let ambientPlayer = null;
+        let isAudioPlaying = false;
+
+        function onYouTubeIframeAPIReady() {
+            ambientPlayer = new YT.Player('ambient-player', {
+                videoId: AMBIENT_VIDEO_ID,
+                playerVars: {
+                    autoplay: 0,
+                    controls: 0,
+                    disablekb: 1,
+                    loop: 1,
+                    playlist: AMBIENT_VIDEO_ID,
+                    playsinline: 1,
+                    rel: 0
+                },
+                events: {
+                    onReady: function(event) {
+                        event.target.setVolume(35);
+                        document.getElementById('ambient-audio-btn').disabled = false;
+                    },
+                    onStateChange: function(event) {
+                        if (event.data === YT.PlayerState.ENDED) {
+                            event.target.playVideo();
+                        }
+                    }
+                }
+            });
+        }
+
+        function setAmbientAudioState(playing) {
+            const btn = document.getElementById('ambient-audio-btn');
+            const icon = document.getElementById('audio-icon');
+            const label = document.getElementById('audio-label');
+
+            isAudioPlaying = playing;
+            btn.setAttribute('aria-pressed', String(playing));
+
+            if (playing) {
+                icon.className = "fa-solid fa-volume-high text-terracotta-500 animate-pulse";
+                label.innerText = "Detener Sonido";
+                btn.classList.add('bg-olive-800', 'text-white');
+            } else {
+                icon.className = "fa-solid fa-volume-xmark";
+                label.innerText = "Sonido Ambiente";
+                btn.classList.remove('bg-olive-800', 'text-white');
+            }
+        }
+
+        function toggleAmbientAudio() {
+            if (!ambientPlayer || typeof ambientPlayer.playVideo !== 'function') {
+                return;
+            }
+
+            if (isAudioPlaying) {
+                ambientPlayer.pauseVideo();
+                setAmbientAudioState(false);
+            } else {
+                ambientPlayer.playVideo();
+                setAmbientAudioState(true);
+            }
+        }
+
+        document.getElementById('ambient-audio-btn').addEventListener('click', toggleAmbientAudio);
+
+        function loadFeaturedDocumentary() {
+            if (isAudioPlaying) {
+                toggleAmbientAudio();
+            }
+
+            const frame = document.getElementById('doc-video-frame');
+            const iframe = document.createElement('iframe');
+
+            iframe.className = 'absolute inset-0 w-full h-full';
+            iframe.src = 'https://www.youtube.com/embed/7N52aJab0IE?autoplay=1&rel=0';
+            iframe.title = '#QueNoMueraLaEsperanza: 28 años de resistencia y búsqueda por la verdad';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.allowFullscreen = true;
+
+            frame.replaceChildren(iframe);
+        }
+
+        (function loadAmbientAudioApi() {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
+        })();
+
+        const catDetails = {
+            ausencia: {
+                title: "Ausencia y Pérdida",
+                body: `
+                    <p class="font-serif italic text-lg text-terracotta-600">“El mejor acto de perdón es la verdad y la justicia [...]. Creemos en la paz, pero una paz sin desaparecidos.” — Flor Gallego</p>
+                    <p>La desaparición produce una ausencia particular: no hay cuerpo, cierre del duelo ni certeza sobre el destino de la persona. Como plantea Ricoeur (2003), el recuerdo funciona como fidelidad hacia las víctimas y quienes están ausentes; la memoria resignifica la pérdida en vez de dejarla en un silencio absoluto.</p>
+                    <p>En La Esperanza, esa ausencia no quedó confinada al ámbito privado. Los caminos y sembrados se transformaron en espacios de miedo, zozobra e incertidumbre. El dolor cotidiano recayó especialmente en las madres rurales que sostuvieron la crianza y la subsistencia en medio del abandono estatal.</p>
+                    <p>Jelin (2002) ayuda a comprender que las experiencias traumáticas generan silencios y memorias reconstruidas desde el presente. Pollak (2006) entiende la memoria como un campo de tensiones entre el recuerdo oficial y el silenciado: antes del reconocimiento estatal de 2017, la comunidad habitó durante décadas el dolor de la ausencia y lo transformó en identidad colectiva.</p>
+                    <div class="bg-cream-100 p-4 rounded-xl border border-cream-300">
+                        <h5 class="font-bold text-olive-900 mb-1">Aportes Teóricos Clave:</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-xs">
+                            <li><strong>Paul Ricoeur (2003):</strong> memoria, fidelidad y justo recuerdo.</li>
+                            <li><strong>Michael Pollak (2006):</strong> tensiones entre memoria oficial y memoria silenciada.</li>
+                            <li><strong>Elizabeth Jelin (2002):</strong> elaboración del trauma desde el presente.</li>
+                        </ul>
+                    </div>
+                `
+            },
+            busqueda: {
+                title: "Búsqueda y Resistencia Colectiva",
+                body: `
+                    <p class="font-serif italic text-lg text-brass-600">“El dolor también se transforma en lucha, en denuncia y en la búsqueda de los desaparecidos.” — Flor Gallego</p>
+                    <p>Recordar no ha significado solo conservar el recuerdo, sino emprender una acción sostenida para conocer qué ocurrió, exigir reconocimiento y disputar el silencio. Para Jelin (2002), la memoria es un “trabajo” realizado desde el presente, no una recuperación pasiva del pasado.</p>
+                    <p>El liderazgo de <strong>Flor Gallego</strong> muestra que buscar implica recuperar la dignidad y cuestionar la estigmatización de las víctimas. Pollak (2006) permite entender las relaciones de poder entre lo público y lo silenciado: la insistencia familiar disputó durante décadas una versión que no reconocía la responsabilidad estatal.</p>
+                    <p>Portelli (1991) recuerda que los testimonios contienen los significados de la experiencia. Joutard (2007) propone relacionar esos relatos con las investigaciones y la sentencia de la Corte IDH. Todorov (2000) agrega la pregunta ética: en La Esperanza se recuerda para exigir verdad, justicia, reparación y no repetición.</p>
+                    <div class="bg-cream-100 p-4 rounded-xl border border-cream-300">
+                        <h5 class="font-bold text-olive-900 mb-1">Aportes Teóricos Clave:</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-xs">
+                            <li><strong>Elizabeth Jelin (2002) y Michael Pollak (2006):</strong> trabajo de memoria y disputa del silencio.</li>
+                            <li><strong>Alessandro Portelli (1991) y Philippe Joutard (2007):</strong> diálogo entre testimonio e historia.</li>
+                            <li><strong>Tzvetan Todorov (2000):</strong> sentido ético del recuerdo.</li>
+                        </ul>
+                    </div>
+                `
+            },
+            transmision: {
+                title: "Transmisión Intergeneracional",
+                body: `
+                    <p class="font-serif italic text-lg text-olive-800">“Se han ido gestando nuevas generaciones para depositar la semilla, para que no desfallezcan después de tantos años de lucha.” — Claudia Castaño, hija de Flor Gallego</p>
+                    <p>Los hijos e hijas de las víctimas, que en 1996 eran niños o aún no habían nacido, hoy sostienen y comunican esta memoria. Según Jelin (2002), no reproducen intacto el pasado: cada generación lo elabora desde su propio presente.</p>
+                    <p>En la conmemoración de los 20 años, hijos y nietos protagonizaron una obra de teatro en honor a sus familiares desaparecidos, evidencia de que la memoria sigue siendo elaborada activamente.</p>
+                    <p>Pagès (2008) plantea que enseñar historia implica relacionarse con las memorias que circulan socialmente. Carretero, Rosa y González (2006) advierten la tensión entre narrativas oficiales y memorias sociales: ¿qué versión de La Esperanza llegaría al aula si la escuela decidiera abordarla?</p>
+                    <div class="bg-cream-100 p-4 rounded-xl border border-cream-300">
+                        <h5 class="font-bold text-olive-900 mb-1">Aportes Teóricos Clave:</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-xs">
+                            <li><strong>Elizabeth Jelin (2002):</strong> transmisión y resignificación entre generaciones.</li>
+                            <li><strong>Joan Pagès (2008):</strong> lugar de la memoria en la enseñanza de la historia.</li>
+                            <li><strong>Carretero, Rosa y González (2006):</strong> tensiones entre historia oficial y memorias sociales.</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        function openCategoryModal(key) {
+            const modal = document.getElementById('category-modal');
+            const title = document.getElementById('cat-modal-title');
+            const body = document.getElementById('cat-modal-body');
+
+            if(catDetails[key]) {
+                title.innerText = catDetails[key].title;
+                body.innerHTML = catDetails[key].body;
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeCategoryModal() {
+            document.getElementById('category-modal').classList.add('hidden');
+        }
+
+        function showVerbMeaning(title, desc) {
+            const card = document.getElementById('verb-modal-card');
+            const t = document.getElementById('verb-modal-title');
+            const d = document.getElementById('verb-modal-desc');
+
+            t.innerText = title;
+            d.innerText = desc;
+            card.classList.remove('hidden');
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        const archivePhotos = [
+            {
+                src: 'images/archivo/mo.jpg',
+                title: 'Que no muera La Esperanza',
+                caption: 'Retrato de un joven desaparecido sobre un altar de flores blancas, con la consigna escrita a mano frente a la imagen.'
+            },
+            {
+                src: 'images/archivo/escuela-vereda.jpg',
+                title: 'Encuentro en la escuela rural',
+                caption: 'Familias, líderes y niñez posan en el patio de una escuela de la vereda, frente a aulas de techo de zinc y ladera sembrada.'
+            },
+            {
+                src: 'images/archivo/entrega-retratos.jpg',
+                title: 'Entrega de retratos',
+                caption: 'Acto público en un escenario: familiares y autoridades sostienen retratos enmarcados de las personas desaparecidas.'
+            },
+            {
+                src: 'images/archivo/marcha-autopista.jpg',
+                title: 'Marcha sobre la autopista',
+                caption: 'Movilización en la vía: pancartas verdes forman letra a letra la consigna «Que no muera La Esperanza».'
+            },
+            {
+                src: 'images/archivo/casa-campesina.jpg',
+                title: 'Casa campesina de la vereda',
+                caption: 'Vivienda rural de muros amarillos, puertas de madera y corredor de postes: huella cotidiana del territorio campesino.'
+            },
+            {
+                src: 'images/archivo/galeria-desaparecidos.jpg',
+                title: 'Galería de los desaparecidos',
+                caption: 'Puesto de memoria a orilla de la vía: fotografías de detenidos-desaparecidos, pinturas y el llamado «Nunca más desaparecidos».'
+            }
+        ];
+        let archivePhotoIndex = 0;
+
+        function initArchiveCarousel() {
+            const track = document.getElementById('archive-carousel-track');
+            const dots = document.getElementById('archive-photo-dots');
+            if (!track || !dots) return;
+
+            track.innerHTML = archivePhotos.map((photo, i) => `
+                <button type="button" class="archive-slide absolute inset-0 ${i === 0 ? 'is-active' : ''}" data-archive-index="${i}" onclick="openImageModal('${photo.src}', '${photo.title}. ${photo.caption}')" aria-label="Ampliar: ${photo.title}">
+                    <img src="${photo.src}" alt="${photo.title}. ${photo.caption}" loading="${i === 0 ? 'eager' : 'lazy'}" class="w-full h-full object-cover">
+                </button>
+            `).join('');
+
+            dots.innerHTML = archivePhotos.map((_, i) => `
+                <button type="button" class="w-2.5 h-2.5 rounded-full transition ${i === 0 ? 'bg-terracotta-600 scale-110' : 'bg-cream-300 hover:bg-brass-400'}" data-archive-dot="${i}" onclick="goToArchivePhoto(${i})" aria-label="Ir a la fotografía ${i + 1}"></button>
+            `).join('');
+
+            renderArchiveCarousel();
+            bindArchiveCarouselSwipe(track);
+        }
+
+        function renderArchiveCarousel() {
+            document.querySelectorAll('.archive-slide').forEach((slide, i) => {
+                slide.classList.toggle('is-active', i === archivePhotoIndex);
+            });
+            document.querySelectorAll('[data-archive-dot]').forEach((dot, i) => {
+                const active = i === archivePhotoIndex;
+                dot.classList.toggle('bg-terracotta-600', active);
+                dot.classList.toggle('scale-110', active);
+                dot.classList.toggle('bg-cream-300', !active);
+            });
+            document.getElementById('archive-photo-count').innerText = `${archivePhotoIndex + 1} / ${archivePhotos.length}`;
+            document.getElementById('archive-photo-title').innerText = archivePhotos[archivePhotoIndex].title;
+            document.getElementById('archive-photo-caption').innerText = archivePhotos[archivePhotoIndex].caption;
+        }
+
+        function goToArchivePhoto(index) {
+            archivePhotoIndex = (index + archivePhotos.length) % archivePhotos.length;
+            renderArchiveCarousel();
+        }
+
+        function stepArchiveCarousel(direction) {
+            goToArchivePhoto(archivePhotoIndex + direction);
+        }
+
+        function bindArchiveCarouselSwipe(track) {
+            let startX = 0;
+            let swiped = false;
+            track.addEventListener('pointerdown', (event) => {
+                startX = event.clientX;
+                swiped = false;
+            });
+            track.addEventListener('pointerup', (event) => {
+                const delta = event.clientX - startX;
+                if (Math.abs(delta) < 40) return;
+                swiped = true;
+                stepArchiveCarousel(delta < 0 ? 1 : -1);
+            });
+            track.addEventListener('click', (event) => {
+                if (swiped) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    swiped = false;
+                }
+            }, true);
+        }
+
+        function openImageModal(src, caption) {
+            document.getElementById('image-modal-src').src = src;
+            document.getElementById('image-modal-caption').innerText = caption;
+            document.getElementById('image-modal').classList.remove('hidden');
+        }
+
+        function closeImageModal() {
+            document.getElementById('image-modal').classList.add('hidden');
+        }
+
+        function openFichaModal() {
+            document.getElementById('ficha-modal').classList.remove('hidden');
+        }
+
+        function closeFichaModal() {
+            document.getElementById('ficha-modal').classList.add('hidden');
+        }
+
+        // Each author presents her own videos, so the poster is her portrait
+        const VIDEO_POSTERS = {
+            video1: { src: 'images/equipo/lina.jpg', alt: 'Lina Maria Garcia Gomez presentando el video' },
+            video2: { src: 'images/equipo/lina.jpg', alt: 'Lina Maria Garcia Gomez presentando el video' },
+            video3: { src: 'images/equipo/luisa.jpg', alt: 'Luisa Fernanda Osorio Zuluaga presentando el video' },
+            video4: { src: 'images/equipo/luisa.jpg', alt: 'Luisa Fernanda Osorio Zuluaga presentando el video' },
+            video5: { src: 'images/equipo/camila.jpg', alt: 'Paula Camila Manrique Ordoñez presentando el video' },
+            video6: { src: 'images/equipo/camila.jpg', alt: 'Paula Camila Manrique Ordoñez presentando el video' }
+        };
+
+        function initVideoThumbnails() {
+            document.querySelectorAll('[data-video-key]').forEach((wrapper) => {
+                const key = wrapper.dataset.videoKey;
+                const poster = VIDEO_POSTERS[key];
+                const id = youTubeId(appSettings.videos[key] || DEFAULT_SETTINGS.videos[key]);
+                if (!poster && !id) return;
+
+                const thumb = document.createElement('img');
+                thumb.alt = poster ? poster.alt : '';
+                thumb.loading = 'lazy';
+                thumb.className = 'absolute inset-0 w-full h-full object-cover';
+                if (poster) {
+                    thumb.classList.add('object-top');
+                    thumb.src = poster.src;
+                } else {
+                    thumb.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+                    thumb.addEventListener('error', () => {
+                        thumb.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+                    }, { once: true });
+                }
+
+                const scrim = document.createElement('div');
+                scrim.className = 'absolute inset-0 bg-charcoal-900/65';
+
+                wrapper.prepend(scrim);
+                wrapper.prepend(thumb);
+            });
+        }
+
+        function openVideoModal(videoKey) {
+            const url = toYouTubeEmbed(appSettings.videos[videoKey] || DEFAULT_SETTINGS.videos[videoKey]);
+            const iframe = document.getElementById(`iframe-${videoKey}`);
+            const placeholder = document.getElementById(`${videoKey}-placeholder`);
+            if (!iframe || !url) return;
+            iframe.src = url;
+            iframe.classList.remove('hidden');
+            if (placeholder) placeholder.classList.add('hidden');
+        }
+
+        function openSettingsModal() {
+            document.getElementById('input-author-1').value = appSettings.authors[0] || '';
+            document.getElementById('input-author-2').value = appSettings.authors[1] || '';
+            document.getElementById('input-author-3').value = appSettings.authors[2] || '';
+            
+            document.getElementById('input-video-1').value = appSettings.videos.video1 || '';
+            document.getElementById('input-video-2').value = appSettings.videos.video2 || '';
+            document.getElementById('input-video-3').value = appSettings.videos.video3 || '';
+            document.getElementById('input-video-4').value = appSettings.videos.video4 || '';
+            document.getElementById('input-video-5').value = appSettings.videos.video5 || '';
+            document.getElementById('input-video-6').value = appSettings.videos.video6 || '';
+
+            document.getElementById('settings-modal').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settings-modal').classList.add('hidden');
+        }
+
+        function saveSettings() {
+            appSettings.authors = [
+                document.getElementById('input-author-1').value || 'Lina Maria Garcia Gomez',
+                document.getElementById('input-author-2').value || 'Luisa Fernanda Osorio Zuluaga',
+                document.getElementById('input-author-3').value || 'Paula Camila Manrique Ordoñez'
+            ];
+
+            appSettings.videos.video1 = toYouTubeEmbed(document.getElementById('input-video-1').value) || DEFAULT_SETTINGS.videos.video1;
+            appSettings.videos.video2 = toYouTubeEmbed(document.getElementById('input-video-2').value) || DEFAULT_SETTINGS.videos.video2;
+            appSettings.videos.video3 = toYouTubeEmbed(document.getElementById('input-video-3').value) || DEFAULT_SETTINGS.videos.video3;
+            appSettings.videos.video4 = toYouTubeEmbed(document.getElementById('input-video-4').value) || DEFAULT_SETTINGS.videos.video4;
+            appSettings.videos.video5 = toYouTubeEmbed(document.getElementById('input-video-5').value) || DEFAULT_SETTINGS.videos.video5;
+            appSettings.videos.video6 = toYouTubeEmbed(document.getElementById('input-video-6').value) || DEFAULT_SETTINGS.videos.video6;
+
+            localStorage.setItem('esperanza_settings', JSON.stringify(appSettings));
+            updateDOMWithSettings();
+            closeSettingsModal();
+        }
+
+        function updateDOMWithSettings() {
+            document.getElementById('display-author-1').innerText = appSettings.authors[0];
+            document.getElementById('display-author-2').innerText = appSettings.authors[1];
+            document.getElementById('display-author-3').innerText = appSettings.authors[2];
+        }
+
+        window.onload = function() {
+            updateDOMWithSettings();
+            initTimeline();
+            initArchiveCarousel();
+            initVideoThumbnails();
+
+            // Mobile menu toggle logic
+            document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            });
+
+            document.getElementById('open-settings-btn').addEventListener('click', openSettingsModal);
+        };
+    </script>
+</body>
+</html>
